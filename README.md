@@ -1,446 +1,455 @@
 ```
-# Telegram Drive Website - Tahap 20 : Folder Management (Professional File Organization)
-
-Tahap User Management telah selesai.
-
-Project saat ini telah memiliki:
-
-✅ Telegram Bot
-✅ Upload Engine
-✅ Download Engine
-✅ Storage Service
-✅ REST API
-✅ Authentication
-✅ Dashboard
-✅ Files Manager
-✅ Upload Manager
-✅ Settings Center
-✅ Statistics
-✅ User Management
-
-JANGAN mengubah fitur yang sudah berjalan.
-
-JANGAN merusak REST API.
-
-Gunakan seluruh Design System.
-
-====================================================
-
-TUJUAN
-
-Membangun Folder Management profesional.
-
-Folder digunakan untuk mengelola ribuan file agar terorganisir.
-
-Upload Manager harus bisa memilih Folder.
-
-Files Manager harus bisa difilter berdasarkan Folder.
-
-====================================================
-
-ROUTE
-
-/admin/folders
-
-====================================================
-
-DATABASE
-
-Gunakan tabel Folder.
-
-Jika belum ada buat schema berikut:
-
-Folder
-
-id
-
-parentId
-
-name
-
-slug
-
-description
-
-icon
-
-color
-
-sortOrder
-
-visibility
-
-status
-
-createdAt
-
-updatedAt
-
-====================================================
-
-SUPPORT
-
-Unlimited Folder
-
-Unlimited Sub Folder
-
-====================================================
-
-TREE VIEW
-
-Sidebar kiri seperti File Explorer.
-
-Folder
-
-Sub Folder
-
-Expand
-
-Collapse
-
-====================================================
-
-CONTENT
-
-Saat klik Folder tampilkan:
-
-Nama Folder
-
-Jumlah File
-
-Jumlah Sub Folder
-
-Storage
-
-Tanggal Dibuat
-
-====================================================
-
-ACTION
-
-Create Folder
-
-Rename
-
-Move
-
-Duplicate
-
-Delete
-
-Change Icon
-
-Change Color
-
-====================================================
-
-DRAG DROP
-
-Support Drag & Drop Folder.
-
-Jika belum memungkinkan beri TODO.
-
-====================================================
-
-MOVE FILE
-
-File dapat dipindahkan ke Folder lain.
-
-====================================================
-
-UPLOAD
-
-Upload Manager wajib memiliki dropdown Folder.
-
-Folder terakhir disimpan sebagai default.
-
-====================================================
-
-FILES MANAGER
-
-Tambahkan:
-
-Filter Folder
-
-Breadcrumb
-
-====================================================
-
-BREADCRUMB
+# IMPLEMENTASI LENGKAP DASHBOARD ADMIN OPERASIONAL DIGITAL CELL (PRODUCTION READY)
+
+Lanjutkan project Digital Cell tanpa mengubah fitur yang sudah selesai (Digiflazz, Checkout, Deposit Otomatis, Wallet Payment, Refund, Ledger, Recovery, Notifikasi Real-Time, dan Riwayat Transaksi).
+
+Tujuan tahap ini adalah membangun Dashboard Admin Operasional yang benar-benar digunakan untuk mengelola website setiap hari, memonitor transaksi, provider, payment gateway, wallet, deposit, refund, server, dan seluruh aktivitas sistem.
+
+==================================================
+ATURAN
+==================================================
+
+- Jangan mengubah UI user.
+- Jangan mengubah alur checkout.
+- Jangan mengubah Wallet.
+- Jangan mengubah Refund.
+- Jangan mengubah Deposit.
+- Jangan mengubah Digiflazz.
+- Jangan membuat dummy, mock, fake data, maupun hardcode.
+- Semua data berasal dari database dan service yang sudah ada.
+- Semua endpoint admin wajib menggunakan autentikasi dan otorisasi admin.
+- Dashboard hanya dapat diakses admin.
+
+==================================================
+DASHBOARD UTAMA
+==================================================
+
+Buat dashboard modern dengan ringkasan realtime.
+
+Tampilkan:
+
+- Total Order Hari Ini
+- Total Order Bulan Ini
+- Order Success
+- Order Processing
+- Order Pending
+- Order Failed
+- Total Deposit Hari Ini
+- Total Refund Hari Ini
+- Total Wallet Payment
+- Total Pendapatan
+- Total User
+- User Aktif
+- Provider Online
+- Provider Offline
+- Gateway Aktif
+- Recovery Queue
+- Notifikasi Penting
+
+Semua card update otomatis tanpa refresh.
+
+==================================================
+LIVE ORDER MONITOR
+==================================================
+
+Buat halaman monitoring order realtime.
+
+Kolom:
+
+- Invoice
+- User
+- Produk
+- Provider
+- Tujuan
+- Harga
+- Payment
+- Status
+- Waktu
+- Tombol Detail
+
+Filter:
+
+- Pending
+- Paid
+- Processing
+- Success
+- Failed
+- Refund
+- Recovery
+
+Search:
+
+- Invoice
+- Nomor Tujuan
+- Username
+
+Sorting:
+
+- Terbaru
+- Terlama
+
+==================================================
+DETAIL ORDER ADMIN
+==================================================
+
+Saat admin membuka detail order tampilkan:
+
+- Invoice
+- Order ID
+- Ref ID Provider
+- Buyer SKU Code
+- Produk
+- Provider
+- Nomor Tujuan
+- Harga
+- Payment
+- Deposit
+- Wallet
+- Refund
+- Callback
+- Timeline
+- Raw Response Provider
+- Audit Log
+- Retry History
+
+==================================================
+MONITOR PROVIDER
+==================================================
+
+Halaman Provider Monitor.
+
+Untuk setiap provider tampilkan:
+
+- Nama Provider
+- Status
+- Online/Offline
+- Latency
+- Last Sync
+- Saldo Provider
+- Total Order Hari Ini
+- Success Rate
+- Timeout Rate
+- Retry Rate
+- Last Callback
+
+Jika provider offline tampilkan alert realtime.
+
+==================================================
+PAYMENT GATEWAY
+==================================================
+
+Monitor:
+
+- Tripay
+- Midtrans
+- Xendit
+- Duitku
+- iPaymu
+- Gateway lain yang aktif
+
+Tampilkan:
+
+- Status
+- Callback terakhir
+- Pending Payment
+- Success
+- Failed
+- Timeout
+- Response Time
+- Health Status
+
+==================================================
+DEPOSIT MONITOR
+==================================================
+
+Halaman Deposit.
+
+Filter:
+
+- Pending
+- Success
+- Failed
+- Expired
+
+Tampilkan:
+
+- User
+- Invoice
+- Nominal
+- Gateway
+- Status
+- Callback
+- Ledger
+
+==================================================
+REFUND MONITOR
+==================================================
+
+Halaman Refund.
+
+Filter:
+
+- Pending
+- Approved
+- Success
+- Failed
+
+Tampilkan:
+
+- User
+- Order
+- Nominal
+- Status
+- Admin
+- Ledger
+- Timeline
+
+==================================================
+WALLET MONITOR
+==================================================
+
+Tampilkan:
+
+- Total Saldo User
+- Total Saldo Beredar
+- Top Up
+- Pengeluaran
+- Refund
+- Koreksi Saldo
+
+Cari berdasarkan user.
+
+==================================================
+RECOVERY QUEUE
+==================================================
+
+Buat halaman Recovery.
+
+Menampilkan:
+
+- Provider Timeout
+- Waiting Callback
+- Retry
+- Queue
+- Recovery Status
+- Last Retry
+- Retry Count
+
+==================================================
+SERVER MONITOR
+==================================================
+
+Tampilkan:
+
+- CPU
+- RAM
+- Storage
+- Node.js
+- MongoDB
+- Uptime
+- Response API
+- Ping Provider
+- Ping Gateway
+
+Refresh otomatis.
+
+==================================================
+AUDIT LOG
+==================================================
+
+Semua aktivitas admin wajib tercatat.
 
 Contoh:
 
-Home
-
->
-
-Film
-
->
-
-Action
-
-====================================================
-
-SEARCH
-
-Cari Folder.
-
-====================================================
-
-SORT
-
-Nama
-
-Tanggal
-
-Jumlah File
-
-====================================================
-
-STATUS
-
-Active
-
-Hidden
-
-Locked
-
-====================================================
-
-VISIBILITY
-
-Public
-
-Private
-
-Premium
-
-====================================================
-
-DETAIL DRAWER
-
-Nama
-
-Slug
-
-Parent Folder
-
-Jumlah File
-
-Jumlah Download
-
-Storage
-
-Owner
-
-Tanggal Dibuat
-
-====================================================
-
-ICON
-
-Gunakan Icon Library.
-
-Folder
-
-Video
-
-Music
-
-Photo
-
-Archive
-
-Application
-
-Document
-
-Game
-
-Movie
-
-====================================================
-
-COLOR
-
-Blue
-
-Green
-
-Purple
-
-Orange
-
-Red
-
-Gray
-
-====================================================
-
-EMPTY STATE
-
-Gunakan Design System.
-
-====================================================
-
-LOADING
-
-Skeleton.
-
-====================================================
-
-ANIMATION
-
-Framer Motion.
-
-Expand Animation
-
-Collapse Animation
-
-Fade
-
-Hover
-
-====================================================
-
-RESPONSIVE
-
-Desktop
-
-Tablet
-
-Mobile
-
-====================================================
-
-API
-
-Gunakan endpoint backend.
-
-Jika belum tersedia tambahkan endpoint berikut tanpa merusak endpoint lama:
-
-GET /api/folders
-
-GET /api/folders/tree
-
-GET /api/folders/:id
-
-POST /api/folders
-
-PUT /api/folders/:id
-
-DELETE /api/folders/:id
-
-POST /api/folders/:id/move
-
-POST /api/folders/:id/icon
-
-POST /api/folders/:id/color
-
-GET /api/folders/:id/files
-
-====================================================
-
-DATABASE RELATION
-
-Folder
-
-↓
-
-Many Files
-
-Folder
-
-↓
-
-Many Child Folder
-
-Parent Folder
-
-↓
-
-Many Sub Folder
-
-====================================================
-
-SECURITY
-
-Semua endpoint wajib menggunakan Admin Authentication.
-
-====================================================
-
-DESIGN
-
-Gunakan seluruh komponen Design System.
-
-Glass Card
-
-Rounded
-
-Light
-
-Dark
-
-====================================================
-
-CODING STYLE
-
-Reusable Components
-
-TypeScript Strict
-
-Repository Pattern
-
-SOLID
-
-Tidak menggunakan any
-
-====================================================
-
-PENTING
-
-Belum membuat:
-
-Category Management
-
-Audit Log
-
-Backup Manager
-
-Notification Center
-
-Premium System
-
-Production Ready
-
-====================================================
-
-OUTPUT
-
-1. Jelaskan struktur Folder Management.
-
-2. Jelaskan relasi database.
-
-3. Jelaskan endpoint yang digunakan.
-
-4. Pastikan Upload Manager dan Files Manager telah terintegrasi dengan Folder.
-
-5. Pastikan:
-
-npm install
-
-npx prisma generate
-
-npx prisma migrate dev
-
-npm run build
-
-npm run dev
-
-berjalan tanpa error.
-
-6. Jangan mengubah Upload Manager, Files Manager, Dashboard, Settings, Statistics, User Management, REST API, Bot Telegram maupun Storage Service.
-
-7. Berhenti setelah Folder Management selesai.
+- Login
+- Logout
+- Edit Produk
+- Koreksi Saldo
+- Refund
+- Deposit
+- Hapus Produk
+- Tambah Produk
+- Maintenance
+- Pengaturan
+
+Filter:
+
+- Admin
+- Jenis Aktivitas
+- Tanggal
+
+==================================================
+MAINTENANCE
+==================================================
+
+Admin dapat:
+
+- Aktifkan Maintenance
+- Nonaktifkan Maintenance
+- Atur Pesan Maintenance
+- Countdown Maintenance
+- Whitelist Admin/IP
+- Preview Halaman Maintenance
+
+==================================================
+BACKUP
+==================================================
+
+Menu Backup Database.
+
+Fitur:
+
+- Backup Manual
+- Restore
+- Riwayat Backup
+- Download Backup
+- Jadwal Backup Otomatis
+- Status Backup
+
+==================================================
+PENGATURAN WEBSITE
+==================================================
+
+Kelola:
+
+- Nama Website
+- Logo
+- Banner
+- Kontak
+- WhatsApp
+- Email
+- SEO
+- Jam Operasional
+- Maintenance
+- Provider Aktif
+- Gateway Aktif
+
+==================================================
+NOTIFIKASI ADMIN
+==================================================
+
+Realtime.
+
+Admin mendapat notifikasi:
+
+- Order Baru
+- Provider Offline
+- Payment Error
+- Callback Gagal
+- Refund Baru
+- Deposit Baru
+- Recovery
+- Login Mencurigakan
+- Server Error
+
+==================================================
+KEAMANAN
+==================================================
+
+Dashboard hanya bisa diakses admin.
+
+Semua endpoint:
+
+- Auth
+- Role Admin
+- Audit Log
+- CSRF Protection (jika digunakan)
+- Rate Limit
+- Validasi Input
+
+Tidak boleh ada IDOR.
+
+==================================================
+REALTIME
+==================================================
+
+Gunakan Notification/Event Bus yang sudah ada.
+
+Dashboard otomatis update ketika:
+
+- Order berubah
+- Deposit masuk
+- Refund dibuat
+- Wallet berubah
+- Provider berubah
+- Gateway berubah
+- Recovery berjalan
+
+Tanpa refresh halaman.
+
+==================================================
+UI
+==================================================
+
+Tambahkan:
+
+- Loading
+- Skeleton
+- Empty State
+- Error State
+- Retry
+- Responsive
+- Dark Mode mengikuti tema
+- Pagination
+- Search
+- Filter
+- Export CSV
+
+==================================================
+VALIDASI
+==================================================
+
+Pastikan:
+
+- npm run lint berhasil.
+- npm run build berhasil.
+- Tidak ada TypeScript error.
+- Tidak ada data dummy.
+- Tidak ada hardcode.
+- Semua data realtime berasal dari database.
+- Dashboard tidak mempengaruhi transaksi user.
+- Seluruh endpoint admin aman.
+- Tidak ada memory leak.
+- Tidak ada query lambat.
+- Tidak ada duplicate data.
+
+==================================================
+AUDIT
+==================================================
+
+Lakukan simulasi:
+
+- Order Baru
+- Payment Success
+- Payment Failed
+- Provider Timeout
+- Recovery
+- Refund
+- Deposit
+- Wallet Update
+- Server Restart
+- Gateway Offline
+- Provider Offline
+- Multi Admin Login
+- Spam Request
+- Reconnect Realtime
+
+==================================================
+LAPORAN AKHIR
+==================================================
+
+Setelah implementasi selesai tampilkan laporan lengkap:
+
+1. File yang ditambah atau diubah.
+2. Struktur Dashboard Admin.
+3. Endpoint baru.
+4. Integrasi dengan Digiflazz, Payment Gateway, Wallet, Refund, Deposit, Recovery, dan Notifikasi.
+5. Hasil lint dan build.
+6. Hasil audit keamanan.
+7. Hasil simulasi seluruh fitur.
+8. Risiko yang masih tersisa.
+9. Skor keamanan Dashboard Admin.
+10. Production Readiness.
+
+Jangan berhenti sebelum implementasi, pengujian, audit, validasi, dan laporan selesai.
 ```
