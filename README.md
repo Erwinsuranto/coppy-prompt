@@ -1,567 +1,332 @@
 ```
-# FINALISASI MODUL AUTHENTICATION DIGITAL CELL (100% PRODUCTION READY)
+# Telegram Drive - Tahap Final : Production Optimization
 
-Lanjutkan project Digital Cell.
+Semua fitur sebelumnya sudah selesai.
 
-Jangan membuat modul authentication baru.
-
-Jangan mengubah alur transaksi yang sudah stabil.
-
-Jangan merusak Checkout, Wallet, Deposit, Refund, Riwayat Transaksi, Dashboard Admin, Produk, Digiflazz Sync, Notifikasi, Recovery, maupun State Machine.
-
-Lakukan audit terlebih dahulu terhadap seluruh modul Authentication yang sudah dikerjakan.
+JANGAN mengubah UI maupun fitur yang sudah ada.
 
 ==================================================
 
 TARGET
 
-Menyelesaikan seluruh Authentication hingga benar-benar Production Ready.
-
-Target akhir:
-
-Authentication
-Profile
-Google Login
-Email OTP
-Session
-Avatar
-Admin User
-SMTP
-OAuth
-
-selesai 100%.
+Membuat Telegram Drive Production Ready.
 
 ==================================================
 
-AUDIT
+1. PERFORMANCE
 
-Periksa kembali seluruh modul.
+Optimasi seluruh API.
 
-Pastikan tidak ada:
+Response cache.
 
-hardcode
+Compression gzip/brotli.
 
-dummy
+Pagination optimization.
 
-mock
+Lazy loading.
 
-legacy auth
+Image optimization.
 
-placeholder
+Database query optimization.
 
-duplicate endpoint
-
-deprecated package
-
-password plaintext
-
-OTP plaintext
-
-token bocor
-
-session bocor
-
-endpoint tanpa auth
-
-admin endpoint tanpa role
-
-IDOR
-
-Broken Access Control
-
-Race Condition
+Index Prisma bila diperlukan.
 
 ==================================================
 
-EMAIL OTP
+2. SECURITY
 
-Pastikan flow:
+Helmet.
 
-Register
+Rate Limit.
 
-↓
+CORS whitelist.
 
-Generate OTP
+CSRF Protection bila diperlukan.
 
-↓
+XSS Protection.
 
-Hash OTP
+Sanitize input.
 
-↓
+SQL Injection protection.
 
-Simpan Expired Time
+Upload validation.
 
-↓
+JWT expiration.
 
-Kirim Email
+Refresh token support.
 
-↓
-
-Verifikasi
-
-↓
-
-Email Verified
-
-↓
-
-Login
-
-Resend OTP wajib memiliki:
-
-Cooldown
-
-Rate Limit
-
-Expired
-
-Attempt Limit
+Secret validation.
 
 ==================================================
 
-SMTP
+3. STORAGE
 
-Audit seluruh EmailService.
+Automatic cleanup temp file.
 
-Gunakan ENV.
+Failed upload cleanup.
 
-Jangan hardcode.
+Restore cleanup.
 
-Support:
+Expired token cleanup.
 
-SMTP Gmail
-
-SMTP Brevo
-
-SMTP Sendgrid
-
-SMTP Mailgun
-
-SMTP lainnya
-
-Email template:
-
-OTP
-
-Reset Password
-
-Login Baru
-
-Password Diganti
-
-Email Diganti
-
-Google Account Linked
+Expired download link cleanup.
 
 ==================================================
 
-GOOGLE LOGIN
+4. HEALTH CHECK
 
-Pastikan memakai OAuth terbaru.
+Endpoint
 
-Audit:
+GET /health
 
-Google Token
+GET /ready
 
-Audience
+GET /live
 
-Issuer
+Menampilkan:
 
-Expiration
+REST API
 
-Nonce
+Telegram Bot
 
-Email
+Database
 
-Email Verified
+Storage
 
-Picture
+Memory
 
-Sub
+CPU
 
-Google ID
+Version
 
-Jangan percaya data frontend.
-
-Backend wajib verifikasi token Google.
+Uptime
 
 ==================================================
 
-LINK ACCOUNT
+5. LOGGING
 
-Jika email sudah ada:
+Request log.
 
-Hubungkan Google.
+Error log.
 
-Jangan buat akun baru.
+Performance log.
 
-Jika user register Google dahulu:
+Slow query log.
 
-Lalu register Email.
+Startup log.
 
-Hubungkan akun.
-
-Satu email = satu user.
+Shutdown log.
 
 ==================================================
 
-PROFILE
+6. ENV VALIDATION
 
-Lengkapi.
+BOT_TOKEN
 
-User dapat:
+DATABASE_URL
 
-Edit Nama
+ADMIN_ID
 
-Edit Username
+CHANNEL_ID
 
-Edit Bio
+JWT_SECRET
 
-Edit Nomor HP
+PORT
 
-Edit Email
+APP_URL
 
-Upload Avatar
-
-Hapus Avatar
-
-Lihat Login History
-
-Lihat Device Aktif
-
-Logout Device
-
-Logout Semua Device
+Semua wajib divalidasi saat startup.
 
 ==================================================
 
-AVATAR
+7. DOCKER READY
 
-Resize otomatis.
+Dockerfile
 
-Compress otomatis.
+Docker Compose
 
-Generate Thumbnail.
+.env.example
 
-Rename Random.
-
-Storage aman.
-
-Delete avatar lama.
-
-Tidak boleh overwrite.
+README deployment
 
 ==================================================
 
-PASSWORD
+8. NGINX READY
 
-Hash bcrypt/argon.
+Reverse Proxy
 
-Password lama wajib dicek.
+HTTPS
 
-Password baru wajib policy.
+Websocket Support
 
-Logout seluruh device.
+Large Upload
 
-Tambah Password Changed At.
-
-==================================================
-
-LOGIN HISTORY
-
-Catat:
-
-Browser
-
-OS
-
-Device
-
-IP
-
-Login Provider
-
-Tanggal
-
-Jam
-
-Status
+Compression
 
 ==================================================
 
-SESSION
+9. PM2 READY
 
-Session Management:
+ecosystem.config.js
 
-Device Aktif
+Restart otomatis
 
-Refresh Token
+Memory limit
 
-Revoke Session
-
-Logout Device
-
-Logout Semua
-
-Session Expired
+Log rotate
 
 ==================================================
 
-SECURITY
+10. CLOUD READY
 
-Audit:
+VPS
 
-JWT
+Railway
 
-Refresh Token
+Render
 
-CSRF
+DigitalOcean
 
-CORS
+Oracle Cloud
 
-Helmet
+Hetzner
 
-Cookie
-
-Session Fixation
-
-Brute Force
-
-Rate Limit
-
-OTP Abuse
-
-Email Abuse
-
-Google Abuse
-
-Replay Attack
+Ubuntu Server
 
 ==================================================
 
-ADMIN
+11. CLOUDFLARE READY
 
-Selesaikan halaman Kelola User.
+Proxy
 
-Admin dapat:
+SSL
 
-Search
+Cache Header
 
-Filter
-
-Pagination
-
-Detail User
-
-Reset Password
-
-Verifikasi Email
-
-Verifikasi Nomor
-
-Aktif
-
-Nonaktif
-
-Suspend
-
-Unsuspend
-
-Ganti Role
-
-Lihat Login History
-
-Lihat Session
-
-Lihat Avatar
-
-Hapus Avatar
+Security Header
 
 ==================================================
 
-STATISTIK
+12. AUTO START
 
-Dashboard Authentication.
+Systemd Service
 
-Jumlah User
+PM2
 
-User Google
-
-User Email
-
-Email Belum Verifikasi
-
-Login Hari Ini
-
-Login Minggu Ini
-
-Login Bulan Ini
-
-Login Gagal
-
-OTP Terkirim
-
-OTP Gagal
-
-Top Device
-
-Top Browser
+Auto Restart
 
 ==================================================
 
-NOTIFICATION
+13. VERSION
 
-Kirim notifikasi ketika:
+Tambahkan halaman:
 
-Login Baru
+/admin/system
 
-Password Diganti
+Menampilkan:
 
-Email Diganti
+Version
 
-Nomor Diganti
+Build Time
 
-Avatar Diganti
+Node Version
 
-Google Connected
+Prisma Version
 
-Google Removed
+Telegram Bot Status
 
-==================================================
+REST API Status
 
-DATABASE
+Database Status
 
-Audit seluruh collection.
+Website Status
 
-Pastikan index.
+Storage Status
 
-Pastikan migration.
+Memory Usage
 
-Pastikan backward compatible.
+CPU Usage
 
-==================================================
-
-TEST
-
-Lakukan simulasi:
-
-Register
-
-OTP salah
-
-OTP expired
-
-Spam resend OTP
-
-Login Email
-
-Login Google
-
-Link Account
-
-Reset Password
-
-Upload Avatar
-
-Edit Profil
-
-Logout Device
-
-Logout Semua
-
-Admin Reset Password
-
-Admin Suspend User
-
-Admin Unsuspend User
-
-Admin Verify Email
-
-Admin Verify Phone
-
-Double Request
-
-Spam Login
-
-Replay Token
-
-Expired JWT
-
-Expired Refresh Token
+Disk Usage
 
 ==================================================
 
-VALIDASI
+14. FINAL AUDIT
 
-Jalankan:
+Audit seluruh project.
+
+Cari:
+
+Duplicate code
+
+Unused file
+
+Unused API
+
+Unused package
+
+Unused component
+
+Unused env
+
+Broken import
+
+Broken route
+
+Broken API
+
+Memory leak
+
+Security issue
+
+Performance bottleneck
+
+Berikan rekomendasi tetapi JANGAN menghapus kode yang masih dipakai.
+
+==================================================
+
+15. VERIFIKASI
+
+npm install
+
+npm audit
 
 npm run lint
 
 npm run build
 
-Pastikan:
+npm run dev
 
-Tidak ada TypeScript Error
+Backend berjalan.
 
-Tidak ada Runtime Error
+Frontend berjalan.
 
-Tidak ada Build Error
+Bot berjalan.
 
-==================================================
-
-PRODUCTION CHECKLIST
-
-Pastikan:
-
-SMTP tinggal isi ENV.
-
-Google OAuth tinggal isi Client ID.
-
-Google Secret tinggal isi ENV.
-
-Avatar Storage tinggal pilih Local/S3.
-
-Semua endpoint production siap.
-
-Semua migration selesai.
-
-Tidak ada dummy.
-
-Tidak ada mock.
-
-Tidak ada hardcode.
+Semua endpoint berjalan.
 
 ==================================================
 
-LAPORAN AKHIR
+OUTPUT
 
-Berikan laporan lengkap:
+Jelaskan:
 
-1. File yang diubah.
+1. File baru.
 
-2. Endpoint baru.
+2. File diubah.
 
-3. Endpoint yang diperbaiki.
+3. Optimasi.
 
-4. Collection yang berubah.
+4. Security.
 
-5. Migration yang dibuat.
+5. Performance.
 
-6. ENV baru.
+6. Production checklist.
 
-7. Audit keamanan.
+7. Deployment checklist.
 
-8. Hasil simulasi.
+8. Hasil audit.
 
-9. Risiko yang masih tersisa.
-
-10. Production Readiness (%).
-
-11. Skor keamanan Authentication.
-
-12. Checklist Go Live.
-
-13. Daftar pekerjaan yang benar-benar tersisa (jika ada), tanpa membuat fitur baru di luar ruang lingkup Authentication.
-
-Jangan berhenti sampai seluruh modul Authentication benar-benar selesai dan siap Production.
+Berhenti setelah tahap Production Optimization selesai.
 ```
+
