@@ -1,419 +1,513 @@
 ```
-# Telegram Drive Website - Tahap 17 : Settings Center (Central Configuration System)
-
-Tahap sebelumnya telah selesai.
-
-Project saat ini telah memiliki:
-
-✅ Telegram Bot
-✅ Upload Engine
-✅ Download Engine
-✅ Storage Service
-✅ REST API
-✅ Authentication
-✅ Website Foundation
-✅ Design System
-✅ Landing Page
-✅ Premium Download Page
-✅ Dashboard
-✅ Files Manager
-✅ Upload Manager
-
-JANGAN mengubah fitur yang sudah berjalan.
-
-JANGAN merusak REST API.
-
-JANGAN membuat duplicate logic.
-
-Semua pengaturan harus terpusat.
-
-====================================================
-
-TUJUAN
-
-Membangun Settings Center.
-
-Settings Center menjadi pusat seluruh konfigurasi Telegram Drive.
-
-Bot Telegram, Website, Dashboard, REST API dan Storage Service harus membaca konfigurasi dari database yang sama.
-
-Tidak boleh ada konfigurasi yang tersebar.
-
-====================================================
-
-ROUTE
-
-/admin/settings
-
-====================================================
-
-DATABASE
-
-Gunakan tabel Settings.
-
-Jika sudah ada gunakan tabel tersebut.
-
-Jika belum ada buat tabel baru.
-
-Gunakan key-value configuration.
-
-Contoh:
-
-site_name
-
-site_description
-
-site_logo
-
-site_favicon
-
-maintenance_mode
-
-force_join
-
-allow_upload
-
-allow_download
-
-max_upload_size
-
-theme
-
-telegram_channel
-
-api_base_url
-
-jwt_expire
-
-default_language
-
-====================================================
-
-LAYOUT
-
-Sidebar:
-
-General
-
-Website
-
-Telegram
-
-Upload
-
-Download
-
-Security
-
-Storage
-
-SEO
-
-Appearance
-
-System
-
-====================================================
-
-GENERAL
-
-Website Name
-
-Website Description
-
-Website Version
-
-Footer Text
-
-Save Button
-
-====================================================
-
-WEBSITE
-
-Upload Logo
-
-Upload Favicon
-
-Maintenance Mode
-
-Contact Email
-
-Website URL
-
-====================================================
-
-TELEGRAM
-
-Force Join ON/OFF
-
-Tambah Channel
-
-Hapus Channel
-
-Daftar Channel
-
-Aktif/Nonaktif Channel
-
-Bot Username
-
-====================================================
-
-UPLOAD
-
-Enable Upload
-
-Allow Multiple Upload
-
-Rename Before Upload
-
-Maximum Upload Size
-
-Generate Token Otomatis
-
-====================================================
-
-DOWNLOAD
-
-Enable Download
-
-Enable Copy Link
-
-Enable Share Button
-
-Default Link Status
-
-Expired Link (placeholder)
-
-====================================================
-
-SECURITY
-
-JWT Expire
-
-Session Timeout
-
-Max Login Attempt
-
-Password Policy
-
-API Key Placeholder
-
-====================================================
-
-STORAGE
-
-Total File
-
-Total Storage
-
-Used Storage
-
-Free Storage
-
-Telegram Storage Status
-
-====================================================
-
-SEO
-
-Meta Title
-
-Meta Description
-
-Meta Keywords
-
-Open Graph Image
-
-Twitter Card
-
-====================================================
-
-APPEARANCE
-
-Light
-
-Dark
-
-System
-
-Primary Color
-
-Accent Color
-
-====================================================
+# IMPLEMENTASI LENGKAP SISTEM NOTIFIKASI REAL-TIME DIGITAL CELL (PRODUCTION READY)
+
+Lanjutkan pengembangan project Digital Cell tanpa mengubah UI maupun fitur yang sudah selesai (Digiflazz, Checkout, Wallet Payment, Deposit Otomatis, Refund, Ledger, Recovery, Dashboard Keuangan, dll).
+
+Tujuan tahap ini adalah membangun sistem Notifikasi Real-Time yang benar-benar production-ready, aman, scalable, dan terintegrasi dengan seluruh aktivitas website.
+
+==================================================
+ATURAN UMUM
+==================================================
+
+- Jangan membuat ulang fitur yang sudah selesai.
+- Jangan merusak alur transaksi yang sudah ada.
+- Jangan menggunakan dummy, mock, fake data, ataupun hardcode.
+- Gunakan database sebagai sumber utama.
+- Gunakan arsitektur event-driven.
+- Semua perubahan harus lolos npm run lint dan npm run build.
+- Tidak boleh ada TypeScript Error.
+- Pertahankan seluruh UI yang sudah ada.
+
+==================================================
+EVENT YANG WAJIB MEMBUAT NOTIFIKASI
+==================================================
+
+ORDER
+
+- Order dibuat
+- Menunggu pembayaran
+- Pembayaran berhasil
+- Pembayaran gagal
+- Order diproses
+- Order dikirim ke provider
+- Provider timeout
+- Recovery berjalan
+- Order berhasil
+- Order gagal
+- Order dibatalkan
+- Order expired
+
+DEPOSIT
+
+- Deposit dibuat
+- Deposit pending
+- Deposit berhasil
+- Deposit gagal
+- Deposit expired
+
+WALLET
+
+- Saldo bertambah
+- Saldo berkurang
+- Refund masuk
+- Koreksi saldo admin
+
+REFUND
+
+- Refund dibuat
+- Refund diproses
+- Refund berhasil
+- Refund ditolak
+
+DIGIFLAZZ
+
+- Provider offline
+- Provider online kembali
+- Callback gagal
+- Callback berhasil
+- Recovery berhasil
 
 SYSTEM
 
-Node Version
+- Maintenance aktif
+- Maintenance selesai
+- Login baru
+- Password diubah
+- Aktivitas admin penting
 
-REST API Status
+==================================================
+DATABASE
+==================================================
 
-Telegram Bot Status
+Buat collection/table notifications apabila belum ada.
 
-Database Status
+Field minimum:
 
-Storage Service Status
+id
 
-====================================================
+userId
 
-BUTTON
+title
 
-Save
+message
 
-Reset
+type
 
-Cancel
+entityType
 
-====================================================
+entityId
 
-CONFIRMATION
+status
 
-Sebelum Reset
+icon
 
-Tampilkan dialog konfirmasi.
+color
 
-====================================================
+isRead
 
-AUTO SAVE
+metadata
 
-Optional.
+createdAt
 
-Jika belum memungkinkan gunakan Save Button.
+updatedAt
 
-====================================================
+Tambahkan index yang diperlukan agar query cepat.
 
-VALIDATION
+==================================================
+NOTIFICATION SERVICE
+==================================================
 
-Gunakan Zod.
+Buat service khusus NotificationService.
 
-====================================================
+Minimal memiliki fungsi:
 
-API
+createNotification()
 
-Gunakan REST API yang sudah ada.
+createAdminNotification()
 
-Jika endpoint belum tersedia tambahkan endpoint berikut tanpa merusak endpoint lama:
+broadcastUser()
 
-GET /api/settings
+broadcastAdmin()
 
-PUT /api/settings
+getNotifications()
 
-GET /api/settings/system
+countUnread()
 
-GET /api/settings/storage
+markAsRead()
 
-POST /api/settings/channel
+markAllRead()
 
-DELETE /api/settings/channel/:id
+deleteNotification()
 
-====================================================
+cleanupOldNotifications()
 
-BOT
+Seluruh project wajib menggunakan service ini.
 
-Bot Telegram harus membaca Force Join dan Channel dari database Settings.
+==================================================
+EVENT BUS
+==================================================
 
-Website juga membaca dari database yang sama.
+Jangan memanggil NotificationService langsung dari semua file.
 
-Tidak boleh ada dua konfigurasi berbeda.
+Gunakan Event Bus.
 
-====================================================
+Contoh event:
 
-RESPONSIVE
+OrderCreated
 
-Mobile
+PaymentSuccess
 
-Tablet
+PaymentFailed
 
-Desktop
+ProviderSuccess
 
-====================================================
+ProviderFailed
 
-ANIMATION
+RefundCreated
 
-Gunakan Framer Motion.
+RefundSuccess
 
-Fade
+DepositSuccess
 
-Slide
+WalletUpdated
 
-Card Animation
+MaintenanceStarted
 
-Toast Success
+MaintenanceFinished
 
-Loading Skeleton
+AdminLogin
 
-====================================================
+Semua event otomatis menghasilkan notification.
 
-DESIGN
+==================================================
+REALTIME
+==================================================
 
-Gunakan seluruh komponen dari Design System.
+Gunakan websocket/socket server yang sudah ada.
 
-Tidak membuat style baru jika sudah ada.
+Jika belum tersedia maka implementasikan.
 
-====================================================
+Saat status berubah:
 
-CODING STYLE
+Backend
 
-Clean Architecture
+↓
 
-Reusable Components
+Event
 
-TypeScript Strict
+↓
 
-SOLID
+NotificationService
 
-Repository Pattern
+↓
 
-Tidak menggunakan any
+Database
 
-====================================================
+↓
 
-PENTING
+Socket
 
-Belum membuat:
+↓
 
-Statistics
+Frontend
 
-User Management
+Tanpa refresh halaman.
 
-Premium
+==================================================
+USER NOTIFICATION
+==================================================
 
-Folder
+User hanya boleh melihat notifikasi miliknya.
 
-Category Management
+Contoh:
 
-Audit Log
+Pembayaran berhasil
 
-Backup Manager
+Order sedang diproses
 
-====================================================
+Produk berhasil dikirim
 
-OUTPUT
+Refund berhasil
 
-1. Jelaskan perubahan database.
+Deposit berhasil
 
-2. Jelaskan endpoint baru.
+Saldo bertambah
 
-3. Jelaskan struktur Settings Center.
+==================================================
+ADMIN NOTIFICATION
+==================================================
 
-4. Pastikan Bot Telegram dan Website menggunakan konfigurasi yang sama.
+Admin memiliki notification sendiri.
 
-5. Pastikan:
+Contoh:
 
-npm install
+Order baru
 
-npx prisma generate
+Deposit baru
 
-npx prisma migrate dev
+Refund baru
 
-npm run build
+Provider timeout
 
-npm run dev
+Gateway error
 
-berjalan tanpa error.
+Recovery berjalan
 
-6. Jangan mengubah fitur Upload, Download, Dashboard, Landing Page, Download Page, Files Manager, Authentication, maupun REST API yang sudah berjalan.
+Server error
 
-7. Berhenti setelah Settings Center selesai.
+User baru
+
+==================================================
+BELL NOTIFICATION
+==================================================
+
+Aktifkan icon lonceng.
+
+Badge otomatis berubah.
+
+Contoh
+
+1
+
+5
+
+10
+
+99+
+
+Saat dibuka
+
+badge langsung sinkron.
+
+==================================================
+DROPDOWN
+==================================================
+
+Klik icon lonceng.
+
+Tampilkan:
+
+Icon
+
+Judul
+
+Isi
+
+Waktu
+
+Status
+
+Belum dibaca diberi highlight.
+
+==================================================
+HALAMAN NOTIFIKASI
+==================================================
+
+Tambahkan halaman:
+
+/notifications
+
+Berisi:
+
+Semua
+
+Belum dibaca
+
+Order
+
+Deposit
+
+Refund
+
+Wallet
+
+System
+
+Search
+
+Filter
+
+Pagination
+
+Infinite Scroll
+
+Relative Time
+
+==================================================
+AKSI USER
+==================================================
+
+Klik notifikasi Order
+
+↓
+
+Buka Detail Order
+
+Klik Deposit
+
+↓
+
+Buka Detail Deposit
+
+Klik Refund
+
+↓
+
+Buka Detail Refund
+
+Klik Wallet
+
+↓
+
+Buka Riwayat Wallet
+
+==================================================
+KEAMANAN
+==================================================
+
+Semua endpoint wajib login.
+
+Validasi userId.
+
+Tidak boleh ada IDOR.
+
+Tidak boleh membaca notification milik user lain.
+
+Admin dan user dipisahkan.
+
+==================================================
+ENDPOINT
+==================================================
+
+GET
+
+/notifications
+
+/notifications/unread
+
+/notifications/count
+
+POST
+
+/notifications/read
+
+/notifications/read-all
+
+DELETE
+
+/notifications/{id}
+
+ADMIN
+
+/admin/notifications
+
+/admin/notifications/system
+
+/admin/notifications/provider
+
+==================================================
+UI
+==================================================
+
+Tambahkan:
+
+Loading
+
+Skeleton
+
+Empty State
+
+Retry
+
+Relative Time
+
+Pull Refresh Mobile
+
+Responsive
+
+Dark Mode mengikuti tema website.
+
+==================================================
+PERFORMA
+==================================================
+
+Notification tidak boleh duplicate.
+
+Socket tidak boleh reconnect berulang.
+
+Gunakan pagination.
+
+Query wajib memakai index.
+
+==================================================
+AUDIT
+==================================================
+
+Lakukan simulasi berikut:
+
+Spam klik checkout
+
+Double payment
+
+Double callback
+
+Provider timeout
+
+Recovery
+
+Refund
+
+Deposit
+
+Wallet Update
+
+Maintenance
+
+Restart Server
+
+Reconnect Socket
+
+Semua harus menghasilkan notification yang benar.
+
+==================================================
+VALIDASI AKHIR
+==================================================
+
+Pastikan:
+
+- npm run lint berhasil.
+- npm run build berhasil.
+- Tidak ada TypeScript error.
+- Tidak ada duplicate notification.
+- Badge selalu sinkron.
+- Socket realtime berjalan normal.
+- Notification tersimpan di database.
+- Admin dan user terpisah.
+- Tidak ada memory leak.
+- Tidak mengubah UI lama.
+- Tidak mengubah alur transaksi Digiflazz.
+- Tidak mengubah Checkout.
+- Tidak mengubah Wallet Payment.
+- Tidak mengubah Deposit Otomatis.
+- Tidak mengubah Refund.
+- Tidak mengubah Ledger.
+- Tidak mengubah Recovery.
+
+==================================================
+LAPORAN AKHIR
+==================================================
+
+Setelah implementasi selesai, tampilkan laporan lengkap berisi:
+
+1. Semua file yang ditambah atau diubah.
+2. Struktur database notifikasi.
+3. Diagram alur event hingga notifikasi tampil di frontend.
+4. Hasil pengujian seluruh skenario.
+5. Hasil lint dan build.
+6. Risiko yang masih tersisa.
+7. Skor keamanan fitur notifikasi.
+8. Penilaian production readiness.
+9. Rekomendasi tahap pengembangan berikutnya.
+
+Jangan berhenti sebelum seluruh implementasi, pengujian, audit, validasi, dan laporan selesai.
 ```
