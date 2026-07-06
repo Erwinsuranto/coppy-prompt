@@ -1,282 +1,317 @@
 ```
-# Telegram Drive Website - Tahap 14 : Admin Dashboard
+Tambahkan fitur Deposit Saldo Otomatis ke website Digital Cell.
 
-Authentication & Admin Foundation telah selesai.
+PENTING:
 
-Saat ini project memiliki:
+- Jangan mengubah UI yang sudah ada.
+- Jangan merusak sistem checkout produk.
+- Gunakan arsitektur transaksi yang sama dengan sistem order yang sudah di-hardening.
+- Semua transaksi deposit harus atomic, idempotent, dan production-ready.
 
-✅ Login
-✅ JWT
-✅ Admin Layout
-✅ REST API
-✅ Storage Service
-✅ Download Engine
-✅ Upload Engine
-✅ Design System
-✅ Landing Page
-✅ Download Page
-
-JANGAN mengubah backend yang sudah berjalan.
-
-Gunakan semua komponen Design System.
-
-====================================================
-
+==================================================
 TUJUAN
+==================================================
 
-Membuat Dashboard Admin modern.
+Member dapat melakukan deposit saldo melalui payment gateway.
 
-Dashboard menjadi pusat kontrol Telegram Drive.
+Setelah pembayaran berhasil:
 
-Belum membuat Upload Page.
+Saldo otomatis bertambah.
 
-Belum membuat Settings Page.
+Tidak perlu admin mengisi saldo secara manual.
 
-Belum membuat Statistics Detail.
+==================================================
+ALUR
+==================================================
 
-====================================================
+Member Login
 
-ROUTE
+↓
 
-/admin
+Menu Deposit Saldo
 
-====================================================
+↓
 
-SIDEBAR
+Input nominal
 
-Dashboard
+↓
 
-Files
+Pilih metode pembayaran
 
-Upload
+↓
 
-Channels
+Gateway membuat invoice
 
-Users
+↓
 
-Statistics
+User bayar
 
-Storage
+↓
 
-Settings
+Callback gateway
 
-API
+↓
 
-Logs
+Verifikasi signature
 
-Premium
+↓
 
-====================================================
+Verifikasi amount
 
-HEADER
+↓
 
-Search
+Verifikasi invoice
 
-Notification
+↓
 
-Theme Toggle
+Verifikasi status
 
-Profile
+↓
 
-Logout
+MongoDB Transaction
 
-====================================================
+↓
 
-HALAMAN DASHBOARD
+Saldo bertambah
 
-Gunakan layout modern.
+↓
 
-====================================================
+Riwayat deposit tersimpan
 
-STAT CARD
+↓
 
-Ambil data dari API.
+Notifikasi berhasil
 
-Tampilkan:
+==================================================
+DATABASE
+==================================================
 
-Total Files
+Buat collection:
 
-Total Downloads
+wallets
 
-Total Users
+- user_id
+- balance
+- created_at
+- updated_at
 
-Total Storage
+deposit_transactions
 
-====================================================
+- id
+- invoice_id
+- payment_gateway
+- payment_reference
+- payment_method
+- nominal
+- fee
+- total
+- status
+- callback_status
+- user_id
+- created_at
+- updated_at
+- paid_at
 
-QUICK ACTION
+wallet_ledger
 
-Upload File
+- id
+- wallet_id
+- user_id
+- deposit_id
+- type
+- amount
+- balance_before
+- balance_after
+- description
+- created_at
 
-Add Channel
+==================================================
+STATUS
+==================================================
 
-Generate Link
+created
 
-Force Join Settings
+waiting_payment
 
-====================================================
+paid
 
-RECENT FILES
+processing
 
-Tampilkan 10 file terbaru.
+success
 
-Nama
+failed
 
-Ukuran
+expired
 
-Tanggal
+cancelled
 
-Status
+==================================================
+ATOMIC TRANSACTION
+==================================================
 
-====================================================
+Saat callback berhasil
 
-RECENT DOWNLOAD
+Mongo Transaction:
 
-10 download terakhir.
+1 insert ledger
 
-====================================================
+2 update wallet balance
 
-SERVER STATUS
+3 update deposit status
 
-Telegram Bot
+4 commit
 
-REST API
+Jika gagal
 
-Database
+rollback semuanya.
 
-Storage
+==================================================
+IDEMPOTENT
+==================================================
 
-Force Join
+Callback dua kali
 
-Semua menggunakan indikator:
+Saldo tidak boleh bertambah dua kali.
 
-Hijau
+Gunakan:
 
-Merah
+invoice_id
 
-Kuning
+payment_reference
 
-====================================================
+callback_id
 
-SYSTEM INFO
+unique index
 
-Version
+==================================================
+VALIDASI CALLBACK
+==================================================
 
-Node Version
+Verifikasi:
 
-Database
+signature
 
-Telegram Bot
+merchant
 
-Storage
+invoice
 
-====================================================
+amount
 
-QUICK STATS
+payment_reference
 
-Download Hari Ini
+status
 
-Upload Hari Ini
+timestamp
 
-User Aktif
+==================================================
+ANTI MANIPULASI
+==================================================
 
-File Aktif
+Frontend hanya mengirim:
 
-====================================================
+nominal
 
-CHART
+payment_method
 
-Placeholder.
+Backend menghitung ulang.
 
-Gunakan komponen chart.
+Nominal tidak boleh berasal dari frontend saat callback.
 
-Belum perlu data real.
+==================================================
+LEDGER
+==================================================
 
-====================================================
+Semua perubahan saldo WAJIB masuk ledger.
 
-EMPTY STATE
+Tidak boleh ada update balance tanpa ledger.
 
-Gunakan komponen dari Design System.
+==================================================
+RIWAYAT
+==================================================
 
-====================================================
+User hanya dapat melihat deposit miliknya.
 
-RESPONSIVE
+Admin dapat melihat seluruh deposit.
 
-Mobile
+==================================================
+ADMIN
+==================================================
 
-Tablet
+Tambah menu:
 
-Desktop
+Deposit
 
-====================================================
+Berisi:
 
-ANIMATION
+Pending
 
-Gunakan Framer Motion.
+Berhasil
 
-Fade
+Expired
 
-Slide
+Gagal
 
-Hover
+Cari invoice
 
-Card Animation
+Cari user
 
-Counter Animation
+Filter gateway
 
-====================================================
+==================================================
+NOTIFIKASI
+==================================================
 
-THEME
+Saat deposit sukses
 
-Support:
+Kirim:
 
-Light
+Website
 
-Dark
+Telegram
 
-System
+WhatsApp (jika aktif)
 
-====================================================
+==================================================
+AUDIT
+==================================================
 
-API
+Simulasikan:
 
-Gunakan endpoint REST API.
+Double callback
 
-Jangan hardcode.
+Double payment
 
-====================================================
+Spam deposit
 
-PENTING
+Nominal dimanipulasi
 
-Belum membuat:
+Invoice expired
 
-Upload Page
+Gateway timeout
 
-Files Page
+Server restart
 
-Settings Page
+Mongo restart
 
-Users Page
+==================================================
+VALIDASI
+==================================================
 
-Statistics Detail
-
-Premium
-
-====================================================
-
-OUTPUT
-
-1. Jelaskan struktur Dashboard.
-
-2. Jelaskan API yang dipakai.
-
-3. Pastikan:
+npm run lint
 
 npm run build
 
-npm run dev
+==================================================
+LAPORAN
+==================================================
 
-berjalan tanpa error.
+Setelah selesai tampilkan:
 
-4. Berhenti setelah Dashboard selesai.
+- File yang diubah
+- Collection baru
+- Endpoint baru
+- UI baru
+- Risiko tersisa
+- Skor keamanan deposit
+- Kesiapan production
 ```
