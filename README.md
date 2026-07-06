@@ -1,350 +1,501 @@
 ```
-# IMPLEMENTASI LENGKAP MANAJEMEN PRODUK DIGITAL CELL (PRODUCTION READY)
+# Telegram Drive Website - Tahap 21 : Audit Log & Activity History (Enterprise Audit System)
 
-Lanjutkan project Digital Cell.
+Tahap Folder Management telah selesai.
 
-Jangan mengubah sistem Checkout, Wallet, Deposit, Refund, Ledger, Recovery, Dashboard Admin, Notifikasi, maupun Riwayat Transaksi yang sudah selesai.
+Project saat ini memiliki:
 
-Fokus tahap ini adalah membuat sistem Manajemen Produk Production Ready yang sepenuhnya sinkron dengan Digiflazz dan database.
+✅ Telegram Bot
+✅ Upload Engine
+✅ Download Engine
+✅ Storage Service
+✅ REST API
+✅ Authentication
+✅ Dashboard
+✅ Files Manager
+✅ Upload Manager
+✅ Settings Center
+✅ Statistics
+✅ User Management
+✅ Folder Management
 
-==================================================
+JANGAN mengubah fitur yang sudah berjalan.
 
-TARGET
+JANGAN merusak REST API.
 
-Semua produk yang tampil di website harus berasal dari database.
+Gunakan seluruh Design System.
 
-Database disinkronkan dari Digiflazz.
+====================================================
 
-Admin dapat mengelola produk tanpa mengubah source code.
+TUJUAN
 
-Tidak boleh ada data dummy.
+Membangun Audit Log profesional.
 
-==================================================
+Semua aktivitas penting harus tercatat otomatis.
 
-HALAMAN PRODUK ADMIN
+Audit Log hanya bisa dilihat oleh Owner dan Admin.
 
-Buat halaman Kelola Produk modern.
+Moderator hanya boleh melihat log yang diizinkan.
 
-Fitur:
+User tidak memiliki akses.
 
-- Search
-- Filter
-- Pagination
-- Sorting
-- Bulk Action
-- Refresh
-- Sinkronisasi Digiflazz
-- Import
-- Export CSV
+====================================================
 
-==================================================
+ROUTE
 
-FILTER
+/admin/audit
 
-Filter berdasarkan:
+====================================================
 
-- Provider
-- Kategori
-- Brand
-- Status
-- Digiflazz
-- Manual
-- Promo
-- Featured
-- Stock
-- Hidden
+DATABASE
 
-==================================================
+Jika belum ada buat tabel:
 
-CARD PRODUK
+AuditLog
 
-Setiap produk menampilkan:
+id
 
-Nama
+userId
 
-Brand
+username
 
-Kategori
+role
 
-Provider
+action
 
-Buyer SKU Code
+module
 
-Harga Modal
+description
 
-Markup
+targetType
 
-Harga Jual
+targetId
 
-Status
+metadata (JSON)
 
-Stock
+ipAddress
 
-Terjual
+userAgent
 
-Terakhir Update
+status
 
-==================================================
+createdAt
 
-EDIT PRODUK
+====================================================
 
-Admin dapat mengubah:
+CATAT OTOMATIS
 
-Nama
+Login
 
-Deskripsi
+Logout
 
-Kategori
+Upload File
 
-Brand
+Delete File
 
-Ikon
+Rename File
 
-Banner
+Move File
 
-Markup
+Copy Link
 
-Harga Manual
+Generate Link
 
-Urutan
+Disable Link
 
-Featured
+Enable Link
 
-Promo
+Download Link Generate
 
-Hidden
+Tambah Folder
 
-Status
+Rename Folder
 
-SEO
+Delete Folder
 
-==================================================
+Move Folder
 
-YANG TIDAK BOLEH DIUBAH
+Tambah User
 
-Buyer SKU Code
+Edit User
 
-Provider
+Delete User
 
-Product ID
+Suspend User
 
-Ref Digiflazz
+Promote Admin
 
-Supplier
+Demote Admin
 
-Karena berasal dari Digiflazz.
+Role Change
 
-==================================================
+Update Settings
 
-SINKRONISASI DIGIFLAZZ
+Force Join ON
 
-Tambahkan tombol
+Force Join OFF
 
-Sinkronisasi Produk
+Tambah Channel
 
-Ketika ditekan:
+Hapus Channel
 
-Ambil Pricelist terbaru.
+Login Gagal
 
-Update produk lama.
+Token Expired
 
-Tambah produk baru.
+Backup
 
-Nonaktifkan produk yang sudah tidak ada.
+Restore
 
-Jangan menghapus histori transaksi.
+====================================================
 
-==================================================
+STATUS
 
-VALIDASI
+Success
 
-Buyer SKU Code wajib unik.
+Failed
 
-Tidak boleh duplicate.
+Warning
 
-Tidak boleh kehilangan relasi order lama.
+====================================================
 
-==================================================
+MODULE
 
-MARKUP
+Authentication
 
-Harga jual dihitung otomatis:
+Upload
 
-Modal + Markup
+Download
 
-Markup dapat:
+Files
 
-Global
+Folders
 
-Per Brand
+Users
 
-Per Provider
+Settings
 
-Per Produk
+Statistics
 
-Preview harga sebelum disimpan.
+Storage
 
-==================================================
+Telegram
 
-PROMO
+System
 
-Admin dapat:
+====================================================
 
-Aktifkan Promo
+TABLE
 
-Diskon %
-
-Harga Coret
-
-Tanggal Mulai
-
-Tanggal Berakhir
-
-Auto selesai saat expired.
-
-==================================================
-
-FEATURED
-
-Admin dapat memilih produk Featured.
-
-Featured tampil di Homepage.
-
-==================================================
-
-HIDDEN
-
-Produk Hidden:
-
-Tidak tampil di website.
-
-Tetapi histori order tetap ada.
-
-==================================================
-
-IMPORT EXPORT
-
-Support:
-
-CSV
-
-Excel
-
-Export:
-
-Semua Produk
-
-Kategori
-
-Brand
-
-Harga
-
-Markup
-
-==================================================
-
-RIWAYAT PERUBAHAN
-
-Semua perubahan produk masuk Audit Log.
-
-Catat:
-
-Admin
-
-Field yang diubah
-
-Nilai lama
-
-Nilai baru
+Kolom:
 
 Tanggal
 
-==================================================
+User
 
-REALTIME
+Role
 
-Jika admin mengubah produk:
+Module
 
-Website otomatis update.
+Action
 
-Search update.
+Status
 
-Kategori update.
+IP Address
 
-Homepage update.
+====================================================
 
-Tanpa refresh.
+DETAIL DRAWER
 
-==================================================
-
-VALIDASI
-
-Pastikan:
-
-npm run lint berhasil.
-
-npm run build berhasil.
-
-Tidak ada TypeScript Error.
-
-Tidak ada hardcode.
-
-Tidak ada data dummy.
-
-Semua data berasal dari database.
-
-==================================================
-
-AUDIT
-
-Lakukan simulasi:
-
-Sinkronisasi Digiflazz.
-
-Tambah produk baru.
-
-Produk hilang dari Digiflazz.
-
-Update harga.
-
-Update markup.
-
-Produk promo.
-
-Produk featured.
-
-Produk hidden.
-
-Import.
-
-Export.
-
-Realtime update.
-
-==================================================
-
-LAPORAN AKHIR
+Klik log.
 
 Tampilkan:
 
-1. File yang diubah.
+ID
 
-2. Endpoint baru.
+Tanggal
 
-3. Struktur database.
+Username
 
-4. Sinkronisasi Digiflazz.
+Telegram ID
 
-5. Audit keamanan.
+Role
 
-6. Hasil simulasi.
+Module
 
-7. Risiko yang tersisa.
+Action
 
-8. Production Readiness.
+Description
 
-9. Skor keamanan modul Produk.
+Target
 
-10. Pastikan seluruh transaksi lama tetap berjalan tanpa perubahan.
+Metadata JSON
+
+IP Address
+
+User Agent
+
+Status
+
+====================================================
+
+SEARCH
+
+Realtime
+
+Cari berdasarkan:
+
+Nama
+
+Username
+
+Action
+
+Module
+
+====================================================
+
+FILTER
+
+Tanggal
+
+Role
+
+Module
+
+Status
+
+====================================================
+
+SORT
+
+Tanggal
+
+User
+
+Module
+
+Action
+
+====================================================
+
+EXPORT
+
+CSV
+
+JSON
+
+====================================================
+
+RETENTION
+
+Tambahkan pengaturan:
+
+Simpan log:
+
+30 Hari
+
+90 Hari
+
+180 Hari
+
+365 Hari
+
+Unlimited
+
+====================================================
+
+AUTO CLEANUP
+
+Jika retention aktif.
+
+Hapus log lama otomatis.
+
+====================================================
+
+SECURITY
+
+Owner melihat semua.
+
+Admin melihat semua.
+
+Moderator hanya membaca.
+
+User tidak boleh akses.
+
+Audit Log tidak boleh diedit.
+
+Audit Log tidak boleh dihapus manual kecuali oleh Owner.
+
+====================================================
+
+NOTIFICATION
+
+Jika terjadi:
+
+Login gagal berulang
+
+Percobaan akses admin tanpa izin
+
+Delete massal
+
+Restore database
+
+Promote Admin
+
+Tandai sebagai Security Event.
+
+====================================================
+
+API
+
+Gunakan endpoint berikut.
+
+Jika belum tersedia tambahkan tanpa merusak endpoint lama:
+
+GET /api/audit
+
+GET /api/audit/:id
+
+GET /api/audit/export
+
+GET /api/audit/statistics
+
+POST /api/audit/cleanup
+
+====================================================
+
+STATISTICS
+
+Total Log
+
+Hari Ini
+
+Minggu Ini
+
+Bulan Ini
+
+Top Action
+
+Top User
+
+Security Event
+
+====================================================
+
+UI
+
+Gunakan Design System.
+
+Glass Card
+
+Rounded
+
+Dark Mode
+
+Light Mode
+
+====================================================
+
+LOADING
+
+Skeleton
+
+====================================================
+
+EMPTY STATE
+
+Gunakan Empty State.
+
+====================================================
+
+ANIMATION
+
+Framer Motion
+
+Fade
+
+Slide
+
+Drawer Animation
+
+====================================================
+
+RESPONSIVE
+
+Desktop
+
+Tablet
+
+Mobile
+
+====================================================
+
+CODING STYLE
+
+TypeScript Strict
+
+Repository Pattern
+
+SOLID
+
+Reusable Components
+
+Tidak menggunakan any
+
+====================================================
+
+PENTING
+
+Audit Log harus otomatis dipanggil dari seluruh module yang sudah ada:
+
+Authentication
+
+Upload
+
+Download
+
+Files
+
+Folders
+
+Users
+
+Settings
+
+Telegram
+
+Storage
+
+Tidak boleh perlu memanggil manual setiap kali membuka halaman.
+
+====================================================
+
+OUTPUT
+
+1. Jelaskan struktur Audit Log.
+
+2. Jelaskan perubahan database.
+
+3. Jelaskan endpoint baru.
+
+4. Jelaskan integrasi dengan module yang sudah ada.
+
+5. Pastikan:
+
+npm install
+
+npx prisma generate
+
+npx prisma migrate dev
+
+npm run build
+
+npm run dev
+
+berjalan tanpa error.
+
+6. Jangan mengubah Upload Manager, Files Manager, Folder Management, Dashboard, Settings, Statistics, User Management, REST API, Bot Telegram maupun Storage Service.
+
+7. Berhenti setelah Audit Log selesai.
 ```
