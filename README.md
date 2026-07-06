@@ -1,154 +1,269 @@
-```
-# Telegram Drive Website - Tahap 11 : Landing Page (Homepage)
+```TUGAS: SELESAIKAN PONDASI TRANSAKSI PRODUCTION DIGITAL CELL
 
-Tahap 10 (Design System) telah selesai.
+JANGAN mengubah UI.
+JANGAN mengubah layout.
+JANGAN mengubah desain.
+JANGAN mengubah alur pembelian yang sudah berjalan.
 
-Gunakan seluruh komponen dari Design System.
+Fokus hanya menyelesaikan seluruh pekerjaan yang masih tersisa agar sistem siap production.
 
-Jangan membuat komponen baru jika sudah tersedia.
+==================================================
+TARGET
+==================================================
 
-====================================================
+Saya ingin seluruh alur transaksi benar-benar production ready.
 
-TUJUAN
+Setelah tahap ini selesai, website harus siap diuji dengan transaksi uang asli dalam lingkungan production.
 
-Membuat Homepage Telegram Drive yang modern, profesional, cepat, responsif, dan siap diintegrasikan dengan REST API yang sudah dibuat.
+==================================================
+PEKERJAAN YANG HARUS DISELESAIKAN
+==================================================
 
-Homepage harus menjadi identitas produk, bukan sekadar halaman daftar file.
+1. PAYMENT GATEWAY PRODUCTION
 
-====================================================
+Audit seluruh sistem pembayaran.
 
-Gunakan:
+Pastikan:
 
-Next.js App Router
+- tidak ada sandbox
+- tidak ada placeholder
+- tidak ada demo key
+- tidak ada fake callback
+- tidak ada payment dummy
+- seluruh payment gateway menggunakan credential production
 
-Tailwind CSS
+Verifikasi:
 
-shadcn/ui
+- callback
+- signature
+- timestamp
+- merchant
+- amount
+- reference
+- order id
 
-Framer Motion
+==================================================
 
-TanStack Query
+2. CALLBACK
 
-Axios Client yang sudah ada
+Periksa seluruh callback.
 
-Lucide Icons
+Pastikan callback:
 
-====================================================
+- idempotent
+- tidak bisa diproses dua kali
+- tidak bisa mengubah status terminal
+- tidak bisa menerima callback palsu
+- mencatat audit log
 
-Layout Homepage
+==================================================
 
-1. Hero Section
-- Logo
-- Nama Telegram Drive
-- Subtitle singkat
-- Search Box besar di tengah
-- Tombol Search
-- Statistik (Files, Users, Downloads)
-- Background gradient modern
-- Floating cards dengan animasi
+3. RETRY
 
-2. Recent Files
-- Ambil data dari REST API
-- Tampilkan maksimal 12 file terbaru
-- Card berisi thumbnail/icon file, nama, ukuran, jenis, tanggal upload
+Jika provider timeout:
 
-3. Popular Files
-- Ambil data berdasarkan download terbanyak
-- Grid responsif
+- jangan langsung gagal
+- cek status provider
+- retry sesuai aturan
+- update status dengan aman
 
-4. Categories
-- PDF
-- Video
-- Audio
-- ZIP
-- APK
-- Image
-- Document
-- Masing-masing berupa card dengan ikon
+==================================================
 
-5. Feature Section
-- Telegram Cloud Storage
-- Download Cepat
-- Aman
-- Mobile Friendly
-- Dark Mode
-- Multi Platform
+4. REFUND SYSTEM
 
-6. FAQ
-- Accordion
-- Pertanyaan umum tentang Telegram Drive
+Bangun sistem refund production.
 
-7. Footer
-- Copyright
-- Version
-- Telegram
-- GitHub
-- Privacy Policy
-- Terms of Service
+Refund hanya boleh jika:
 
-====================================================
+payment berhasil
 
-ANIMASI
+provider gagal permanen
 
-Gunakan Framer Motion.
+belum pernah refund
 
-- Hero Fade In
-- Floating Cards
-- Counter Animation
-- Scroll Reveal
-- Hover Animation
-- Search Glow
-- Smooth Transition
+tidak ada callback sukses
 
-====================================================
+Refund harus:
 
-RESPONSIVE
+atomic
 
-Mobile First
+idempotent
 
-Tablet
+memiliki audit log
 
-Desktop
+memiliki approval admin jika diperlukan
 
-====================================================
+tidak boleh refund dua kali
 
-API
+==================================================
 
-Gunakan endpoint REST API yang sudah ada.
+5. ADMIN REFUND
 
-Jangan hardcode data.
+Tambahkan backend:
 
-Gunakan TanStack Query.
+refund request
 
-Loading gunakan Skeleton.
+refund approval
 
-====================================================
+refund reject
 
-PENTING
+refund history
 
-Belum membuat:
+refund audit
 
-Download Page
+Tidak perlu mengubah UI.
 
-Dashboard
+==================================================
 
-Upload
+6. AUDIT LOG
 
-Login
+Semua aktivitas harus dicatat.
 
-Premium
+create order
 
-Settings
+payment
 
-Admin
+callback
 
-====================================================
+provider request
 
-OUTPUT
+provider response
 
-1. Jelaskan struktur halaman.
-2. Jelaskan API yang dipakai.
-3. Pastikan npm run build berhasil.
-4. Pastikan npm run dev berhasil.
-5. Berhenti setelah Homepage selesai.
+refund
+
+retry
+
+timeout
+
+admin action
+
+login
+
+==================================================
+
+7. RECOVERY
+
+Jika server mati:
+
+order processing harus lanjut
+
+payment pending harus dicek
+
+callback terlambat tetap diproses
+
+provider timeout harus dicek ulang
+
+==================================================
+
+8. MONGODB
+
+Pastikan:
+
+seluruh transaksi memakai MongoDB
+
+tidak ada transaksi production memakai local_db.json
+
+local_db.json hanya untuk development
+
+==================================================
+
+9. VALIDASI
+
+Backend tidak boleh percaya frontend.
+
+Harga
+
+Provider
+
+Status
+
+Nama produk
+
+Kategori
+
+Subtotal
+
+Total
+
+Semua wajib diambil ulang dari database.
+
+==================================================
+
+10. TEST
+
+Setelah selesai lakukan simulasi:
+
+spam klik beli
+
+double callback
+
+callback terlambat
+
+provider timeout
+
+payment timeout
+
+server restart
+
+provider gagal
+
+refund
+
+double refund
+
+network error
+
+==================================================
+
+11. BUILD
+
+Jalankan:
+
+npm run lint
+
+npm run build
+
+Perbaiki seluruh error.
+
+==================================================
+
+12. AUDIT AKHIR
+
+Setelah semuanya selesai,
+
+buat laporan lengkap:
+
+✔ tingkat keamanan
+
+✔ status refund
+
+✔ status payment
+
+✔ status callback
+
+✔ status MongoDB
+
+✔ status recovery
+
+✔ status retry
+
+✔ status provider
+
+✔ status Digiflazz
+
+✔ status transaksi
+
+✔ status production
+
+Berikan skor keamanan 0-100.
+
+Jika masih ada risiko sekecil apa pun, jelaskan secara rinci.
+
+Jangan membuat fitur baru.
+
+Jangan mengubah UI.
+
+Jangan mengubah desain.
+
+Fokus hanya menyelesaikan pondasi transaksi hingga benar-benar siap production.
 ```
