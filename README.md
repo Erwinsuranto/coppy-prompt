@@ -1,27 +1,170 @@
 ```
+Lakukan implementasi lengkap sistem autentikasi Admin Telegram Drive. Jangan berhenti sampai login benar-benar berfungsi.
 
-Login admin masih gagal dengan "Network Error".
+TARGET AKHIR
+- Saya bisa membuka /login.
+- Login menggunakan akun admin default.
+- Setelah login langsung masuk ke /admin/dashboard.
+- Refresh halaman tidak membuat logout.
+- Logout berfungsi.
+- Semua route admin terlindungi.
 
-Jangan hanya memperbaiki UI. Tolong debug sampai selesai.
+====================================================
+1. DATABASE
+====================================================
 
-Lakukan langkah berikut:
+Buat tabel/collection Admin jika belum ada.
 
-1. Jalankan frontend dan backend.
-2. Tekan tombol Login dan lihat log terminal.
-3. Cari request login yang gagal.
-4. Pastikan endpoint login benar-benar ada.
-5. Jika endpoint belum dibuat, buat endpoint login.
-6. Jika backend tidak berjalan, jalankan dan perbaiki.
-7. Jika URL API salah, perbaiki.
-8. Jika CORS bermasalah, perbaiki.
-9. Jika database admin belum ada, buat seed admin.
-10. Pastikan akun berikut benar-benar bisa login:
-    Username: admin
-    Password: admin123
-11. Setelah berhasil login, otomatis masuk ke /admin/dashboard.
-12. Jalankan pengujian dan buktikan login berhasil.
+Field:
 
-Jangan berhenti sampai login benar-benar berfungsi.
+id
+username (unique)
+email (unique)
+passwordHash
+role
+isActive
+createdAt
+updatedAt
+
+Role:
+SUPER_ADMIN
+ADMIN
+
+====================================================
+2. SEED ADMIN
+====================================================
+
+Jika database kosong, otomatis buat akun:
+
+Username:
+admin
+
+Email:
+admin@example.com
+
+Password:
+admin123
+
+Password wajib di-hash menggunakan bcrypt.
+
+Jangan simpan password plaintext.
+
+====================================================
+3. LOGIN API
+====================================================
+
+Buat endpoint login.
+
+Validasi:
+
+- username atau email
+- password
+
+Jika salah:
+401
+
+Jika benar:
+buat session menggunakan HttpOnly Cookie (atau JWT HttpOnly).
+
+====================================================
+4. SESSION
+====================================================
+
+Session bertahan setelah refresh.
+
+Middleware membaca session.
+
+Jika belum login:
+
+redirect ke
+
+/login
+
+====================================================
+5. PROTECTED ROUTES
+====================================================
+
+Lindungi:
+
+/admin
+
+/admin/*
+
+Tanpa login tidak boleh diakses.
+
+====================================================
+6. LOGOUT
+====================================================
+
+Hapus cookie/session.
+
+Redirect ke /login.
+
+====================================================
+7. FRONTEND LOGIN
+====================================================
+
+Perbaiki halaman login.
+
+Hilangkan "Network Error".
+
+Pastikan request menuju endpoint login yang benar.
+
+Jika backend memakai port berbeda,
+sesuaikan BASE_URL/API_URL.
+
+====================================================
+8. ENV
+====================================================
+
+Buat .env jika belum ada.
+
+Tambahkan seluruh variabel yang diperlukan.
+
+====================================================
+9. ERROR HANDLING
+====================================================
+
+Tampilkan pesan:
+
+Username atau Password salah
+
+Server tidak tersedia
+
+Session habis
+
+====================================================
+10. TEST
+====================================================
+
+Jalankan seluruh project.
+
+Lakukan login menggunakan:
+
+Username:
+admin
+
+Password:
+admin123
+
+Pastikan berhasil masuk dashboard.
+
+====================================================
+11. HASIL AKHIR
+====================================================
+
+Setelah selesai tampilkan:
+
+- file yang diubah
+- endpoint login
+- struktur session
+- akun admin default
+- cara menjalankan backend
+- cara menjalankan frontend
+- cara login
+
+Jangan berhenti sampai login benar-benar berhasil dan tidak ada lagi "Network Error".
+
 
 
 ```
