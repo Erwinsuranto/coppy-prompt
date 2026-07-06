@@ -1,168 +1,185 @@
 ```
-Lanjutkan pengembangan website Digital Cell.
+Lanjutkan pengembangan Digital Cell.
 
-PENTING:
-- Jangan mengubah UI pelanggan yang sudah ada.
-- Jangan mengubah alur checkout.
-- Jangan mengubah sistem transaksi yang sudah stabil.
-- Fokus hanya membuat Dashboard Keuangan (Wallet & Deposit Center) untuk Admin.
+Jangan mengubah UI yang sudah ada.
+
+Jangan mengubah sistem checkout.
+
+Tambahkan fitur pembayaran menggunakan Saldo Member (Wallet Payment).
 
 ==================================================
+
 TUJUAN
-==================================================
-
-Buat Dashboard Keuangan yang menjadi pusat kontrol seluruh saldo member dan transaksi deposit.
-
-Dashboard harus real-time dan mengambil data dari MongoDB, bukan data dummy.
 
 ==================================================
-MENU BARU
-==================================================
 
-Tambah menu Admin:
+Member dapat membeli seluruh produk menggunakan saldo wallet.
 
-💰 Keuangan
+Jika saldo cukup:
 
-Sub menu:
+Tidak perlu membuka payment gateway.
 
-1. Dashboard Keuangan
-2. Wallet Member
-3. Deposit
-4. Ledger
-5. Koreksi Saldo
-6. Statistik
-7. Audit Log
+Order langsung diproses.
 
 ==================================================
-DASHBOARD KEUANGAN
-==================================================
 
-Tampilkan card:
-
-• Total Saldo Member
-• Total Deposit Hari Ini
-• Total Deposit Bulan Ini
-• Deposit Pending
-• Deposit Berhasil
-• Deposit Gagal
-• Total Refund
-• Total Transaksi Produk
-• Total Pendapatan Hari Ini
-• Total Pendapatan Bulan Ini
-
-Semua data realtime dari database.
+ALUR
 
 ==================================================
-WALLET MEMBER
+
+Member Login
+
+↓
+
+Pilih Produk
+
+↓
+
+Checkout
+
+↓
+
+Metode Pembayaran
+
+↓
+
+Saldo Member
+
+↓
+
+Validasi saldo
+
+↓
+
+MongoDB Transaction
+
+↓
+
+Potong saldo
+
+↓
+
+Buat Ledger
+
+↓
+
+Create Order
+
+↓
+
+Kirim ke Digiflazz
+
+↓
+
+Success / Failed
+
 ==================================================
 
-Tampilkan tabel:
-
-Nama User
-
-Email
-
-Nomor HP
-
-Saldo
-
-Total Deposit
-
-Total Belanja
-
-Tanggal Daftar
-
-Status
-
-Pencarian cepat.
-
-Sorting.
-
-Pagination.
+VALIDASI
 
 ==================================================
-DETAIL WALLET
-==================================================
 
-Klik user.
+Jika saldo kurang
 
-Tampilkan:
+tolak transaksi.
 
-Saldo sekarang
+Jika saldo cukup
 
-Riwayat Deposit
-
-Riwayat Pembelian
-
-Riwayat Refund
-
-Riwayat Penyesuaian Saldo
-
-Ledger lengkap
+lanjut.
 
 ==================================================
+
+ATOMIC
+
+==================================================
+
+Gunakan Mongo Transaction.
+
+Urutan:
+
+1 Lock Wallet
+
+2 Potong saldo
+
+3 Ledger
+
+4 Create Order
+
+5 Commit
+
+Jika Digiflazz gagal permanen
+
+Refund saldo otomatis.
+
+Jika timeout
+
+Saldo jangan langsung dikembalikan.
+
+Status processing.
+
+==================================================
+
 LEDGER
+
 ==================================================
 
-Semua perubahan saldo harus tampil.
+Catat:
 
-Kolom:
-
-Tanggal
+Order ID
 
 User
 
-Jenis
+Saldo sebelum
+
+Saldo sesudah
 
 Nominal
 
-Saldo Sebelum
-
-Saldo Sesudah
-
-Referensi
-
-Admin
-
-Status
-
-Filter:
+Jenis
 
 Tanggal
 
-User
-
-Jenis
-
-Nominal
-
-==================================================
-KOREKSI SALDO
 ==================================================
 
-Admin dapat:
-
-Tambah saldo
-
-Kurangi saldo
-
-Wajib:
-
-Alasan
-
-Catatan
-
-Password admin
-
-Semua koreksi masuk ledger.
-
-Tidak boleh ada update saldo langsung.
+REFUND
 
 ==================================================
-DEPOSIT
+
+Jika provider gagal permanen
+
+Tambah saldo kembali.
+
+Ledger Refund.
+
+Notifikasi user.
+
 ==================================================
 
-Halaman Deposit Admin.
+SECURITY
+
+==================================================
+
+Double klik checkout
+
+Tidak boleh memotong saldo dua kali.
+
+Gunakan:
+
+client_request_id
+
+idempotency
+
+unique index
+
+==================================================
+
+ADMIN
+
+==================================================
+
+Tambah menu:
+
+Riwayat Wallet Payment
 
 Filter:
 
@@ -172,178 +189,84 @@ Processing
 
 Success
 
+Refund
+
 Failed
 
-Expired
-
-Cancelled
-
-Cari:
-
-Invoice
-
-User
-
-Gateway
-
-Reference
-
-==================================================
-DETAIL DEPOSIT
 ==================================================
 
-Klik deposit.
-
-Tampilkan:
-
-Invoice
-
-Gateway
-
-Reference
-
-Nominal
-
-Fee
-
-Total
-
-Status
-
-Callback
-
-Recovery
-
-Timeline
-
-Raw Callback
-
-Raw Response
+USER
 
 ==================================================
-STATISTIK
-==================================================
 
-Grafik:
+Tambah:
 
-Deposit harian
+Riwayat pembayaran saldo.
 
-Deposit bulanan
-
-Top member deposit
-
-Top member belanja
-
-Pendapatan
-
-Refund
-
-Wallet Growth
+Riwayat refund.
 
 ==================================================
-AUDIT LOG
-==================================================
 
-Catat:
-
-Login admin
-
-Koreksi saldo
-
-Refund
-
-Perubahan gateway
-
-Perubahan status
-
-Semua immutable.
-
-==================================================
-EXPORT
-==================================================
-
-Tambah Export:
-
-CSV
-
-Excel
-
-PDF
-
-Untuk:
-
-Wallet
-
-Deposit
-
-Ledger
-
-Statistik
-
-==================================================
 NOTIFIKASI
+
 ==================================================
 
-Jika:
-
-Deposit sukses
+Potong saldo
 
 Refund
 
-Koreksi saldo
+Order berhasil
 
-Kirim notifikasi:
-
-Website
-
-Telegram Admin
-
-WhatsApp Admin (jika aktif)
+Order gagal
 
 ==================================================
-SECURITY
-==================================================
 
-Pastikan:
-
-Hanya Admin dapat membuka Dashboard Keuangan.
-
-User tidak dapat mengakses endpoint admin.
-
-Gunakan role-based permission.
+SIMULASI
 
 ==================================================
-PERFORMANCE
+
+Saldo kurang
+
+Saldo pas
+
+Double klik
+
+Server restart
+
+Mongo restart
+
+Digiflazz timeout
+
+Digiflazz success
+
+Digiflazz failed
+
+Refund
+
 ==================================================
 
-Gunakan pagination.
-
-Gunakan index MongoDB.
-
-Jangan query seluruh collection.
-
-==================================================
 VALIDASI
-==================================================
 
-Jalankan:
+==================================================
 
 npm run lint
 
 npm run build
 
 ==================================================
+
 LAPORAN
+
 ==================================================
 
-Setelah selesai tampilkan:
+Tampilkan:
 
 - File yang diubah
-- Collection yang digunakan
 - Endpoint baru
-- Menu baru
-- Statistik yang dibuat
-- Fitur keamanan yang ditambahkan
-- Risiko yang masih tersisa
-- Skor keamanan Dashboard Keuangan
+- Ledger baru
+- Wallet Payment Flow
+- Refund Flow
+- Risiko tersisa
+- Skor keamanan Wallet Payment
+- Production Readiness
 ```
