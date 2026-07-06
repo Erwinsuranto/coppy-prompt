@@ -1,213 +1,201 @@
 ```
-# Telegram Drive Website - Tahap 15 : Files Manager (Admin)
+# Telegram Drive Website - Tahap 16 : Upload Manager (Professional Upload Center)
 
-Tahap Dashboard Foundation telah selesai.
+Tahap Files Manager telah selesai.
 
-Saat ini project telah memiliki:
-
-✅ Authentication
-
-✅ Admin Layout
+Project saat ini memiliki:
 
 ✅ Dashboard
 
-✅ REST API
+✅ Files Manager
 
 ✅ Storage Service
 
+✅ Upload Engine
+
+✅ REST API
+
 ✅ Telegram Bot
 
-JANGAN mengubah backend yang sudah berjalan.
-
 Gunakan seluruh Design System.
+
+JANGAN mengubah backend yang sudah berjalan.
 
 ====================================================
 
 TUJUAN
 
-Membangun halaman Files Manager.
+Membangun Upload Manager profesional.
 
-Halaman ini menjadi pusat pengelolaan seluruh file Telegram Drive.
+Upload Manager menjadi pusat upload Website.
+
+Website harus menggunakan Storage Service yang sudah ada.
+
+Tidak boleh duplicate code.
 
 ====================================================
 
 ROUTE
 
-/admin/files
+/admin/upload
 
 ====================================================
 
-TABLE
+LAYOUT
 
-Gunakan Data Table modern.
+Modern.
 
-Kolom:
+Card.
 
-Thumbnail/Icon
+Glass.
 
-Nama File
-
-Jenis
-
-Ukuran
-
-Tanggal Upload
-
-Download
-
-Status
-
-Uploader
-
-Action
+Responsive.
 
 ====================================================
 
-SEARCH
+UPLOAD AREA
 
-Realtime.
+Drag & Drop.
 
-Debounce.
+Click to Upload.
 
-====================================================
-
-FILTER
-
-Jenis File
-
-Tanggal
-
-Status
-
-Uploader
+Support Multiple File.
 
 ====================================================
 
-SORT
+PREVIEW
 
-Nama
+Sebelum upload.
 
-Tanggal
-
-Download
-
-Ukuran
-
-====================================================
-
-PAGINATION
-
-Gunakan pagination.
-
-====================================================
-
-ACTION
-
-View
-
-Copy Link
-
-Download
-
-Regenerate Token
-
-Enable Link
-
-Disable Link
-
-Delete
-
-====================================================
-
-MULTI SELECT
-
-Support:
-
-Delete Selected
-
-Enable Selected
-
-Disable Selected
-
-====================================================
-
-DETAIL
-
-Klik file.
-
-Muncul Drawer.
-
-Isi:
+Tampilkan:
 
 Thumbnail
 
 Nama
 
-Telegram File ID
-
-Unique ID
-
-Token
-
 Ukuran
-
-Tanggal
 
 Jenis
 
-Download
+====================================================
 
-Uploader
+RENAME
+
+User boleh mengubah nama file sebelum upload.
 
 ====================================================
 
-COPY
+DESCRIPTION
 
-Copy Token
-
-Copy Download Link
-
-Copy Telegram File ID
+Optional.
 
 ====================================================
 
-STATUS
+TAG
 
-Active
-
-Disabled
-
-Deleted
+Optional.
 
 ====================================================
 
-EMPTY
+CATEGORY
 
-Gunakan Empty State.
+Dropdown.
 
-====================================================
-
-LOADING
-
-Gunakan Skeleton.
+Placeholder.
 
 ====================================================
 
-ANIMATION
+BUTTON
 
-Fade
+Upload
 
-Hover
+Cancel
 
-Drawer Animation
+Reset
+
+====================================================
+
+UPLOAD PROGRESS
+
+Progress Bar.
+
+Percentage.
+
+Upload Speed (placeholder jika API belum menyediakan).
+
+Estimasi waktu (placeholder).
+
+====================================================
+
+SETELAH BERHASIL
+
+Tampilkan Card.
+
+✅ Upload Berhasil
+
+Nama File
+
+Ukuran
+
+Token
+
+Download Link
+
+====================================================
+
+BUTTON
+
+Copy Link
+
+Open Download Page
+
+Upload Lagi
+
+====================================================
+
+ERROR
+
+Upload gagal.
+
+Toast.
+
+Retry.
+
+====================================================
+
+HISTORY
+
+Sidebar kecil.
+
+5 upload terakhir.
 
 ====================================================
 
 API
 
-Gunakan endpoint REST API.
+Gunakan endpoint REST API upload yang sudah ada.
 
-Jangan hardcode.
+Jangan membuat upload baru.
+
+====================================================
+
+LOADING
+
+Skeleton.
+
+====================================================
+
+ANIMATION
+
+Framer Motion.
+
+Fade.
+
+Scale.
+
+Progress Animation.
+
+Success Animation.
 
 ====================================================
 
@@ -221,11 +209,19 @@ Desktop
 
 ====================================================
 
+CODING STYLE
+
+Reusable Components
+
+TypeScript Strict
+
+Tidak menggunakan any
+
+====================================================
+
 PENTING
 
 Belum membuat:
-
-Upload Page
 
 Settings
 
@@ -235,17 +231,21 @@ Users
 
 Premium
 
+Folder
+
+Kategori Management
+
 ====================================================
 
 OUTPUT
 
 1.
 
-Jelaskan struktur Files Manager.
+Jelaskan Upload Manager.
 
 2.
 
-Jelaskan API yang dipakai.
+Jelaskan API yang digunakan.
 
 3.
 
@@ -259,5 +259,5 @@ berjalan tanpa error.
 
 4.
 
-Berhenti setelah Files Manager selesai.
+Berhenti setelah Upload Manager selesai.
 ```
