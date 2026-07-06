@@ -1,272 +1,419 @@
 ```
-Lanjutkan pengembangan Digital Cell.
+# Telegram Drive Website - Tahap 17 : Settings Center (Central Configuration System)
 
-Jangan mengubah UI yang sudah ada.
+Tahap sebelumnya telah selesai.
 
-Jangan mengubah sistem checkout.
+Project saat ini telah memiliki:
 
-Tambahkan fitur pembayaran menggunakan Saldo Member (Wallet Payment).
+✅ Telegram Bot
+✅ Upload Engine
+✅ Download Engine
+✅ Storage Service
+✅ REST API
+✅ Authentication
+✅ Website Foundation
+✅ Design System
+✅ Landing Page
+✅ Premium Download Page
+✅ Dashboard
+✅ Files Manager
+✅ Upload Manager
 
-==================================================
+JANGAN mengubah fitur yang sudah berjalan.
+
+JANGAN merusak REST API.
+
+JANGAN membuat duplicate logic.
+
+Semua pengaturan harus terpusat.
+
+====================================================
 
 TUJUAN
 
-==================================================
+Membangun Settings Center.
 
-Member dapat membeli seluruh produk menggunakan saldo wallet.
+Settings Center menjadi pusat seluruh konfigurasi Telegram Drive.
 
-Jika saldo cukup:
+Bot Telegram, Website, Dashboard, REST API dan Storage Service harus membaca konfigurasi dari database yang sama.
 
-Tidak perlu membuka payment gateway.
+Tidak boleh ada konfigurasi yang tersebar.
 
-Order langsung diproses.
+====================================================
 
-==================================================
+ROUTE
 
-ALUR
+/admin/settings
 
-==================================================
+====================================================
 
-Member Login
+DATABASE
 
-↓
+Gunakan tabel Settings.
 
-Pilih Produk
+Jika sudah ada gunakan tabel tersebut.
 
-↓
+Jika belum ada buat tabel baru.
 
-Checkout
+Gunakan key-value configuration.
 
-↓
+Contoh:
 
-Metode Pembayaran
+site_name
 
-↓
+site_description
 
-Saldo Member
+site_logo
 
-↓
+site_favicon
 
-Validasi saldo
+maintenance_mode
 
-↓
+force_join
 
-MongoDB Transaction
+allow_upload
 
-↓
+allow_download
 
-Potong saldo
+max_upload_size
 
-↓
+theme
 
-Buat Ledger
+telegram_channel
 
-↓
+api_base_url
 
-Create Order
+jwt_expire
 
-↓
+default_language
 
-Kirim ke Digiflazz
+====================================================
 
-↓
+LAYOUT
 
-Success / Failed
+Sidebar:
 
-==================================================
+General
 
-VALIDASI
+Website
 
-==================================================
+Telegram
 
-Jika saldo kurang
+Upload
 
-tolak transaksi.
+Download
 
-Jika saldo cukup
+Security
 
-lanjut.
+Storage
 
-==================================================
+SEO
 
-ATOMIC
+Appearance
 
-==================================================
+System
 
-Gunakan Mongo Transaction.
+====================================================
 
-Urutan:
+GENERAL
 
-1 Lock Wallet
+Website Name
 
-2 Potong saldo
+Website Description
 
-3 Ledger
+Website Version
 
-4 Create Order
+Footer Text
 
-5 Commit
+Save Button
 
-Jika Digiflazz gagal permanen
+====================================================
 
-Refund saldo otomatis.
+WEBSITE
 
-Jika timeout
+Upload Logo
 
-Saldo jangan langsung dikembalikan.
+Upload Favicon
 
-Status processing.
+Maintenance Mode
 
-==================================================
+Contact Email
 
-LEDGER
+Website URL
 
-==================================================
+====================================================
 
-Catat:
+TELEGRAM
 
-Order ID
+Force Join ON/OFF
 
-User
+Tambah Channel
 
-Saldo sebelum
+Hapus Channel
 
-Saldo sesudah
+Daftar Channel
 
-Nominal
+Aktif/Nonaktif Channel
 
-Jenis
+Bot Username
 
-Tanggal
+====================================================
 
-==================================================
+UPLOAD
 
-REFUND
+Enable Upload
 
-==================================================
+Allow Multiple Upload
 
-Jika provider gagal permanen
+Rename Before Upload
 
-Tambah saldo kembali.
+Maximum Upload Size
 
-Ledger Refund.
+Generate Token Otomatis
 
-Notifikasi user.
+====================================================
 
-==================================================
+DOWNLOAD
+
+Enable Download
+
+Enable Copy Link
+
+Enable Share Button
+
+Default Link Status
+
+Expired Link (placeholder)
+
+====================================================
 
 SECURITY
 
-==================================================
+JWT Expire
 
-Double klik checkout
+Session Timeout
 
-Tidak boleh memotong saldo dua kali.
+Max Login Attempt
 
-Gunakan:
+Password Policy
 
-client_request_id
+API Key Placeholder
 
-idempotency
+====================================================
 
-unique index
+STORAGE
 
-==================================================
+Total File
 
-ADMIN
+Total Storage
 
-==================================================
+Used Storage
 
-Tambah menu:
+Free Storage
 
-Riwayat Wallet Payment
+Telegram Storage Status
 
-Filter:
+====================================================
 
-Pending
+SEO
 
-Processing
+Meta Title
 
-Success
+Meta Description
 
-Refund
+Meta Keywords
 
-Failed
+Open Graph Image
 
-==================================================
+Twitter Card
 
-USER
+====================================================
 
-==================================================
+APPEARANCE
 
-Tambah:
+Light
 
-Riwayat pembayaran saldo.
+Dark
 
-Riwayat refund.
+System
 
-==================================================
+Primary Color
 
-NOTIFIKASI
+Accent Color
 
-==================================================
+====================================================
 
-Potong saldo
+SYSTEM
 
-Refund
+Node Version
 
-Order berhasil
+REST API Status
 
-Order gagal
+Telegram Bot Status
 
-==================================================
+Database Status
 
-SIMULASI
+Storage Service Status
 
-==================================================
+====================================================
 
-Saldo kurang
+BUTTON
 
-Saldo pas
+Save
 
-Double klik
+Reset
 
-Server restart
+Cancel
 
-Mongo restart
+====================================================
 
-Digiflazz timeout
+CONFIRMATION
 
-Digiflazz success
+Sebelum Reset
 
-Digiflazz failed
+Tampilkan dialog konfirmasi.
 
-Refund
+====================================================
 
-==================================================
+AUTO SAVE
 
-VALIDASI
+Optional.
 
-==================================================
+Jika belum memungkinkan gunakan Save Button.
 
-npm run lint
+====================================================
+
+VALIDATION
+
+Gunakan Zod.
+
+====================================================
+
+API
+
+Gunakan REST API yang sudah ada.
+
+Jika endpoint belum tersedia tambahkan endpoint berikut tanpa merusak endpoint lama:
+
+GET /api/settings
+
+PUT /api/settings
+
+GET /api/settings/system
+
+GET /api/settings/storage
+
+POST /api/settings/channel
+
+DELETE /api/settings/channel/:id
+
+====================================================
+
+BOT
+
+Bot Telegram harus membaca Force Join dan Channel dari database Settings.
+
+Website juga membaca dari database yang sama.
+
+Tidak boleh ada dua konfigurasi berbeda.
+
+====================================================
+
+RESPONSIVE
+
+Mobile
+
+Tablet
+
+Desktop
+
+====================================================
+
+ANIMATION
+
+Gunakan Framer Motion.
+
+Fade
+
+Slide
+
+Card Animation
+
+Toast Success
+
+Loading Skeleton
+
+====================================================
+
+DESIGN
+
+Gunakan seluruh komponen dari Design System.
+
+Tidak membuat style baru jika sudah ada.
+
+====================================================
+
+CODING STYLE
+
+Clean Architecture
+
+Reusable Components
+
+TypeScript Strict
+
+SOLID
+
+Repository Pattern
+
+Tidak menggunakan any
+
+====================================================
+
+PENTING
+
+Belum membuat:
+
+Statistics
+
+User Management
+
+Premium
+
+Folder
+
+Category Management
+
+Audit Log
+
+Backup Manager
+
+====================================================
+
+OUTPUT
+
+1. Jelaskan perubahan database.
+
+2. Jelaskan endpoint baru.
+
+3. Jelaskan struktur Settings Center.
+
+4. Pastikan Bot Telegram dan Website menggunakan konfigurasi yang sama.
+
+5. Pastikan:
+
+npm install
+
+npx prisma generate
+
+npx prisma migrate dev
 
 npm run build
 
-==================================================
+npm run dev
 
-LAPORAN
+berjalan tanpa error.
 
-==================================================
+6. Jangan mengubah fitur Upload, Download, Dashboard, Landing Page, Download Page, Files Manager, Authentication, maupun REST API yang sudah berjalan.
 
-Tampilkan:
-
-- File yang diubah
-- Endpoint baru
-- Ledger baru
-- Wallet Payment Flow
-- Refund Flow
-- Risiko tersisa
-- Skor keamanan Wallet Payment
-- Production Readiness
+7. Berhenti setelah Settings Center selesai.
 ```
