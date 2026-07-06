@@ -1,383 +1,515 @@
 ```
-# Telegram Drive Website - Tahap 19 : User Management (Professional User Administration)
+# IMPLEMENTASI LENGKAP RIWAYAT TRANSAKSI DIGITAL CELL (PRODUCTION READY)
 
-Tahap Statistics & Analytics telah selesai.
+Lanjutkan project Digital Cell tanpa mengubah fitur yang sudah selesai (Digiflazz, Checkout, Deposit Otomatis, Wallet Payment, Refund, Ledger, Recovery, Dashboard Keuangan, dan Notifikasi Real-Time).
 
-Project saat ini memiliki:
+Tujuan tahap ini adalah membangun sistem Riwayat Transaksi yang lengkap, aman, realtime, dan production-ready.
 
-✅ Telegram Bot
-✅ Upload Engine
-✅ Download Engine
-✅ Storage Service
-✅ REST API
-✅ Authentication
-✅ Dashboard
-✅ Files Manager
-✅ Upload Manager
-✅ Settings Center
-✅ Statistics & Analytics
+==================================================
+ATURAN
+==================================================
 
-JANGAN mengubah fitur yang sudah berjalan.
+- Jangan merusak UI lama.
+- Jangan mengubah alur checkout.
+- Jangan mengubah alur Digiflazz.
+- Jangan mengubah Wallet.
+- Jangan mengubah Deposit.
+- Jangan mengubah Refund.
+- Jangan menggunakan dummy, fake data, hardcode, maupun mock.
+- Semua data harus berasal dari database.
+- Semua endpoint wajib login.
+- User hanya boleh melihat transaksi miliknya.
+- Admin memiliki endpoint sendiri.
 
-Gunakan Design System yang sudah ada.
+==================================================
+HALAMAN RIWAYAT TRANSAKSI
+==================================================
 
-====================================================
+Buat halaman Riwayat Transaksi yang modern dan responsif.
 
-TUJUAN
+Setiap transaksi menampilkan:
 
-Membangun User Management profesional.
+- Nama Produk
+- Logo Provider
+- Nomor Tujuan
+- Kategori
+- Provider
+- Invoice / ID Order
+- Tanggal
+- Jam
+- Harga
+- Metode Pembayaran
+- Status
+- Badge Status
+- Tombol Detail
 
-Semua user Telegram Drive dikelola dari Dashboard.
+==================================================
+STATUS
+==================================================
 
-====================================================
+Gunakan badge berwarna.
 
-ROUTE
+Waiting Payment
 
-/admin/users
+Paid
 
-====================================================
+Processing
 
-TABLE
+Success
 
-Gunakan Data Table modern.
+Failed
 
-Kolom:
+Refund
 
-Avatar
+Refund Success
 
-Nama
+Cancelled
 
-Username
+Expired
 
-Telegram ID
+Recovery
 
-Role
-
-Status
-
-Total Upload
-
-Total Download
-
-Storage
-
-Tanggal Daftar
-
-Terakhir Aktif
-
-Action
-
-====================================================
-
-SEARCH
-
-Realtime
-
-Debounce
-
-Cari berdasarkan:
-
-Nama
-
-Username
-
-Telegram ID
-
-====================================================
-
+==================================================
 FILTER
+==================================================
 
-Role
+Semua
+
+Hari Ini
+
+7 Hari
+
+30 Hari
+
+Berhasil
+
+Diproses
+
+Pending
+
+Refund
+
+Deposit
+
+Wallet
+
+Kategori
+
+Provider
+
+==================================================
+SEARCH
+==================================================
+
+Cari berdasarkan
+
+Invoice
+
+Nomor Tujuan
+
+Nama Produk
+
+Provider
+
+==================================================
+SORT
+==================================================
+
+Terbaru
+
+Terlama
+
+Harga terbesar
+
+Harga terkecil
+
+==================================================
+DETAIL TRANSAKSI
+==================================================
+
+Saat klik Detail.
+
+Tampilkan:
+
+ID Order
+
+Invoice
+
+Ref ID Provider
+
+Buyer SKU Code
+
+Provider
+
+Kategori
+
+Nama Produk
+
+Nomor Tujuan
+
+Harga Produk
+
+Biaya Admin
+
+Diskon
+
+Total
+
+Metode Pembayaran
 
 Status
 
-Tanggal Daftar
+Tanggal
 
-Premium
+Jam
 
-====================================================
+Catatan
 
-SORT
+==================================================
+TIMELINE
+==================================================
 
-Nama
+Tampilkan timeline.
 
-Upload
+Order dibuat
 
-Download
+↓
 
-Storage
+Waiting Payment
 
-Tanggal Daftar
+↓
 
-====================================================
+Payment Success
 
-ROLE
+↓
 
-Owner
+Processing
+
+↓
+
+Provider
+
+↓
+
+Success
+
+atau
+
+↓
+
+Failed
+
+↓
+
+Refund
+
+↓
+
+Refund Success
+
+Semua timeline berasal dari database.
+
+==================================================
+DETAIL PAYMENT
+==================================================
+
+Jika payment gateway dipakai.
+
+Tampilkan
+
+Invoice Gateway
+
+Gateway
+
+Reference
+
+Callback
+
+Payment Time
+
+Expired Time
+
+==================================================
+DETAIL REFUND
+==================================================
+
+Jika refund ada.
+
+Tampilkan
+
+Nominal
+
+Tanggal
+
+Status
 
 Admin
 
-Moderator
+Alasan
+
+Ledger
+
+==================================================
+DETAIL WALLET
+==================================================
+
+Jika menggunakan wallet.
+
+Tampilkan
+
+Saldo Sebelum
+
+Saldo Sesudah
+
+Debit
+
+Credit
+
+Ledger Reference
+
+==================================================
+DETAIL DIGIFLAZZ
+==================================================
+
+Jika provider Digiflazz.
+
+Tampilkan
+
+Buyer SKU Code
+
+Ref ID
+
+SN
+
+Message
+
+Status Provider
+
+Last Update
+
+==================================================
+DETAIL DEPOSIT
+==================================================
+
+Jika order berasal dari saldo deposit.
+
+Tampilkan
+
+Deposit ID
+
+Saldo Dipakai
+
+Ledger
+
+==================================================
+REALTIME
+==================================================
+
+Jika status berubah.
+
+Halaman otomatis update.
+
+Tanpa refresh.
+
+Gunakan Notification/Event yang sudah dibuat.
+
+==================================================
+EXPORT
+==================================================
+
+User dapat
+
+Download PDF Invoice
+
+Download CSV Riwayat
+
+Print Invoice
+
+==================================================
+KEAMANAN
+==================================================
+
+User tidak boleh melihat transaksi user lain.
+
+Gunakan auth user.
+
+Validasi owner.
+
+Cegah IDOR.
+
+Endpoint admin dipisahkan.
+
+==================================================
+ENDPOINT
+==================================================
+
+GET
+
+/orders
+
+/orders/history
+
+/orders/{id}
+
+/orders/{id}/timeline
+
+/orders/{id}/invoice
+
+/orders/search
+
+/orders/filter
+
+ADMIN
+
+/admin/orders
+
+/admin/orders/{id}
+
+==================================================
+ADMIN
+==================================================
+
+Admin melihat seluruh transaksi.
+
+Filter:
+
+Provider
+
+Kategori
+
+Status
+
+Payment
+
+Refund
+
+Wallet
+
+Deposit
+
+Tanggal
 
 User
 
-====================================================
+==================================================
+STATISTIK
+==================================================
 
-STATUS
+Hitung otomatis
 
-Active
+Total Order
 
-Suspended
+Total Success
 
-Banned
+Total Failed
 
-Deleted
+Total Refund
 
-====================================================
+Total Pending
 
-ACTION
+Total Deposit
 
-View
+Total Wallet Payment
 
-Edit
+Total Belanja
 
-Change Role
+==================================================
+UI
+==================================================
 
-Suspend
+Tambahkan
 
-Ban
+Loading
 
-Activate
+Skeleton
 
-Delete
+Retry
 
-====================================================
+Pagination
 
-DETAIL DRAWER
+Infinite Scroll
 
-Saat klik user tampilkan:
+Responsive
 
-Foto Profil
+Dark Mode mengikuti tema website.
 
-Nama
+==================================================
+AUDIT
+==================================================
 
-Username
+Uji:
 
-Telegram ID
+Order sukses
 
-Role
+Order gagal
 
-Status
+Refund
 
-Tanggal Daftar
+Wallet
 
-Login Terakhir
+Deposit
 
-Jumlah Upload
+Provider timeout
 
-Jumlah Download
+Recovery
 
-Storage Digunakan
+Restart server
 
-File Terakhir
+Double callback
 
-IP Terakhir (placeholder jika belum tersedia)
+Spam refresh
 
-====================================================
+Multi tab
 
-EDIT USER
+==================================================
+VALIDASI
+==================================================
 
-Role
+Pastikan
 
-Status
-
-Catatan Admin
-
-====================================================
-
-MULTI SELECT
-
-Suspend Selected
-
-Ban Selected
-
-Delete Selected
-
-Export Selected
-
-====================================================
-
-EXPORT
-
-CSV
-
-JSON
-
-====================================================
-
-USER ACTIVITY
-
-Upload History
-
-Download History
-
-Generate Link
-
-Login History
-
-====================================================
-
-EMPTY STATE
-
-Gunakan Design System.
-
-====================================================
-
-LOADING
-
-Skeleton.
-
-====================================================
-
-RESPONSIVE
-
-Mobile
-
-Tablet
-
-Desktop
-
-====================================================
-
-ANIMATION
-
-Framer Motion
-
-Fade
-
-Slide
-
-Drawer Animation
-
-====================================================
-
-API
-
-Gunakan endpoint backend.
-
-Jika endpoint belum tersedia tambahkan tanpa merusak endpoint lama:
-
-GET /api/users
-
-GET /api/users/:id
-
-PUT /api/users/:id
-
-DELETE /api/users/:id
-
-POST /api/users/:id/role
-
-POST /api/users/:id/status
-
-GET /api/users/:id/activity
-
-GET /api/users/export
-
-====================================================
-
-DATABASE
-
-Gunakan tabel User yang sudah ada.
-
-Jangan membuat tabel baru jika tidak diperlukan.
-
-Jika beberapa data belum tersedia tampilkan placeholder dan beri komentar TODO.
-
-====================================================
-
-SECURITY
-
-Semua endpoint wajib menggunakan Admin Authentication.
-
-Owner tidak boleh dihapus.
-
-Role Owner tidak boleh diturunkan kecuali oleh Owner lain.
-
-====================================================
-
-DESIGN
-
-Gunakan seluruh komponen Design System.
-
-Glass Card
-
-Rounded
-
-Dark Mode
-
-Light Mode
-
-====================================================
-
-CODING STYLE
-
-Reusable Components
-
-TypeScript Strict
-
-SOLID
-
-Repository Pattern
-
-Tidak menggunakan any
-
-====================================================
-
-PENTING
-
-Belum membuat:
-
-Folder Management
-
-Category Management
-
-Audit Log
-
-Backup Manager
-
-Notification Center
-
-Premium System
-
-Production Ready
-
-====================================================
-
-OUTPUT
-
-1. Jelaskan struktur User Management.
-
-2. Jelaskan endpoint yang digunakan.
-
-3. Jelaskan Role dan Permission.
-
-4. Jelaskan placeholder yang digunakan bila data belum tersedia.
-
-5. Pastikan:
-
-npm install
-
-npx prisma generate
-
-npx prisma migrate dev
+npm run lint
 
 npm run build
 
-npm run dev
+berhasil.
 
-berjalan tanpa error.
+Tidak ada TypeScript error.
 
-6. Jangan mengubah Upload Manager, Files Manager, Dashboard, Settings, Statistics, REST API, Bot Telegram, Download Engine maupun Storage Service.
+Tidak ada duplicate order.
 
-7. Berhenti setelah User Management selesai.
+Tidak ada transaksi hilang.
+
+Tidak ada transaksi user lain terbuka.
+
+Timeline sinkron dengan database.
+
+Invoice sinkron.
+
+Refund sinkron.
+
+Wallet sinkron.
+
+Deposit sinkron.
+
+Notifikasi sinkron.
+
+Digiflazz sinkron.
+
+==================================================
+LAPORAN AKHIR
+==================================================
+
+Setelah implementasi selesai tampilkan:
+
+1. File yang diubah.
+2. Struktur endpoint.
+3. Struktur database yang digunakan.
+4. Hasil audit keamanan.
+5. Hasil simulasi transaksi.
+6. Risiko tersisa.
+7. Skor keamanan Riwayat Transaksi.
+8. Production Readiness.
+9. Rekomendasi tahap berikutnya.
+
+Jangan berhenti sebelum implementasi, audit, validasi, pengujian, dan laporan selesai.
 ```
