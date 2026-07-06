@@ -1,402 +1,69 @@
 ```
-# Telegram Drive Website - Tahap 10 : Design System (UI Foundation)
+Tahap 2 - Migrasi Database Production
 
-Tahap Website Foundation telah selesai.
+JANGAN mengubah UI website.
 
-Saat ini project telah memiliki:
+JANGAN mengubah alur transaksi yang sudah selesai.
 
-✅ Next.js
+Fokus hanya pada migrasi database agar siap production.
 
-✅ Tailwind
+Target:
 
-✅ Theme
+1. Hilangkan ketergantungan local_db.json sebagai penyimpanan utama transaksi.
 
-✅ Axios
+2. Gunakan MongoDB sebagai database production.
 
-✅ Query
+3. Semua transaksi harus menggunakan MongoDB.
 
-✅ Animation
+4. Buat collection:
 
-✅ API Client
+products
+orders
+payments
+refunds
+provider_attempts
+audit_logs
+notifications
+users
 
-JANGAN mengubah Backend.
+5. Tambahkan unique index yang diperlukan.
 
-JANGAN mengubah API.
+6. Pastikan createOrder menggunakan transaksi atomic.
 
-Fokus hanya Frontend.
+7. Pastikan update status transaksi tidak race condition.
 
-====================================================
+8. Semua callback wajib update database secara aman.
 
-TUJUAN
+9. Jangan ada data transaksi yang hanya tersimpan di memory atau JSON.
 
-Membangun Design System.
+10. local_db.json hanya boleh dipakai sebagai data migrasi atau development, bukan storage production.
 
-Semua halaman Website nantinya harus menggunakan komponen ini.
+11. Tambahkan migration script apabila diperlukan.
 
-Tidak boleh membuat komponen berbeda-beda.
+12. Pastikan seluruh endpoint tetap kompatibel dengan frontend saat ini.
 
-====================================================
+13. Jalankan:
 
-Gunakan
+npm run lint
 
-shadcn/ui
+npm run build
 
-Tailwind
+14. Audit ulang seluruh alur transaksi.
 
-Framer Motion
+15. Laporkan:
 
-Lucide
+- file yang diubah
+- struktur database baru
+- index yang dibuat
+- collection baru
+- risiko yang masih tersisa
 
-====================================================
+Jangan mengubah tampilan website.
 
-Buat Design Token
+Jangan mengubah layout.
 
-Color
+Jangan mengubah fitur frontend.
 
-Spacing
-
-Radius
-
-Shadow
-
-Typography
-
-Transition
-
-Animation
-
-Container
-
-====================================================
-
-Color Palette
-
-Primary
-
-Blue
-
-Secondary
-
-White
-
-Success
-
-Green
-
-Warning
-
-Orange
-
-Danger
-
-Red
-
-Info
-
-Sky Blue
-
-Background
-
-Light Gray
-
-Dark Gray
-
-====================================================
-
-Support
-
-Light
-
-Dark
-
-System
-
-====================================================
-
-Typography
-
-Heading XL
-
-Heading LG
-
-Heading MD
-
-Body LG
-
-Body
-
-Caption
-
-Label
-
-====================================================
-
-Button
-
-Primary
-
-Secondary
-
-Outline
-
-Ghost
-
-Danger
-
-Loading
-
-Disabled
-
-Icon Button
-
-====================================================
-
-Input
-
-Text
-
-Password
-
-Search
-
-Textarea
-
-====================================================
-
-Card
-
-Basic
-
-Hover
-
-Glass
-
-Download Card
-
-Statistic Card
-
-====================================================
-
-Badge
-
-Primary
-
-Success
-
-Warning
-
-Danger
-
-====================================================
-
-Alert
-
-Success
-
-Error
-
-Warning
-
-Info
-
-====================================================
-
-Table
-
-Responsive
-
-Loading
-
-Empty State
-
-====================================================
-
-Modal
-
-Confirmation
-
-Delete
-
-Success
-
-====================================================
-
-Dropdown
-
-Modern
-
-Animation
-
-====================================================
-
-Tabs
-
-Animated
-
-====================================================
-
-Loading
-
-Spinner
-
-Skeleton
-
-Progress
-
-Linear Progress
-
-Circular Progress
-
-====================================================
-
-Toast
-
-Gunakan Sonner.
-
-====================================================
-
-Animation
-
-Fade
-
-Slide
-
-Scale
-
-Bounce
-
-Page Transition
-
-Hover
-
-Ripple Button
-
-Loading Transition
-
-====================================================
-
-Empty State
-
-No File
-
-No Search
-
-No Internet
-
-No Result
-
-====================================================
-
-Icons
-
-Gunakan Lucide.
-
-====================================================
-
-Utility
-
-Container
-
-Section
-
-Grid
-
-Stack
-
-Divider
-
-====================================================
-
-Accessibility
-
-Focus Ring
-
-Keyboard Navigation
-
-ARIA
-
-====================================================
-
-Responsive
-
-Mobile
-
-Tablet
-
-Desktop
-
-====================================================
-
-Coding Style
-
-Reusable
-
-Atomic
-
-Clean
-
-TypeScript Strict
-
-====================================================
-
-PENTING
-
-Belum membuat:
-
-Home
-
-Download Page
-
-Dashboard
-
-Upload
-
-Login
-
-Settings
-
-Premium
-
-Folder
-
-Kategori
-
-====================================================
-
-OUTPUT
-
-1.
-
-Jelaskan seluruh komponen.
-
-2.
-
-Jelaskan Design Token.
-
-3.
-
-Pastikan npm run build berhasil.
-
-4.
-
-Pastikan npm run dev berhasil.
-
-5.
-
-Berhenti setelah Design System selesai.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Fokus menjadikan sistem siap production menggunakan MongoDB.
 
 ```
