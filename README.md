@@ -1,88 +1,383 @@
 ```
-Lanjutkan penyempurnaan sistem Notifikasi Digital Cell hingga benar-benar production-ready.
+# Telegram Drive Website - Tahap 19 : User Management (Professional User Administration)
 
-Target:
-- Skor keamanan minimal 95/100.
-- Tidak ada fitur notifikasi yang setengah jadi.
-- Tidak mengubah UI maupun alur transaksi yang sudah selesai.
+Tahap Statistics & Analytics telah selesai.
 
-Pekerjaan yang harus diselesaikan:
+Project saat ini memiliki:
 
-1. Buat halaman penuh /notifications.
-   - Daftar seluruh notifikasi.
-   - Pagination.
-   - Search.
-   - Filter:
-     * Semua
-     * Belum dibaca
-     * Order
-     * Deposit
-     * Wallet
-     * Refund
-     * Sistem
-   - Relative time.
-   - Infinite scroll atau pagination.
-   - Empty state.
-   - Loading.
-   - Retry.
+✅ Telegram Bot
+✅ Upload Engine
+✅ Download Engine
+✅ Storage Service
+✅ REST API
+✅ Authentication
+✅ Dashboard
+✅ Files Manager
+✅ Upload Manager
+✅ Settings Center
+✅ Statistics & Analytics
 
-2. Migrasikan seluruh event lama agar menggunakan Event Bus.
-   Tidak boleh ada lagi pemanggilan DB.Notifications.create() secara langsung dari modul lain.
+JANGAN mengubah fitur yang sudah berjalan.
 
-3. Audit seluruh source code.
-   Cari semua pemanggilan notification lama.
-   Ganti menjadi NotificationService + EventBus.
+Gunakan Design System yang sudah ada.
 
-4. Pastikan semua event berikut menghasilkan notifikasi:
-   - Order dibuat
-   - Waiting payment
-   - Payment success
-   - Payment failed
-   - Processing
-   - Success
-   - Failed
-   - Refund
-   - Deposit
-   - Wallet debit
-   - Wallet credit
-   - Maintenance
-   - Provider offline
-   - Provider online
-   - Recovery
-   - Admin login
-   - Admin error
+====================================================
 
-5. Klik notifikasi harus membuka halaman yang sesuai:
-   Order → Detail Order
-   Deposit → Detail Deposit
-   Refund → Detail Refund
-   Wallet → Riwayat Wallet
+TUJUAN
 
-6. Audit keamanan:
-   - Tidak boleh membaca notification user lain.
-   - Tidak boleh ada IDOR.
-   - Admin dan user benar-benar terpisah.
-   - Semua endpoint wajib login.
+Membangun User Management profesional.
 
-7. Uji:
-   - Spam klik.
-   - Double callback.
-   - Restart server.
-   - Reconnect.
-   - Provider timeout.
-   - Recovery.
-   - Multi tab browser.
+Semua user Telegram Drive dikelola dari Dashboard.
 
-8. Jalankan:
-   npm run lint
-   npm run build
+====================================================
 
-9. Setelah selesai tampilkan laporan:
-   - File yang diubah.
-   - Hasil audit.
-   - Risiko tersisa.
-   - Skor keamanan.
-   - Production readiness.
+ROUTE
 
-Jangan membuat fitur baru sebelum seluruh sistem notifikasi benar-benar selesai dan siap production.
+/admin/users
+
+====================================================
+
+TABLE
+
+Gunakan Data Table modern.
+
+Kolom:
+
+Avatar
+
+Nama
+
+Username
+
+Telegram ID
+
+Role
+
+Status
+
+Total Upload
+
+Total Download
+
+Storage
+
+Tanggal Daftar
+
+Terakhir Aktif
+
+Action
+
+====================================================
+
+SEARCH
+
+Realtime
+
+Debounce
+
+Cari berdasarkan:
+
+Nama
+
+Username
+
+Telegram ID
+
+====================================================
+
+FILTER
+
+Role
+
+Status
+
+Tanggal Daftar
+
+Premium
+
+====================================================
+
+SORT
+
+Nama
+
+Upload
+
+Download
+
+Storage
+
+Tanggal Daftar
+
+====================================================
+
+ROLE
+
+Owner
+
+Admin
+
+Moderator
+
+User
+
+====================================================
+
+STATUS
+
+Active
+
+Suspended
+
+Banned
+
+Deleted
+
+====================================================
+
+ACTION
+
+View
+
+Edit
+
+Change Role
+
+Suspend
+
+Ban
+
+Activate
+
+Delete
+
+====================================================
+
+DETAIL DRAWER
+
+Saat klik user tampilkan:
+
+Foto Profil
+
+Nama
+
+Username
+
+Telegram ID
+
+Role
+
+Status
+
+Tanggal Daftar
+
+Login Terakhir
+
+Jumlah Upload
+
+Jumlah Download
+
+Storage Digunakan
+
+File Terakhir
+
+IP Terakhir (placeholder jika belum tersedia)
+
+====================================================
+
+EDIT USER
+
+Role
+
+Status
+
+Catatan Admin
+
+====================================================
+
+MULTI SELECT
+
+Suspend Selected
+
+Ban Selected
+
+Delete Selected
+
+Export Selected
+
+====================================================
+
+EXPORT
+
+CSV
+
+JSON
+
+====================================================
+
+USER ACTIVITY
+
+Upload History
+
+Download History
+
+Generate Link
+
+Login History
+
+====================================================
+
+EMPTY STATE
+
+Gunakan Design System.
+
+====================================================
+
+LOADING
+
+Skeleton.
+
+====================================================
+
+RESPONSIVE
+
+Mobile
+
+Tablet
+
+Desktop
+
+====================================================
+
+ANIMATION
+
+Framer Motion
+
+Fade
+
+Slide
+
+Drawer Animation
+
+====================================================
+
+API
+
+Gunakan endpoint backend.
+
+Jika endpoint belum tersedia tambahkan tanpa merusak endpoint lama:
+
+GET /api/users
+
+GET /api/users/:id
+
+PUT /api/users/:id
+
+DELETE /api/users/:id
+
+POST /api/users/:id/role
+
+POST /api/users/:id/status
+
+GET /api/users/:id/activity
+
+GET /api/users/export
+
+====================================================
+
+DATABASE
+
+Gunakan tabel User yang sudah ada.
+
+Jangan membuat tabel baru jika tidak diperlukan.
+
+Jika beberapa data belum tersedia tampilkan placeholder dan beri komentar TODO.
+
+====================================================
+
+SECURITY
+
+Semua endpoint wajib menggunakan Admin Authentication.
+
+Owner tidak boleh dihapus.
+
+Role Owner tidak boleh diturunkan kecuali oleh Owner lain.
+
+====================================================
+
+DESIGN
+
+Gunakan seluruh komponen Design System.
+
+Glass Card
+
+Rounded
+
+Dark Mode
+
+Light Mode
+
+====================================================
+
+CODING STYLE
+
+Reusable Components
+
+TypeScript Strict
+
+SOLID
+
+Repository Pattern
+
+Tidak menggunakan any
+
+====================================================
+
+PENTING
+
+Belum membuat:
+
+Folder Management
+
+Category Management
+
+Audit Log
+
+Backup Manager
+
+Notification Center
+
+Premium System
+
+Production Ready
+
+====================================================
+
+OUTPUT
+
+1. Jelaskan struktur User Management.
+
+2. Jelaskan endpoint yang digunakan.
+
+3. Jelaskan Role dan Permission.
+
+4. Jelaskan placeholder yang digunakan bila data belum tersedia.
+
+5. Pastikan:
+
+npm install
+
+npx prisma generate
+
+npx prisma migrate dev
+
+npm run build
+
+npm run dev
+
+berjalan tanpa error.
+
+6. Jangan mengubah Upload Manager, Files Manager, Dashboard, Settings, Statistics, REST API, Bot Telegram, Download Engine maupun Storage Service.
+
+7. Berhenti setelah User Management selesai.
 ```
