@@ -1,513 +1,378 @@
 ```
-# IMPLEMENTASI LENGKAP SISTEM NOTIFIKASI REAL-TIME DIGITAL CELL (PRODUCTION READY)
+# Telegram Drive Website - Tahap 18 : Statistics & Analytics (Professional Dashboard)
 
-Lanjutkan pengembangan project Digital Cell tanpa mengubah UI maupun fitur yang sudah selesai (Digiflazz, Checkout, Wallet Payment, Deposit Otomatis, Refund, Ledger, Recovery, Dashboard Keuangan, dll).
+Tahap sebelumnya telah selesai.
 
-Tujuan tahap ini adalah membangun sistem Notifikasi Real-Time yang benar-benar production-ready, aman, scalable, dan terintegrasi dengan seluruh aktivitas website.
+Project saat ini telah memiliki:
 
-==================================================
-ATURAN UMUM
-==================================================
+✅ Telegram Bot
+✅ Upload Engine
+✅ Download Engine
+✅ Storage Service
+✅ REST API
+✅ Authentication
+✅ Dashboard
+✅ Files Manager
+✅ Upload Manager
+✅ Settings Center
+✅ Landing Page
+✅ Download Page
 
-- Jangan membuat ulang fitur yang sudah selesai.
-- Jangan merusak alur transaksi yang sudah ada.
-- Jangan menggunakan dummy, mock, fake data, ataupun hardcode.
-- Gunakan database sebagai sumber utama.
-- Gunakan arsitektur event-driven.
-- Semua perubahan harus lolos npm run lint dan npm run build.
-- Tidak boleh ada TypeScript Error.
-- Pertahankan seluruh UI yang sudah ada.
+JANGAN mengubah fitur yang sudah berjalan.
 
-==================================================
-EVENT YANG WAJIB MEMBUAT NOTIFIKASI
-==================================================
+JANGAN merusak REST API.
 
-ORDER
+Gunakan seluruh Design System.
 
-- Order dibuat
-- Menunggu pembayaran
-- Pembayaran berhasil
-- Pembayaran gagal
-- Order diproses
-- Order dikirim ke provider
-- Provider timeout
-- Recovery berjalan
-- Order berhasil
-- Order gagal
-- Order dibatalkan
-- Order expired
+====================================================
 
-DEPOSIT
+TUJUAN
 
-- Deposit dibuat
-- Deposit pending
-- Deposit berhasil
-- Deposit gagal
-- Deposit expired
+Membangun halaman Statistics & Analytics profesional.
 
-WALLET
+Semua data diambil dari backend.
 
-- Saldo bertambah
-- Saldo berkurang
-- Refund masuk
-- Koreksi saldo admin
+Tidak boleh hardcode.
 
-REFUND
+====================================================
 
-- Refund dibuat
-- Refund diproses
-- Refund berhasil
-- Refund ditolak
+ROUTE
 
-DIGIFLAZZ
+/admin/statistics
 
-- Provider offline
-- Provider online kembali
-- Callback gagal
-- Callback berhasil
-- Recovery berhasil
+====================================================
 
-SYSTEM
-
-- Maintenance aktif
-- Maintenance selesai
-- Login baru
-- Password diubah
-- Aktivitas admin penting
-
-==================================================
-DATABASE
-==================================================
-
-Buat collection/table notifications apabila belum ada.
-
-Field minimum:
-
-id
-
-userId
-
-title
-
-message
-
-type
-
-entityType
-
-entityId
-
-status
-
-icon
-
-color
-
-isRead
-
-metadata
-
-createdAt
-
-updatedAt
-
-Tambahkan index yang diperlukan agar query cepat.
-
-==================================================
-NOTIFICATION SERVICE
-==================================================
-
-Buat service khusus NotificationService.
-
-Minimal memiliki fungsi:
-
-createNotification()
-
-createAdminNotification()
-
-broadcastUser()
-
-broadcastAdmin()
-
-getNotifications()
-
-countUnread()
-
-markAsRead()
-
-markAllRead()
-
-deleteNotification()
-
-cleanupOldNotifications()
-
-Seluruh project wajib menggunakan service ini.
-
-==================================================
-EVENT BUS
-==================================================
-
-Jangan memanggil NotificationService langsung dari semua file.
-
-Gunakan Event Bus.
-
-Contoh event:
-
-OrderCreated
-
-PaymentSuccess
-
-PaymentFailed
-
-ProviderSuccess
-
-ProviderFailed
-
-RefundCreated
-
-RefundSuccess
-
-DepositSuccess
-
-WalletUpdated
-
-MaintenanceStarted
-
-MaintenanceFinished
-
-AdminLogin
-
-Semua event otomatis menghasilkan notification.
-
-==================================================
-REALTIME
-==================================================
-
-Gunakan websocket/socket server yang sudah ada.
-
-Jika belum tersedia maka implementasikan.
-
-Saat status berubah:
-
-Backend
-
-↓
-
-Event
-
-↓
-
-NotificationService
-
-↓
-
-Database
-
-↓
-
-Socket
-
-↓
-
-Frontend
-
-Tanpa refresh halaman.
-
-==================================================
-USER NOTIFICATION
-==================================================
-
-User hanya boleh melihat notifikasi miliknya.
-
-Contoh:
-
-Pembayaran berhasil
-
-Order sedang diproses
-
-Produk berhasil dikirim
-
-Refund berhasil
-
-Deposit berhasil
-
-Saldo bertambah
-
-==================================================
-ADMIN NOTIFICATION
-==================================================
-
-Admin memiliki notification sendiri.
-
-Contoh:
-
-Order baru
-
-Deposit baru
-
-Refund baru
-
-Provider timeout
-
-Gateway error
-
-Recovery berjalan
-
-Server error
-
-User baru
-
-==================================================
-BELL NOTIFICATION
-==================================================
-
-Aktifkan icon lonceng.
-
-Badge otomatis berubah.
-
-Contoh
-
-1
-
-5
-
-10
-
-99+
-
-Saat dibuka
-
-badge langsung sinkron.
-
-==================================================
-DROPDOWN
-==================================================
-
-Klik icon lonceng.
+OVERVIEW CARD
 
 Tampilkan:
 
-Icon
+Total Files
 
-Judul
+Total Downloads
 
-Isi
+Total Uploads
 
-Waktu
+Total Users
 
-Status
+Total Storage
 
-Belum dibaca diberi highlight.
+Used Storage
 
-==================================================
-HALAMAN NOTIFIKASI
-==================================================
+Free Storage
 
-Tambahkan halaman:
+====================================================
 
-/notifications
+TODAY
 
-Berisi:
+Upload Hari Ini
 
-Semua
+Download Hari Ini
 
-Belum dibaca
+User Aktif Hari Ini
 
-Order
+Storage Bertambah Hari Ini
 
-Deposit
+====================================================
 
-Refund
+GRAPH
 
-Wallet
+Upload Harian
 
-System
+Download Harian
 
-Search
+User Baru
 
-Filter
+Storage Growth
 
-Pagination
+Gunakan Chart Component.
 
-Infinite Scroll
+====================================================
 
-Relative Time
+FILTER
 
-==================================================
-AKSI USER
-==================================================
+Hari
 
-Klik notifikasi Order
+7 Hari
 
-↓
+30 Hari
 
-Buka Detail Order
+90 Hari
 
-Klik Deposit
+1 Tahun
 
-↓
+Custom Date Range
 
-Buka Detail Deposit
+====================================================
 
-Klik Refund
+TOP FILES
 
-↓
+Top 10 Download
 
-Buka Detail Refund
+Nama File
 
-Klik Wallet
+Download
 
-↓
+Ukuran
 
-Buka Riwayat Wallet
+Uploader
 
-==================================================
-KEAMANAN
-==================================================
+====================================================
 
-Semua endpoint wajib login.
+TOP UPLOADER
 
-Validasi userId.
+Top User
 
-Tidak boleh ada IDOR.
+Jumlah Upload
 
-Tidak boleh membaca notification milik user lain.
+Total Storage
 
-Admin dan user dipisahkan.
+====================================================
 
-==================================================
-ENDPOINT
-==================================================
+RECENT ACTIVITY
 
-GET
+Upload Terbaru
 
-/notifications
+Download Terbaru
 
-/notifications/unread
+Login Admin
 
-/notifications/count
+Delete File
 
-POST
+Generate Link
 
-/notifications/read
+====================================================
 
-/notifications/read-all
+STORAGE
 
-DELETE
+Storage Used
 
-/notifications/{id}
+Storage Free
 
-ADMIN
+Persentase
 
-/admin/notifications
+Progress Bar
 
-/admin/notifications/system
+====================================================
 
-/admin/notifications/provider
+DOWNLOAD ANALYTICS
 
-==================================================
-UI
-==================================================
+Total Download
 
-Tambahkan:
+Download Hari Ini
 
-Loading
+Download Minggu Ini
+
+Download Bulan Ini
+
+====================================================
+
+UPLOAD ANALYTICS
+
+Total Upload
+
+Upload Hari Ini
+
+Upload Minggu Ini
+
+Upload Bulan Ini
+
+====================================================
+
+FILE TYPE
+
+Pie Chart
+
+Photo
+
+Video
+
+Document
+
+Audio
+
+Archive
+
+Other
+
+====================================================
+
+SYSTEM
+
+Bot Status
+
+REST API
+
+Database
+
+Storage
+
+Website
+
+====================================================
+
+EXPORT
+
+CSV
+
+JSON
+
+====================================================
+
+REFRESH
+
+Manual Refresh
+
+Auto Refresh Placeholder
+
+====================================================
+
+LOADING
 
 Skeleton
 
-Empty State
+====================================================
 
-Retry
+EMPTY STATE
 
-Relative Time
+Gunakan Design System
 
-Pull Refresh Mobile
+====================================================
 
-Responsive
+ANIMATION
 
-Dark Mode mengikuti tema website.
+Framer Motion
 
-==================================================
-PERFORMA
-==================================================
+Fade
 
-Notification tidak boleh duplicate.
+Slide
 
-Socket tidak boleh reconnect berulang.
+Counter Animation
 
-Gunakan pagination.
+Chart Animation
 
-Query wajib memakai index.
+====================================================
 
-==================================================
-AUDIT
-==================================================
+RESPONSIVE
 
-Lakukan simulasi berikut:
+Mobile
 
-Spam klik checkout
+Tablet
 
-Double payment
+Desktop
 
-Double callback
+====================================================
 
-Provider timeout
+API
 
-Recovery
+Gunakan endpoint backend.
 
-Refund
+Jika endpoint belum tersedia tambahkan endpoint berikut tanpa merusak endpoint lama:
 
-Deposit
+GET /api/statistics
 
-Wallet Update
+GET /api/statistics/overview
 
-Maintenance
+GET /api/statistics/storage
 
-Restart Server
+GET /api/statistics/download
 
-Reconnect Socket
+GET /api/statistics/upload
 
-Semua harus menghasilkan notification yang benar.
+GET /api/statistics/files
 
-==================================================
-VALIDASI AKHIR
-==================================================
+GET /api/statistics/users
 
-Pastikan:
+GET /api/statistics/system
 
-- npm run lint berhasil.
-- npm run build berhasil.
-- Tidak ada TypeScript error.
-- Tidak ada duplicate notification.
-- Badge selalu sinkron.
-- Socket realtime berjalan normal.
-- Notification tersimpan di database.
-- Admin dan user terpisah.
-- Tidak ada memory leak.
-- Tidak mengubah UI lama.
-- Tidak mengubah alur transaksi Digiflazz.
-- Tidak mengubah Checkout.
-- Tidak mengubah Wallet Payment.
-- Tidak mengubah Deposit Otomatis.
-- Tidak mengubah Refund.
-- Tidak mengubah Ledger.
-- Tidak mengubah Recovery.
+GET /api/statistics/chart
 
-==================================================
-LAPORAN AKHIR
-==================================================
+====================================================
 
-Setelah implementasi selesai, tampilkan laporan lengkap berisi:
+DATABASE
 
-1. Semua file yang ditambah atau diubah.
-2. Struktur database notifikasi.
-3. Diagram alur event hingga notifikasi tampil di frontend.
-4. Hasil pengujian seluruh skenario.
-5. Hasil lint dan build.
-6. Risiko yang masih tersisa.
-7. Skor keamanan fitur notifikasi.
-8. Penilaian production readiness.
-9. Rekomendasi tahap pengembangan berikutnya.
+Gunakan data yang sudah ada.
 
-Jangan berhenti sebelum seluruh implementasi, pengujian, audit, validasi, dan laporan selesai.
+Jika sebagian data belum tersedia tampilkan placeholder dan beri komentar TODO.
+
+Jangan membuat data palsu.
+
+====================================================
+
+DESIGN
+
+Gunakan Design System.
+
+Glass Card
+
+Soft Shadow
+
+Rounded
+
+Dark Mode
+
+Light Mode
+
+====================================================
+
+CODING STYLE
+
+Reusable Component
+
+TypeScript Strict
+
+SOLID
+
+Repository Pattern
+
+Tidak menggunakan any
+
+====================================================
+
+PENTING
+
+Belum membuat:
+
+User Management
+
+Premium
+
+Folder
+
+Category Management
+
+Audit Log
+
+Backup Manager
+
+Notification Center
+
+====================================================
+
+OUTPUT
+
+1. Jelaskan struktur Statistics.
+
+2. Jelaskan endpoint yang digunakan.
+
+3. Jelaskan chart yang dipakai.
+
+4. Jelaskan placeholder yang digunakan bila data belum tersedia.
+
+5. Pastikan:
+
+npm install
+
+npx prisma generate
+
+npx prisma migrate dev
+
+npm run build
+
+npm run dev
+
+berjalan tanpa error.
+
+6. Jangan mengubah fitur Upload, Download, Dashboard, Files Manager, Settings Center, Authentication, REST API maupun Bot Telegram yang sudah berjalan.
+
+7. Berhenti setelah Statistics & Analytics selesai.
 ```
