@@ -1,257 +1,282 @@
 ```
+# Telegram Drive Website - Tahap 14 : Admin Dashboard
 
-Tahap Final Production Hardening (Target 100/100)
+Authentication & Admin Foundation telah selesai.
 
-Jangan mengubah UI.
-Jangan mengubah desain.
-Jangan mengubah flow pengguna.
+Saat ini project memiliki:
 
-Lanjutkan hanya hardening production.
+✅ Login
+✅ JWT
+✅ Admin Layout
+✅ REST API
+✅ Storage Service
+✅ Download Engine
+✅ Upload Engine
+✅ Design System
+✅ Landing Page
+✅ Download Page
 
-Target akhir:
-Website benar-benar siap menerima transaksi uang asli.
+JANGAN mengubah backend yang sudah berjalan.
 
-Kerjakan semua poin berikut.
+Gunakan semua komponen Design System.
 
-==================================================
-1. Audit Semua Gateway Payment
-==================================================
+====================================================
 
-Audit seluruh adapter payment.
+TUJUAN
 
-Contoh:
+Membuat Dashboard Admin modern.
 
-Tripay
-Midtrans
-iPaymu
-Duitku
-Xendit
+Dashboard menjadi pusat kontrol Telegram Drive.
 
-Pastikan setiap gateway memiliki:
+Belum membuat Upload Page.
 
-- callback verification
-- signature verification
-- polling status
-- timeout recovery
-- duplicate callback protection
-- idempotent payment
+Belum membuat Settings Page.
 
-Jika gateway tidak mendukung polling,
-beri fallback yang aman.
+Belum membuat Statistics Detail.
 
-==================================================
-2. Unified Payment Recovery
-==================================================
+====================================================
 
-Buat satu RecoveryService.
+ROUTE
 
-RecoveryService harus:
+/admin
 
-- scan payment pending
-- scan processing
-- cek gateway
-- update state machine
-- retry callback
-- retry provider
-- retry notification
+====================================================
 
-Jangan ada recovery berbeda-beda tiap gateway.
+SIDEBAR
 
-==================================================
-3. Atomic Notification
-==================================================
+Dashboard
 
-Pastikan:
+Files
 
-Status berubah
-↓
+Upload
 
-Mongo transaction commit
+Channels
 
-↓
+Users
 
-Notification Queue
+Statistics
 
-↓
+Storage
 
-Send notification
+Settings
 
-Jika notification gagal
+API
 
-Jangan rollback transaksi.
+Logs
 
-Masukkan retry queue.
+Premium
 
-==================================================
-4. Provider Recovery
-==================================================
+====================================================
 
-Jika provider timeout
+HEADER
 
-cek status provider
+Search
 
-Jika success
+Notification
 
-ubah menjadi success
+Theme Toggle
 
-Jika failed
+Profile
 
-ubah failed
+Logout
 
-Jika unknown
+====================================================
 
-tetap processing
+HALAMAN DASHBOARD
 
-jangan pernah langsung gagal.
+Gunakan layout modern.
 
-==================================================
-5. Production Config Audit
-==================================================
+====================================================
 
-Cari seluruh project.
+STAT CARD
 
-Pastikan tidak ada lagi:
+Ambil data dari API.
 
-sandbox
+Tampilkan:
 
-dummy
+Total Files
 
-mock
+Total Downloads
 
-placeholder
+Total Users
 
-localhost
+Total Storage
 
-example.com
+====================================================
 
-yourdomain
+QUICK ACTION
 
-dev-key
+Upload File
 
-testing credential
+Add Channel
 
-Jika ditemukan
+Generate Link
 
-hapus dari production path.
+Force Join Settings
 
-==================================================
-6. Security Audit
-==================================================
+====================================================
 
-Audit:
+RECENT FILES
 
-JWT
+Tampilkan 10 file terbaru.
 
-Session
+Nama
 
-Cookie
+Ukuran
 
-CORS
+Tanggal
 
-Rate limit
+Status
 
-CSRF
+====================================================
 
-Helmet
+RECENT DOWNLOAD
 
-Admin endpoint
+10 download terakhir.
 
-History endpoint
+====================================================
 
-Payment endpoint
+SERVER STATUS
 
-Provider endpoint
+Telegram Bot
 
-Pastikan tidak ada endpoint tanpa auth.
+REST API
 
-==================================================
-7. Privacy Audit
-==================================================
+Database
 
-Pastikan user tidak dapat:
+Storage
 
-melihat order user lain
+Force Join
 
-refund user lain
+Semua menggunakan indikator:
 
-payment user lain
+Hijau
 
-callback user lain
+Merah
 
-history user lain
+Kuning
 
-==================================================
-8. MongoDB Production
-==================================================
+====================================================
 
-Audit:
+SYSTEM INFO
 
-index
+Version
 
-compound index
+Node Version
 
-TTL
+Database
 
-transaction
+Telegram Bot
 
-replica set
+Storage
 
-write concern
+====================================================
 
-read concern
+QUICK STATS
 
-optimistic locking
+Download Hari Ini
 
-==================================================
-9. Recovery Test
-==================================================
+Upload Hari Ini
 
-Simulasikan:
+User Aktif
 
-- restart server
-- payment callback terlambat
-- provider timeout
-- provider success setelah timeout
-- callback datang dua kali
-- refund dua kali
-- payment spam
-- checkout spam
-- network error
-- Mongo restart
+File Aktif
 
-==================================================
-10. Final Report
-==================================================
+====================================================
 
-Berikan laporan:
+CHART
 
-✔ skor keamanan
+Placeholder.
 
-✔ production readiness
+Gunakan komponen chart.
 
-✔ daftar file berubah
+Belum perlu data real.
 
-✔ risiko tersisa
+====================================================
 
-✔ apakah sudah layak transaksi uang asli
+EMPTY STATE
 
-✔ apakah sudah layak menerima ribuan transaksi per hari
+Gunakan komponen dari Design System.
 
-✔ apakah ada kemungkinan kehilangan saldo
+====================================================
 
-✔ apakah masih ada kemungkinan double payment
+RESPONSIVE
 
-✔ apakah masih ada kemungkinan double refund
+Mobile
 
-✔ apakah masih ada kemungkinan order nyangkut
+Tablet
 
-Jika masih ada risiko,
+Desktop
 
-jelaskan secara rinci.
+====================================================
 
-Jangan mengubah UI.
+ANIMATION
 
-Jangan mengubah desain.
+Gunakan Framer Motion.
 
-Fokus hanya keamanan dan stabilitas production.
+Fade
+
+Slide
+
+Hover
+
+Card Animation
+
+Counter Animation
+
+====================================================
+
+THEME
+
+Support:
+
+Light
+
+Dark
+
+System
+
+====================================================
+
+API
+
+Gunakan endpoint REST API.
+
+Jangan hardcode.
+
+====================================================
+
+PENTING
+
+Belum membuat:
+
+Upload Page
+
+Files Page
+
+Settings Page
+
+Users Page
+
+Statistics Detail
+
+Premium
+
+====================================================
+
+OUTPUT
+
+1. Jelaskan struktur Dashboard.
+
+2. Jelaskan API yang dipakai.
+
+3. Pastikan:
+
+npm run build
+
+npm run dev
+
+berjalan tanpa error.
+
+4. Berhenti setelah Dashboard selesai.
 ```
