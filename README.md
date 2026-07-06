@@ -1,334 +1,258 @@
 ```
-# LANJUTKAN IMPLEMENTASI AUTHENTICATION DIGITAL CELL (PRODUCTION READY)
+# Tahap Selanjutnya - Backup & Restore Center
 
-Lanjutkan project Digital Cell.
+Jangan mengubah seluruh fitur yang sudah selesai.
 
-Jangan membuat sistem authentication baru.
+Semua module harus tetap berjalan:
 
-Gunakan sistem login yang sudah ada dan sempurnakan menjadi production ready.
-
-==================================================
-
-TARGET
-
-Selesaikan seluruh Authentication sampai Production Ready.
-
-Seluruh fitur login harus menggunakan database yang sama.
-
-Satu user hanya memiliki satu akun walaupun login menggunakan Email atau Google.
-
-Tidak boleh membuat akun ganda.
-
-==================================================
-
-IMPLEMENTASI
-
-Lanjutkan seluruh implementasi yang sudah diaudit sebelumnya.
-
-Selesaikan:
-
-✅ Profil User
-✅ Upload Avatar
-✅ Edit Profil
-✅ Ganti Password
-✅ Login History
-✅ Session Manager
-✅ Admin User Management
-
-Setelah itu lanjutkan Authentication.
+- Telegram Bot
+- Upload Telegram
+- Download Page
+- REST API
+- Login Admin
+- Dashboard
+- Upload Manager
+- Files Manager
+- Folder Manager
+- User Manager
+- Statistics
+- Audit Log
+- Notification Center
+- Settings
+- Force Join
 
 ==================================================
 
-PENDAFTARAN EMAIL OTP
+Buat Backup & Restore Center.
 
-Tambahkan sistem register menggunakan Email.
+Route:
 
-Flow:
-
-Nama
-
-Email
-
-Password
-
-Konfirmasi Password
-
-Kirim OTP ke Email
-
-Verifikasi OTP
-
-Akun aktif
-
-Login otomatis.
-
-OTP memiliki masa berlaku.
-
-OTP hanya sekali pakai.
-
-OTP disimpan aman di database.
-
-Rate limit pengiriman OTP.
+/admin/backup
 
 ==================================================
 
-LOGIN EMAIL
+Sidebar
 
-User login menggunakan:
+Backup
 
-Email
+Restore
 
-Password
+Schedule
 
-Jika belum verifikasi email:
+History
 
-Tolak login.
-
-Tawarkan kirim ulang OTP.
+Storage
 
 ==================================================
 
-LOGIN GOOGLE
+Dashboard Backup
 
-Tambahkan Login menggunakan Google OAuth.
+Card:
 
-Gunakan OAuth resmi Google.
+Last Backup
 
-Jangan menggunakan library yang sudah deprecated.
+Next Backup
 
-==================================================
+Database Size
 
-FLOW LOGIN GOOGLE
+Total Backup
 
-Klik Login Google
-
-Pilih akun Google
-
-Verifikasi token Google
-
-Jika email belum ada:
-
-Buat akun baru.
-
-Jika email sudah ada:
-
-Hubungkan ke akun lama.
-
-Login berhasil.
+Storage Used
 
 ==================================================
 
-LINK ACCOUNT
+Backup Type
 
-Jika user awalnya daftar Email OTP lalu login Google dengan email yang sama:
+✓ Database
 
-Jangan membuat akun baru.
+✓ Uploaded Metadata
 
-Hubungkan provider Google ke akun tersebut.
+✓ Settings
 
-==================================================
+✓ Folder
 
-DATABASE
+✓ User
 
-Tambahkan field yang diperlukan:
+✓ Notification
 
-google_id
+✓ Audit
 
-auth_provider
+✓ Statistics
 
-email_verified
+✓ Configuration
 
-last_login
-
-avatar_url
-
-token_version
-
-login_history
-
-session
+Checkbox bebas dipilih.
 
 ==================================================
 
-LOGIN HISTORY
+Button
 
-Simpan:
+Backup Now
 
-IP
+Download Backup
 
-Browser
+Delete Backup
 
-OS
+Restore Backup
+
+==================================================
+
+Backup Format
+
+ZIP
+
+JSON
+
+SQL
+
+==================================================
+
+History
 
 Tanggal
 
-Jam
+Ukuran
 
-Provider Login
+Jenis
 
-==================================================
+Status
 
-SESSION
+Durasi
 
-User dapat melihat:
+Download
 
-Perangkat aktif
+Restore
 
-Logout device tertentu
-
-Logout semua device
+Delete
 
 ==================================================
 
-LUPA PASSWORD
+Schedule
 
-Flow:
+Manual
 
-Masukkan Email
+Daily
 
-Kirim OTP
+Weekly
 
-Verifikasi OTP
+Monthly
 
-Password Baru
+Auto Cleanup
 
-Login kembali
+Retention:
 
-==================================================
+7 hari
 
-ADMIN PANEL
+30 hari
 
-Tambahkan menu Authentication.
+90 hari
 
-Admin dapat melihat:
-
-Jumlah User
-
-User Google
-
-User Email
-
-User Belum Verifikasi
-
-Login Hari Ini
-
-Login Gagal
-
-User Terblokir
+365 hari
 
 ==================================================
 
-KEAMANAN
+Storage
 
-Password wajib hash.
+Total Backup
 
-OTP hash.
+Used
 
-JWT tetap digunakan.
+Free
 
-Refresh Token tetap aman.
+Largest Backup
 
-Rate Limit Login.
-
-Rate Limit OTP.
-
-Captcha support bila diperlukan.
+Latest Backup
 
 ==================================================
 
-EMAIL
+Restore
 
-Gunakan SMTP production.
+Upload backup
 
-Jangan hardcode akun email.
+Validasi
 
-Gunakan ENV.
+Preview isi backup
 
-==================================================
+Konfirmasi Restore
 
-NOTIFIKASI
+Progress Restore
 
-Kirim Email ketika:
-
-Register
-
-OTP
-
-Login Baru
-
-Password Diganti
-
-Email Diganti
-
-Google berhasil dihubungkan
+Rollback jika gagal
 
 ==================================================
 
-VALIDASI
+API
 
-Pastikan:
+GET /api/backup
 
-npm run lint
+POST /api/backup/create
+
+POST /api/backup/restore
+
+DELETE /api/backup/:id
+
+GET /api/backup/download/:id
+
+GET /api/backup/history
+
+==================================================
+
+Security
+
+Hanya OWNER
+
+Audit Log otomatis
+
+Notification otomatis
+
+==================================================
+
+UI
+
+Glassmorphism
+
+Framer Motion
+
+Progress
+
+Loading
+
+Toast
+
+Responsive Desktop Tablet Mobile
+
+==================================================
+
+Output
+
+Jelaskan:
+
+1. File baru
+
+2. File diubah
+
+3. Database
+
+4. API
+
+5. UI
+
+6. Integrasi
+
+7. Verifikasi:
+
+npm install
+
+npx prisma generate
+
+npx prisma migrate dev
 
 npm run build
 
-Tidak ada TypeScript Error.
+npm run dev
 
-Tidak ada Build Error.
+Jangan mengubah module lain.
 
-==================================================
-
-SIMULASI
-
-Lakukan audit:
-
-Register Email OTP
-
-OTP salah
-
-OTP expired
-
-Resend OTP
-
-Login Email
-
-Login Google
-
-Hubungkan akun Google
-
-Reset Password
-
-Logout Semua Device
-
-Login Multi Device
-
-Admin melihat user
-
-Admin reset password
-
-==================================================
-
-LAPORAN
-
-Tampilkan:
-
-1. File yang diubah.
-
-2. Endpoint baru.
-
-3. Collection yang berubah.
-
-4. Migration.
-
-5. Audit keamanan.
-
-6. Hasil simulasi.
-
-7. Risiko yang tersisa.
-
-8. Production Readiness.
-
-9. Skor keamanan Authentication.
-
-10. Pastikan seluruh sistem lama (Checkout, Wallet, Deposit, Refund, Riwayat, Notifikasi, Dashboard Admin, Produk, Sinkronisasi Digiflazz) tetap berjalan normal tanpa regresi.
+Berhenti setelah Backup & Restore selesai.
 ```
 
