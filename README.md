@@ -1,515 +1,446 @@
 ```
-# IMPLEMENTASI LENGKAP RIWAYAT TRANSAKSI DIGITAL CELL (PRODUCTION READY)
+# Telegram Drive Website - Tahap 20 : Folder Management (Professional File Organization)
 
-Lanjutkan project Digital Cell tanpa mengubah fitur yang sudah selesai (Digiflazz, Checkout, Deposit Otomatis, Wallet Payment, Refund, Ledger, Recovery, Dashboard Keuangan, dan Notifikasi Real-Time).
+Tahap User Management telah selesai.
 
-Tujuan tahap ini adalah membangun sistem Riwayat Transaksi yang lengkap, aman, realtime, dan production-ready.
+Project saat ini telah memiliki:
 
-==================================================
-ATURAN
-==================================================
+✅ Telegram Bot
+✅ Upload Engine
+✅ Download Engine
+✅ Storage Service
+✅ REST API
+✅ Authentication
+✅ Dashboard
+✅ Files Manager
+✅ Upload Manager
+✅ Settings Center
+✅ Statistics
+✅ User Management
 
-- Jangan merusak UI lama.
-- Jangan mengubah alur checkout.
-- Jangan mengubah alur Digiflazz.
-- Jangan mengubah Wallet.
-- Jangan mengubah Deposit.
-- Jangan mengubah Refund.
-- Jangan menggunakan dummy, fake data, hardcode, maupun mock.
-- Semua data harus berasal dari database.
-- Semua endpoint wajib login.
-- User hanya boleh melihat transaksi miliknya.
-- Admin memiliki endpoint sendiri.
+JANGAN mengubah fitur yang sudah berjalan.
 
-==================================================
-HALAMAN RIWAYAT TRANSAKSI
-==================================================
+JANGAN merusak REST API.
 
-Buat halaman Riwayat Transaksi yang modern dan responsif.
+Gunakan seluruh Design System.
 
-Setiap transaksi menampilkan:
+====================================================
 
-- Nama Produk
-- Logo Provider
-- Nomor Tujuan
-- Kategori
-- Provider
-- Invoice / ID Order
-- Tanggal
-- Jam
-- Harga
-- Metode Pembayaran
-- Status
-- Badge Status
-- Tombol Detail
+TUJUAN
 
-==================================================
-STATUS
-==================================================
+Membangun Folder Management profesional.
 
-Gunakan badge berwarna.
+Folder digunakan untuk mengelola ribuan file agar terorganisir.
 
-Waiting Payment
+Upload Manager harus bisa memilih Folder.
 
-Paid
+Files Manager harus bisa difilter berdasarkan Folder.
 
-Processing
+====================================================
 
-Success
+ROUTE
 
-Failed
+/admin/folders
 
-Refund
+====================================================
 
-Refund Success
+DATABASE
 
-Cancelled
+Gunakan tabel Folder.
 
-Expired
+Jika belum ada buat schema berikut:
 
-Recovery
+Folder
 
-==================================================
-FILTER
-==================================================
+id
 
-Semua
+parentId
 
-Hari Ini
+name
 
-7 Hari
+slug
 
-30 Hari
+description
 
-Berhasil
+icon
 
-Diproses
+color
 
-Pending
+sortOrder
 
-Refund
+visibility
 
-Deposit
+status
 
-Wallet
+createdAt
 
-Kategori
+updatedAt
 
-Provider
+====================================================
 
-==================================================
+SUPPORT
+
+Unlimited Folder
+
+Unlimited Sub Folder
+
+====================================================
+
+TREE VIEW
+
+Sidebar kiri seperti File Explorer.
+
+Folder
+
+Sub Folder
+
+Expand
+
+Collapse
+
+====================================================
+
+CONTENT
+
+Saat klik Folder tampilkan:
+
+Nama Folder
+
+Jumlah File
+
+Jumlah Sub Folder
+
+Storage
+
+Tanggal Dibuat
+
+====================================================
+
+ACTION
+
+Create Folder
+
+Rename
+
+Move
+
+Duplicate
+
+Delete
+
+Change Icon
+
+Change Color
+
+====================================================
+
+DRAG DROP
+
+Support Drag & Drop Folder.
+
+Jika belum memungkinkan beri TODO.
+
+====================================================
+
+MOVE FILE
+
+File dapat dipindahkan ke Folder lain.
+
+====================================================
+
+UPLOAD
+
+Upload Manager wajib memiliki dropdown Folder.
+
+Folder terakhir disimpan sebagai default.
+
+====================================================
+
+FILES MANAGER
+
+Tambahkan:
+
+Filter Folder
+
+Breadcrumb
+
+====================================================
+
+BREADCRUMB
+
+Contoh:
+
+Home
+
+>
+
+Film
+
+>
+
+Action
+
+====================================================
+
 SEARCH
-==================================================
 
-Cari berdasarkan
+Cari Folder.
 
-Invoice
+====================================================
 
-Nomor Tujuan
-
-Nama Produk
-
-Provider
-
-==================================================
 SORT
-==================================================
 
-Terbaru
-
-Terlama
-
-Harga terbesar
-
-Harga terkecil
-
-==================================================
-DETAIL TRANSAKSI
-==================================================
-
-Saat klik Detail.
-
-Tampilkan:
-
-ID Order
-
-Invoice
-
-Ref ID Provider
-
-Buyer SKU Code
-
-Provider
-
-Kategori
-
-Nama Produk
-
-Nomor Tujuan
-
-Harga Produk
-
-Biaya Admin
-
-Diskon
-
-Total
-
-Metode Pembayaran
-
-Status
+Nama
 
 Tanggal
 
-Jam
+Jumlah File
 
-Catatan
+====================================================
 
-==================================================
-TIMELINE
-==================================================
+STATUS
 
-Tampilkan timeline.
+Active
 
-Order dibuat
+Hidden
+
+Locked
+
+====================================================
+
+VISIBILITY
+
+Public
+
+Private
+
+Premium
+
+====================================================
+
+DETAIL DRAWER
+
+Nama
+
+Slug
+
+Parent Folder
+
+Jumlah File
+
+Jumlah Download
+
+Storage
+
+Owner
+
+Tanggal Dibuat
+
+====================================================
+
+ICON
+
+Gunakan Icon Library.
+
+Folder
+
+Video
+
+Music
+
+Photo
+
+Archive
+
+Application
+
+Document
+
+Game
+
+Movie
+
+====================================================
+
+COLOR
+
+Blue
+
+Green
+
+Purple
+
+Orange
+
+Red
+
+Gray
+
+====================================================
+
+EMPTY STATE
+
+Gunakan Design System.
+
+====================================================
+
+LOADING
+
+Skeleton.
+
+====================================================
+
+ANIMATION
+
+Framer Motion.
+
+Expand Animation
+
+Collapse Animation
+
+Fade
+
+Hover
+
+====================================================
+
+RESPONSIVE
+
+Desktop
+
+Tablet
+
+Mobile
+
+====================================================
+
+API
+
+Gunakan endpoint backend.
+
+Jika belum tersedia tambahkan endpoint berikut tanpa merusak endpoint lama:
+
+GET /api/folders
+
+GET /api/folders/tree
+
+GET /api/folders/:id
+
+POST /api/folders
+
+PUT /api/folders/:id
+
+DELETE /api/folders/:id
+
+POST /api/folders/:id/move
+
+POST /api/folders/:id/icon
+
+POST /api/folders/:id/color
+
+GET /api/folders/:id/files
+
+====================================================
+
+DATABASE RELATION
+
+Folder
 
 ↓
 
-Waiting Payment
+Many Files
+
+Folder
 
 ↓
 
-Payment Success
+Many Child Folder
+
+Parent Folder
 
 ↓
 
-Processing
+Many Sub Folder
 
-↓
+====================================================
 
-Provider
+SECURITY
 
-↓
+Semua endpoint wajib menggunakan Admin Authentication.
 
-Success
+====================================================
 
-atau
+DESIGN
 
-↓
+Gunakan seluruh komponen Design System.
 
-Failed
+Glass Card
 
-↓
+Rounded
 
-Refund
+Light
 
-↓
+Dark
 
-Refund Success
+====================================================
 
-Semua timeline berasal dari database.
+CODING STYLE
 
-==================================================
-DETAIL PAYMENT
-==================================================
+Reusable Components
 
-Jika payment gateway dipakai.
+TypeScript Strict
 
-Tampilkan
+Repository Pattern
 
-Invoice Gateway
+SOLID
 
-Gateway
+Tidak menggunakan any
 
-Reference
+====================================================
 
-Callback
+PENTING
 
-Payment Time
+Belum membuat:
 
-Expired Time
+Category Management
 
-==================================================
-DETAIL REFUND
-==================================================
+Audit Log
 
-Jika refund ada.
+Backup Manager
 
-Tampilkan
+Notification Center
 
-Nominal
+Premium System
 
-Tanggal
+Production Ready
 
-Status
+====================================================
 
-Admin
+OUTPUT
 
-Alasan
+1. Jelaskan struktur Folder Management.
 
-Ledger
+2. Jelaskan relasi database.
 
-==================================================
-DETAIL WALLET
-==================================================
+3. Jelaskan endpoint yang digunakan.
 
-Jika menggunakan wallet.
+4. Pastikan Upload Manager dan Files Manager telah terintegrasi dengan Folder.
 
-Tampilkan
+5. Pastikan:
 
-Saldo Sebelum
+npm install
 
-Saldo Sesudah
+npx prisma generate
 
-Debit
-
-Credit
-
-Ledger Reference
-
-==================================================
-DETAIL DIGIFLAZZ
-==================================================
-
-Jika provider Digiflazz.
-
-Tampilkan
-
-Buyer SKU Code
-
-Ref ID
-
-SN
-
-Message
-
-Status Provider
-
-Last Update
-
-==================================================
-DETAIL DEPOSIT
-==================================================
-
-Jika order berasal dari saldo deposit.
-
-Tampilkan
-
-Deposit ID
-
-Saldo Dipakai
-
-Ledger
-
-==================================================
-REALTIME
-==================================================
-
-Jika status berubah.
-
-Halaman otomatis update.
-
-Tanpa refresh.
-
-Gunakan Notification/Event yang sudah dibuat.
-
-==================================================
-EXPORT
-==================================================
-
-User dapat
-
-Download PDF Invoice
-
-Download CSV Riwayat
-
-Print Invoice
-
-==================================================
-KEAMANAN
-==================================================
-
-User tidak boleh melihat transaksi user lain.
-
-Gunakan auth user.
-
-Validasi owner.
-
-Cegah IDOR.
-
-Endpoint admin dipisahkan.
-
-==================================================
-ENDPOINT
-==================================================
-
-GET
-
-/orders
-
-/orders/history
-
-/orders/{id}
-
-/orders/{id}/timeline
-
-/orders/{id}/invoice
-
-/orders/search
-
-/orders/filter
-
-ADMIN
-
-/admin/orders
-
-/admin/orders/{id}
-
-==================================================
-ADMIN
-==================================================
-
-Admin melihat seluruh transaksi.
-
-Filter:
-
-Provider
-
-Kategori
-
-Status
-
-Payment
-
-Refund
-
-Wallet
-
-Deposit
-
-Tanggal
-
-User
-
-==================================================
-STATISTIK
-==================================================
-
-Hitung otomatis
-
-Total Order
-
-Total Success
-
-Total Failed
-
-Total Refund
-
-Total Pending
-
-Total Deposit
-
-Total Wallet Payment
-
-Total Belanja
-
-==================================================
-UI
-==================================================
-
-Tambahkan
-
-Loading
-
-Skeleton
-
-Retry
-
-Pagination
-
-Infinite Scroll
-
-Responsive
-
-Dark Mode mengikuti tema website.
-
-==================================================
-AUDIT
-==================================================
-
-Uji:
-
-Order sukses
-
-Order gagal
-
-Refund
-
-Wallet
-
-Deposit
-
-Provider timeout
-
-Recovery
-
-Restart server
-
-Double callback
-
-Spam refresh
-
-Multi tab
-
-==================================================
-VALIDASI
-==================================================
-
-Pastikan
-
-npm run lint
+npx prisma migrate dev
 
 npm run build
 
-berhasil.
+npm run dev
 
-Tidak ada TypeScript error.
+berjalan tanpa error.
 
-Tidak ada duplicate order.
+6. Jangan mengubah Upload Manager, Files Manager, Dashboard, Settings, Statistics, User Management, REST API, Bot Telegram maupun Storage Service.
 
-Tidak ada transaksi hilang.
-
-Tidak ada transaksi user lain terbuka.
-
-Timeline sinkron dengan database.
-
-Invoice sinkron.
-
-Refund sinkron.
-
-Wallet sinkron.
-
-Deposit sinkron.
-
-Notifikasi sinkron.
-
-Digiflazz sinkron.
-
-==================================================
-LAPORAN AKHIR
-==================================================
-
-Setelah implementasi selesai tampilkan:
-
-1. File yang diubah.
-2. Struktur endpoint.
-3. Struktur database yang digunakan.
-4. Hasil audit keamanan.
-5. Hasil simulasi transaksi.
-6. Risiko tersisa.
-7. Skor keamanan Riwayat Transaksi.
-8. Production Readiness.
-9. Rekomendasi tahap berikutnya.
-
-Jangan berhenti sebelum implementasi, audit, validasi, pengujian, dan laporan selesai.
+7. Berhenti setelah Folder Management selesai.
 ```
