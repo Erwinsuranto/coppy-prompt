@@ -1,287 +1,334 @@
 ```
-# Telegram Drive - Tahap 22 : Notification Center (Real Time)
+# LANJUTKAN IMPLEMENTASI AUTHENTICATION DIGITAL CELL (PRODUCTION READY)
 
-Semua modul sebelumnya sudah selesai.
+Lanjutkan project Digital Cell.
 
-JANGAN mengubah fitur yang sudah berjalan.
+Jangan membuat sistem authentication baru.
 
-Gunakan seluruh REST API, Database, Authentication, Dashboard, Settings, Audit Log, Statistics, Folder Management, Upload Manager, Files Manager yang sudah ada.
+Gunakan sistem login yang sudah ada dan sempurnakan menjadi production ready.
 
-====================================================
+==================================================
 
-TUJUAN
+TARGET
 
-Membangun Notification Center profesional.
+Selesaikan seluruh Authentication sampai Production Ready.
 
-Semua aktivitas penting menghasilkan notifikasi.
+Seluruh fitur login harus menggunakan database yang sama.
 
-====================================================
+Satu user hanya memiliki satu akun walaupun login menggunakan Email atau Google.
 
-ROUTE
+Tidak boleh membuat akun ganda.
 
-/admin/notifications
+==================================================
 
-====================================================
+IMPLEMENTASI
+
+Lanjutkan seluruh implementasi yang sudah diaudit sebelumnya.
+
+Selesaikan:
+
+✅ Profil User
+✅ Upload Avatar
+✅ Edit Profil
+✅ Ganti Password
+✅ Login History
+✅ Session Manager
+✅ Admin User Management
+
+Setelah itu lanjutkan Authentication.
+
+==================================================
+
+PENDAFTARAN EMAIL OTP
+
+Tambahkan sistem register menggunakan Email.
+
+Flow:
+
+Nama
+
+Email
+
+Password
+
+Konfirmasi Password
+
+Kirim OTP ke Email
+
+Verifikasi OTP
+
+Akun aktif
+
+Login otomatis.
+
+OTP memiliki masa berlaku.
+
+OTP hanya sekali pakai.
+
+OTP disimpan aman di database.
+
+Rate limit pengiriman OTP.
+
+==================================================
+
+LOGIN EMAIL
+
+User login menggunakan:
+
+Email
+
+Password
+
+Jika belum verifikasi email:
+
+Tolak login.
+
+Tawarkan kirim ulang OTP.
+
+==================================================
+
+LOGIN GOOGLE
+
+Tambahkan Login menggunakan Google OAuth.
+
+Gunakan OAuth resmi Google.
+
+Jangan menggunakan library yang sudah deprecated.
+
+==================================================
+
+FLOW LOGIN GOOGLE
+
+Klik Login Google
+
+Pilih akun Google
+
+Verifikasi token Google
+
+Jika email belum ada:
+
+Buat akun baru.
+
+Jika email sudah ada:
+
+Hubungkan ke akun lama.
+
+Login berhasil.
+
+==================================================
+
+LINK ACCOUNT
+
+Jika user awalnya daftar Email OTP lalu login Google dengan email yang sama:
+
+Jangan membuat akun baru.
+
+Hubungkan provider Google ke akun tersebut.
+
+==================================================
 
 DATABASE
 
-Jika belum ada buat tabel:
+Tambahkan field yang diperlukan:
 
-Notification
+google_id
 
-id
+auth_provider
 
-title
+email_verified
 
-message
+last_login
 
-type
+avatar_url
 
-icon
+token_version
 
-priority
+login_history
 
-isRead
+session
 
-userId (nullable)
+==================================================
 
-targetRole
+LOGIN HISTORY
 
-actionUrl
+Simpan:
 
-metadata JSON
+IP
 
-createdAt
+Browser
 
-====================================================
+OS
 
-TYPE
+Tanggal
 
-Info
+Jam
 
-Success
+Provider Login
 
-Warning
+==================================================
 
-Error
+SESSION
 
-Security
+User dapat melihat:
 
-System
+Perangkat aktif
 
-====================================================
+Logout device tertentu
 
-PRIORITY
+Logout semua device
 
-Low
+==================================================
 
-Medium
+LUPA PASSWORD
 
-High
+Flow:
 
-Critical
+Masukkan Email
 
-====================================================
+Kirim OTP
 
-NOTIFIKASI OTOMATIS
+Verifikasi OTP
 
-Upload berhasil
+Password Baru
 
-Upload gagal
+Login kembali
 
-Download tinggi
+==================================================
 
-Storage hampir penuh
+ADMIN PANEL
 
-Login berhasil
+Tambahkan menu Authentication.
 
-Login gagal
+Admin dapat melihat:
 
-User baru
+Jumlah User
 
-Admin baru
+User Google
 
-Role berubah
+User Email
 
-Folder dibuat
+User Belum Verifikasi
 
-Folder dihapus
+Login Hari Ini
 
-Generate Link
+Login Gagal
 
-Disable Link
+User Terblokir
 
-Force Join ON
+==================================================
 
-Force Join OFF
+KEAMANAN
 
-Tambah Channel
+Password wajib hash.
 
-Hapus Channel
+OTP hash.
 
-Backup selesai
+JWT tetap digunakan.
 
-Restore selesai
+Refresh Token tetap aman.
 
-Error Telegram API
+Rate Limit Login.
 
-REST API Error
+Rate Limit OTP.
 
-====================================================
+Captcha support bila diperlukan.
 
-HEADER
+==================================================
 
-Tambahkan Bell Notification.
+EMAIL
 
-Badge unread.
+Gunakan SMTP production.
 
-Klik membuka Notification Drawer.
+Jangan hardcode akun email.
 
-====================================================
+Gunakan ENV.
 
-DRAWER
+==================================================
 
-Latest Notification
+NOTIFIKASI
 
-Infinite Scroll
+Kirim Email ketika:
 
-Load More
+Register
 
-Mark Read
+OTP
 
-Mark All Read
+Login Baru
 
-Delete Read
+Password Diganti
 
-====================================================
+Email Diganti
 
-HALAMAN
+Google berhasil dihubungkan
 
-/admin/notifications
+==================================================
 
-Filter
+VALIDASI
 
-Search
+Pastikan:
 
-Sort
-
-Priority
-
-Type
-
-Date
-
-Status
-
-====================================================
-
-CARD
-
-Icon
-
-Title
-
-Description
-
-Time Ago
-
-Priority Badge
-
-Action Button
-
-====================================================
-
-REALTIME
-
-Auto Refresh
-
-Polling
-
-30 detik
-
-Tanpa websocket.
-
-====================================================
-
-API
-
-GET /api/notifications
-
-GET /api/notifications/unread
-
-POST /api/notifications/read/:id
-
-POST /api/notifications/read-all
-
-DELETE /api/notifications/read
-
-====================================================
-
-SETTING
-
-Settings Center sekarang memiliki:
-
-Enable Notification
-
-Desktop Notification
-
-Sound Notification
-
-Email Placeholder
-
-Telegram Placeholder
-
-====================================================
-
-ANIMATION
-
-Framer Motion
-
-Slide
-
-Fade
-
-Bell Shake
-
-Counter Animation
-
-====================================================
-
-RESPONSIVE
-
-Desktop
-
-Tablet
-
-Mobile
-
-====================================================
-
-OUTPUT
-
-Jelaskan:
-
-1. Database
-
-2. API
-
-3. UI
-
-4. Integrasi otomatis
-
-5. Verifikasi:
-
-npm install
-
-npx prisma generate
-
-npx prisma migrate dev
+npm run lint
 
 npm run build
 
-npm run dev
+Tidak ada TypeScript Error.
 
-6. Jangan mengubah module lain.
+Tidak ada Build Error.
 
-Berhenti setelah Notification Center selesai.
+==================================================
+
+SIMULASI
+
+Lakukan audit:
+
+Register Email OTP
+
+OTP salah
+
+OTP expired
+
+Resend OTP
+
+Login Email
+
+Login Google
+
+Hubungkan akun Google
+
+Reset Password
+
+Logout Semua Device
+
+Login Multi Device
+
+Admin melihat user
+
+Admin reset password
+
+==================================================
+
+LAPORAN
+
+Tampilkan:
+
+1. File yang diubah.
+
+2. Endpoint baru.
+
+3. Collection yang berubah.
+
+4. Migration.
+
+5. Audit keamanan.
+
+6. Hasil simulasi.
+
+7. Risiko yang tersisa.
+
+8. Production Readiness.
+
+9. Skor keamanan Authentication.
+
+10. Pastikan seluruh sistem lama (Checkout, Wallet, Deposit, Refund, Riwayat, Notifikasi, Dashboard Admin, Produk, Sinkronisasi Digiflazz) tetap berjalan normal tanpa regresi.
 ```
+
