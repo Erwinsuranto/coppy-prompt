@@ -1,421 +1,287 @@
 ```
-# IMPLEMENTASI LENGKAP MODUL PROFIL PENGGUNA (USER PROFILE) DIGITAL CELL
+# Telegram Drive - Tahap 22 : Notification Center (Real Time)
 
-Lakukan audit terlebih dahulu sebelum mengubah kode.
+Semua modul sebelumnya sudah selesai.
 
-Jangan langsung membuat fitur baru.
+JANGAN mengubah fitur yang sudah berjalan.
 
-Periksa seluruh project, frontend, backend, database, API, authentication, dashboard admin, dan relasi data.
+Gunakan seluruh REST API, Database, Authentication, Dashboard, Settings, Audit Log, Statistics, Folder Management, Upload Manager, Files Manager yang sudah ada.
 
-Jika fitur sudah ada sebagian, lanjutkan dan sempurnakan tanpa membuat versi baru.
+====================================================
 
-==================================================
+TUJUAN
 
-TARGET
+Membangun Notification Center profesional.
 
-Menyelesaikan seluruh modul Profil Pengguna hingga Production Ready.
+Semua aktivitas penting menghasilkan notifikasi.
 
-Semua data harus berasal dari database.
+====================================================
 
-Tidak boleh ada data dummy.
+ROUTE
 
-Tidak boleh ada hardcode.
+/admin/notifications
 
-Harus kompatibel dengan seluruh sistem transaksi yang sudah selesai.
-
-==================================================
-
-AUDIT
-
-Periksa terlebih dahulu:
-
-- Struktur tabel/collection user
-- Authentication
-- JWT
-- Session
-- Login
-- Register
-- Dashboard User
-- Dashboard Admin
-- Notification
-- Wallet
-- Order
-- Riwayat
-- Deposit
-- Refund
-- Upload File
-- Storage Avatar
-
-Buat laporan:
-
-- Yang sudah ada
-- Yang belum ada
-- Yang perlu diperbaiki
-- Yang berpotensi merusak sistem jika diubah
-
-==================================================
-
-PROFIL USER
-
-Lengkapi halaman Profil.
-
-Minimal memiliki:
-
-Foto Profil
-
-Nama Lengkap
-
-Username
-
-Email
-
-Nomor HP
-
-Tanggal Daftar
-
-Status Akun
-
-Role
-
-Saldo
-
-Jumlah Order
-
-Total Deposit
-
-Total Refund
-
-Terakhir Login
-
-==================================================
-
-EDIT PROFIL
-
-User dapat mengubah:
-
-Nama
-
-Username (jika diizinkan)
-
-Email
-
-Nomor HP
-
-Foto Profil
-
-Bio (opsional)
-
-Semua perubahan harus divalidasi backend.
-
-==================================================
-
-UPLOAD FOTO
-
-Upload Avatar.
-
-Validasi:
-
-jpg
-
-jpeg
-
-png
-
-webp
-
-Ukuran maksimal.
-
-Resize otomatis bila perlu.
-
-Hapus file lama bila diganti.
-
-Tidak boleh overwrite avatar user lain.
-
-==================================================
-
-EMAIL
-
-Audit apakah email sudah digunakan.
-
-Jika belum:
-
-Tambahkan.
-
-Jika sudah:
-
-Pastikan unik.
-
-Tidak boleh duplicate.
-
-Semua perubahan email dicatat.
-
-==================================================
-
-NOMOR HP
-
-Audit field nomor HP.
-
-Validasi format Indonesia.
-
-Tidak boleh duplicate bila kebijakan sistem mengharuskan unik.
-
-==================================================
-
-PASSWORD
-
-Audit sistem password.
-
-Pastikan:
-
-Hash aman.
-
-Tidak ada plaintext.
-
-User harus memasukkan:
-
-Password lama
-
-Password baru
-
-Konfirmasi password
-
-Logout semua session lama bila password diganti.
-
-==================================================
-
-LOGIN SESSION
-
-Audit:
-
-JWT
-
-Refresh Token
-
-Session
-
-Remember Login
-
-Perangkat aktif
-
-Tambahkan halaman:
-
-Perangkat yang sedang login.
-
-Logout device tertentu.
-
-Logout semua device.
-
-==================================================
-
-RIWAYAT LOGIN
-
-Catat:
-
-IP
-
-Browser
-
-OS
-
-Tanggal
-
-Jam
-
-Lokasi bila tersedia.
-
-==================================================
-
-ADMIN PANEL
-
-Tambahkan halaman Kelola User.
-
-Admin dapat melihat:
-
-Semua User
-
-Search
-
-Filter
-
-Pagination
-
-Status
-
-Role
-
-Saldo
-
-Deposit
-
-Order
-
-Refund
-
-Login Terakhir
-
-==================================================
-
-DETAIL USER
-
-Admin dapat melihat:
-
-Profil lengkap
-
-Wallet
-
-Deposit
-
-Refund
-
-Riwayat Order
-
-Notifikasi
-
-Riwayat Login
-
-Audit Log
-
-==================================================
-
-ADMIN ACTION
-
-Admin dapat:
-
-Reset Password
-
-Nonaktifkan User
-
-Aktifkan User
-
-Verifikasi Email
-
-Verifikasi Nomor HP
-
-Ganti Role
-
-Lihat Avatar
-
-Hapus Avatar
-
-Semua aksi harus masuk Audit Log.
-
-==================================================
-
-KEAMANAN
-
-Pastikan:
-
-JWT tetap aman.
-
-IDOR tidak ada.
-
-User hanya dapat melihat profil miliknya.
-
-Admin hanya melalui endpoint admin.
-
-Tidak ada data sensitif bocor.
-
-==================================================
+====================================================
 
 DATABASE
 
-Audit apakah perlu migration.
+Jika belum ada buat tabel:
 
-Jangan merusak collection lama.
+Notification
 
-Jika menambah field baru:
+id
 
-Gunakan migration.
+title
 
-Pastikan kompatibel dengan data lama.
+message
 
-==================================================
+type
 
-NOTIFIKASI
+icon
 
-Jika user mengubah:
+priority
 
-Password
+isRead
 
-Email
+userId (nullable)
 
-Nomor HP
+targetRole
 
-Foto Profil
+actionUrl
 
-Kirim notifikasi ke user.
+metadata JSON
 
-==================================================
+createdAt
+
+====================================================
+
+TYPE
+
+Info
+
+Success
+
+Warning
+
+Error
+
+Security
+
+System
+
+====================================================
+
+PRIORITY
+
+Low
+
+Medium
+
+High
+
+Critical
+
+====================================================
+
+NOTIFIKASI OTOMATIS
+
+Upload berhasil
+
+Upload gagal
+
+Download tinggi
+
+Storage hampir penuh
+
+Login berhasil
+
+Login gagal
+
+User baru
+
+Admin baru
+
+Role berubah
+
+Folder dibuat
+
+Folder dihapus
+
+Generate Link
+
+Disable Link
+
+Force Join ON
+
+Force Join OFF
+
+Tambah Channel
+
+Hapus Channel
+
+Backup selesai
+
+Restore selesai
+
+Error Telegram API
+
+REST API Error
+
+====================================================
+
+HEADER
+
+Tambahkan Bell Notification.
+
+Badge unread.
+
+Klik membuka Notification Drawer.
+
+====================================================
+
+DRAWER
+
+Latest Notification
+
+Infinite Scroll
+
+Load More
+
+Mark Read
+
+Mark All Read
+
+Delete Read
+
+====================================================
+
+HALAMAN
+
+/admin/notifications
+
+Filter
+
+Search
+
+Sort
+
+Priority
+
+Type
+
+Date
+
+Status
+
+====================================================
+
+CARD
+
+Icon
+
+Title
+
+Description
+
+Time Ago
+
+Priority Badge
+
+Action Button
+
+====================================================
 
 REALTIME
 
-Perubahan profil harus langsung muncul di:
+Auto Refresh
 
-Header Website
+Polling
 
-Dashboard
+30 detik
 
-Menu Akun
+Tanpa websocket.
 
-Admin Panel
+====================================================
 
-Tanpa refresh manual bila memungkinkan.
+API
 
-==================================================
+GET /api/notifications
 
-VALIDASI
+GET /api/notifications/unread
 
-Jalankan:
+POST /api/notifications/read/:id
 
-npm run lint
+POST /api/notifications/read-all
+
+DELETE /api/notifications/read
+
+====================================================
+
+SETTING
+
+Settings Center sekarang memiliki:
+
+Enable Notification
+
+Desktop Notification
+
+Sound Notification
+
+Email Placeholder
+
+Telegram Placeholder
+
+====================================================
+
+ANIMATION
+
+Framer Motion
+
+Slide
+
+Fade
+
+Bell Shake
+
+Counter Animation
+
+====================================================
+
+RESPONSIVE
+
+Desktop
+
+Tablet
+
+Mobile
+
+====================================================
+
+OUTPUT
+
+Jelaskan:
+
+1. Database
+
+2. API
+
+3. UI
+
+4. Integrasi otomatis
+
+5. Verifikasi:
+
+npm install
+
+npx prisma generate
+
+npx prisma migrate dev
 
 npm run build
 
-Pastikan:
+npm run dev
 
-Tidak ada TypeScript Error.
+6. Jangan mengubah module lain.
 
-Tidak ada Build Error.
-
-Tidak ada Runtime Error.
-
-==================================================
-
-SIMULASI
-
-Lakukan audit dan simulasi:
-
-- Edit Profil
-- Upload Avatar
-- Ganti Password
-- Ganti Email
-- Ganti Nomor HP
-- Logout Semua Device
-- Admin Reset Password
-- Admin Nonaktifkan User
-- Admin Aktifkan User
-- Admin Ganti Role
-- User mencoba membuka profil user lain
-- Admin membuka detail user
-- Upload file gagal
-- Avatar corrupt
-- Email duplicate
-- Nomor HP duplicate
-
-==================================================
-
-LAPORAN AKHIR
-
-Tampilkan laporan lengkap:
-
-1. File yang diubah.
-2. Endpoint yang ditambah atau diperbaiki.
-3. Collection/tabel yang berubah.
-4. Migration yang dibuat.
-5. Audit keamanan.
-6. Hasil simulasi.
-7. Risiko yang masih tersisa.
-8. Skor keamanan modul Profil User.
-9. Production Readiness.
-10. Pastikan seluruh fitur lama (checkout, transaksi, wallet, deposit, refund, notifikasi, riwayat transaksi, dashboard admin, dan sinkronisasi Digiflazz) tetap berjalan normal tanpa regresi.
+Berhenti setelah Notification Center selesai.
 ```
