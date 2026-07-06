@@ -1,501 +1,421 @@
 ```
-# Telegram Drive Website - Tahap 21 : Audit Log & Activity History (Enterprise Audit System)
+# IMPLEMENTASI LENGKAP MODUL PROFIL PENGGUNA (USER PROFILE) DIGITAL CELL
 
-Tahap Folder Management telah selesai.
+Lakukan audit terlebih dahulu sebelum mengubah kode.
 
-Project saat ini memiliki:
+Jangan langsung membuat fitur baru.
 
-✅ Telegram Bot
-✅ Upload Engine
-✅ Download Engine
-✅ Storage Service
-✅ REST API
-✅ Authentication
-✅ Dashboard
-✅ Files Manager
-✅ Upload Manager
-✅ Settings Center
-✅ Statistics
-✅ User Management
-✅ Folder Management
+Periksa seluruh project, frontend, backend, database, API, authentication, dashboard admin, dan relasi data.
 
-JANGAN mengubah fitur yang sudah berjalan.
+Jika fitur sudah ada sebagian, lanjutkan dan sempurnakan tanpa membuat versi baru.
 
-JANGAN merusak REST API.
+==================================================
 
-Gunakan seluruh Design System.
+TARGET
 
-====================================================
+Menyelesaikan seluruh modul Profil Pengguna hingga Production Ready.
 
-TUJUAN
+Semua data harus berasal dari database.
 
-Membangun Audit Log profesional.
+Tidak boleh ada data dummy.
 
-Semua aktivitas penting harus tercatat otomatis.
+Tidak boleh ada hardcode.
 
-Audit Log hanya bisa dilihat oleh Owner dan Admin.
+Harus kompatibel dengan seluruh sistem transaksi yang sudah selesai.
 
-Moderator hanya boleh melihat log yang diizinkan.
+==================================================
 
-User tidak memiliki akses.
+AUDIT
 
-====================================================
+Periksa terlebih dahulu:
 
-ROUTE
+- Struktur tabel/collection user
+- Authentication
+- JWT
+- Session
+- Login
+- Register
+- Dashboard User
+- Dashboard Admin
+- Notification
+- Wallet
+- Order
+- Riwayat
+- Deposit
+- Refund
+- Upload File
+- Storage Avatar
 
-/admin/audit
+Buat laporan:
 
-====================================================
+- Yang sudah ada
+- Yang belum ada
+- Yang perlu diperbaiki
+- Yang berpotensi merusak sistem jika diubah
 
-DATABASE
+==================================================
 
-Jika belum ada buat tabel:
+PROFIL USER
 
-AuditLog
+Lengkapi halaman Profil.
 
-id
+Minimal memiliki:
 
-userId
+Foto Profil
 
-username
-
-role
-
-action
-
-module
-
-description
-
-targetType
-
-targetId
-
-metadata (JSON)
-
-ipAddress
-
-userAgent
-
-status
-
-createdAt
-
-====================================================
-
-CATAT OTOMATIS
-
-Login
-
-Logout
-
-Upload File
-
-Delete File
-
-Rename File
-
-Move File
-
-Copy Link
-
-Generate Link
-
-Disable Link
-
-Enable Link
-
-Download Link Generate
-
-Tambah Folder
-
-Rename Folder
-
-Delete Folder
-
-Move Folder
-
-Tambah User
-
-Edit User
-
-Delete User
-
-Suspend User
-
-Promote Admin
-
-Demote Admin
-
-Role Change
-
-Update Settings
-
-Force Join ON
-
-Force Join OFF
-
-Tambah Channel
-
-Hapus Channel
-
-Login Gagal
-
-Token Expired
-
-Backup
-
-Restore
-
-====================================================
-
-STATUS
-
-Success
-
-Failed
-
-Warning
-
-====================================================
-
-MODULE
-
-Authentication
-
-Upload
-
-Download
-
-Files
-
-Folders
-
-Users
-
-Settings
-
-Statistics
-
-Storage
-
-Telegram
-
-System
-
-====================================================
-
-TABLE
-
-Kolom:
-
-Tanggal
-
-User
-
-Role
-
-Module
-
-Action
-
-Status
-
-IP Address
-
-====================================================
-
-DETAIL DRAWER
-
-Klik log.
-
-Tampilkan:
-
-ID
-
-Tanggal
+Nama Lengkap
 
 Username
 
-Telegram ID
+Email
+
+Nomor HP
+
+Tanggal Daftar
+
+Status Akun
 
 Role
 
-Module
+Saldo
 
-Action
+Jumlah Order
 
-Description
+Total Deposit
 
-Target
+Total Refund
 
-Metadata JSON
+Terakhir Login
 
-IP Address
+==================================================
 
-User Agent
+EDIT PROFIL
 
-Status
-
-====================================================
-
-SEARCH
-
-Realtime
-
-Cari berdasarkan:
+User dapat mengubah:
 
 Nama
 
-Username
+Username (jika diizinkan)
 
-Action
+Email
 
-Module
+Nomor HP
 
-====================================================
+Foto Profil
 
-FILTER
+Bio (opsional)
+
+Semua perubahan harus divalidasi backend.
+
+==================================================
+
+UPLOAD FOTO
+
+Upload Avatar.
+
+Validasi:
+
+jpg
+
+jpeg
+
+png
+
+webp
+
+Ukuran maksimal.
+
+Resize otomatis bila perlu.
+
+Hapus file lama bila diganti.
+
+Tidak boleh overwrite avatar user lain.
+
+==================================================
+
+EMAIL
+
+Audit apakah email sudah digunakan.
+
+Jika belum:
+
+Tambahkan.
+
+Jika sudah:
+
+Pastikan unik.
+
+Tidak boleh duplicate.
+
+Semua perubahan email dicatat.
+
+==================================================
+
+NOMOR HP
+
+Audit field nomor HP.
+
+Validasi format Indonesia.
+
+Tidak boleh duplicate bila kebijakan sistem mengharuskan unik.
+
+==================================================
+
+PASSWORD
+
+Audit sistem password.
+
+Pastikan:
+
+Hash aman.
+
+Tidak ada plaintext.
+
+User harus memasukkan:
+
+Password lama
+
+Password baru
+
+Konfirmasi password
+
+Logout semua session lama bila password diganti.
+
+==================================================
+
+LOGIN SESSION
+
+Audit:
+
+JWT
+
+Refresh Token
+
+Session
+
+Remember Login
+
+Perangkat aktif
+
+Tambahkan halaman:
+
+Perangkat yang sedang login.
+
+Logout device tertentu.
+
+Logout semua device.
+
+==================================================
+
+RIWAYAT LOGIN
+
+Catat:
+
+IP
+
+Browser
+
+OS
 
 Tanggal
 
-Role
+Jam
 
-Module
+Lokasi bila tersedia.
+
+==================================================
+
+ADMIN PANEL
+
+Tambahkan halaman Kelola User.
+
+Admin dapat melihat:
+
+Semua User
+
+Search
+
+Filter
+
+Pagination
 
 Status
 
-====================================================
+Role
 
-SORT
+Saldo
 
-Tanggal
+Deposit
 
-User
+Order
 
-Module
+Refund
 
-Action
+Login Terakhir
 
-====================================================
+==================================================
 
-EXPORT
+DETAIL USER
 
-CSV
+Admin dapat melihat:
 
-JSON
+Profil lengkap
 
-====================================================
+Wallet
 
-RETENTION
+Deposit
 
-Tambahkan pengaturan:
+Refund
 
-Simpan log:
+Riwayat Order
 
-30 Hari
+Notifikasi
 
-90 Hari
+Riwayat Login
 
-180 Hari
+Audit Log
 
-365 Hari
+==================================================
 
-Unlimited
+ADMIN ACTION
 
-====================================================
+Admin dapat:
 
-AUTO CLEANUP
+Reset Password
 
-Jika retention aktif.
+Nonaktifkan User
 
-Hapus log lama otomatis.
+Aktifkan User
 
-====================================================
+Verifikasi Email
 
-SECURITY
+Verifikasi Nomor HP
 
-Owner melihat semua.
+Ganti Role
 
-Admin melihat semua.
+Lihat Avatar
 
-Moderator hanya membaca.
+Hapus Avatar
 
-User tidak boleh akses.
+Semua aksi harus masuk Audit Log.
 
-Audit Log tidak boleh diedit.
+==================================================
 
-Audit Log tidak boleh dihapus manual kecuali oleh Owner.
+KEAMANAN
 
-====================================================
+Pastikan:
 
-NOTIFICATION
+JWT tetap aman.
 
-Jika terjadi:
+IDOR tidak ada.
 
-Login gagal berulang
+User hanya dapat melihat profil miliknya.
 
-Percobaan akses admin tanpa izin
+Admin hanya melalui endpoint admin.
 
-Delete massal
+Tidak ada data sensitif bocor.
 
-Restore database
+==================================================
 
-Promote Admin
+DATABASE
 
-Tandai sebagai Security Event.
+Audit apakah perlu migration.
 
-====================================================
+Jangan merusak collection lama.
 
-API
+Jika menambah field baru:
 
-Gunakan endpoint berikut.
+Gunakan migration.
 
-Jika belum tersedia tambahkan tanpa merusak endpoint lama:
+Pastikan kompatibel dengan data lama.
 
-GET /api/audit
+==================================================
 
-GET /api/audit/:id
+NOTIFIKASI
 
-GET /api/audit/export
+Jika user mengubah:
 
-GET /api/audit/statistics
+Password
 
-POST /api/audit/cleanup
+Email
 
-====================================================
+Nomor HP
 
-STATISTICS
+Foto Profil
 
-Total Log
+Kirim notifikasi ke user.
 
-Hari Ini
+==================================================
 
-Minggu Ini
+REALTIME
 
-Bulan Ini
+Perubahan profil harus langsung muncul di:
 
-Top Action
+Header Website
 
-Top User
+Dashboard
 
-Security Event
+Menu Akun
 
-====================================================
+Admin Panel
 
-UI
+Tanpa refresh manual bila memungkinkan.
 
-Gunakan Design System.
+==================================================
 
-Glass Card
+VALIDASI
 
-Rounded
+Jalankan:
 
-Dark Mode
-
-Light Mode
-
-====================================================
-
-LOADING
-
-Skeleton
-
-====================================================
-
-EMPTY STATE
-
-Gunakan Empty State.
-
-====================================================
-
-ANIMATION
-
-Framer Motion
-
-Fade
-
-Slide
-
-Drawer Animation
-
-====================================================
-
-RESPONSIVE
-
-Desktop
-
-Tablet
-
-Mobile
-
-====================================================
-
-CODING STYLE
-
-TypeScript Strict
-
-Repository Pattern
-
-SOLID
-
-Reusable Components
-
-Tidak menggunakan any
-
-====================================================
-
-PENTING
-
-Audit Log harus otomatis dipanggil dari seluruh module yang sudah ada:
-
-Authentication
-
-Upload
-
-Download
-
-Files
-
-Folders
-
-Users
-
-Settings
-
-Telegram
-
-Storage
-
-Tidak boleh perlu memanggil manual setiap kali membuka halaman.
-
-====================================================
-
-OUTPUT
-
-1. Jelaskan struktur Audit Log.
-
-2. Jelaskan perubahan database.
-
-3. Jelaskan endpoint baru.
-
-4. Jelaskan integrasi dengan module yang sudah ada.
-
-5. Pastikan:
-
-npm install
-
-npx prisma generate
-
-npx prisma migrate dev
+npm run lint
 
 npm run build
 
-npm run dev
+Pastikan:
 
-berjalan tanpa error.
+Tidak ada TypeScript Error.
 
-6. Jangan mengubah Upload Manager, Files Manager, Folder Management, Dashboard, Settings, Statistics, User Management, REST API, Bot Telegram maupun Storage Service.
+Tidak ada Build Error.
 
-7. Berhenti setelah Audit Log selesai.
+Tidak ada Runtime Error.
+
+==================================================
+
+SIMULASI
+
+Lakukan audit dan simulasi:
+
+- Edit Profil
+- Upload Avatar
+- Ganti Password
+- Ganti Email
+- Ganti Nomor HP
+- Logout Semua Device
+- Admin Reset Password
+- Admin Nonaktifkan User
+- Admin Aktifkan User
+- Admin Ganti Role
+- User mencoba membuka profil user lain
+- Admin membuka detail user
+- Upload file gagal
+- Avatar corrupt
+- Email duplicate
+- Nomor HP duplicate
+
+==================================================
+
+LAPORAN AKHIR
+
+Tampilkan laporan lengkap:
+
+1. File yang diubah.
+2. Endpoint yang ditambah atau diperbaiki.
+3. Collection/tabel yang berubah.
+4. Migration yang dibuat.
+5. Audit keamanan.
+6. Hasil simulasi.
+7. Risiko yang masih tersisa.
+8. Skor keamanan modul Profil User.
+9. Production Readiness.
+10. Pastikan seluruh fitur lama (checkout, transaksi, wallet, deposit, refund, notifikasi, riwayat transaksi, dashboard admin, dan sinkronisasi Digiflazz) tetap berjalan normal tanpa regresi.
 ```
