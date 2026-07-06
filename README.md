@@ -1,270 +1,339 @@
 ```
-TUGAS: SELESAIKAN PONDASI TRANSAKSI PRODUCTION DIGITAL CELL
+# Telegram Drive Website - Tahap 12 : Premium Download Page
 
-JANGAN mengubah UI.
-JANGAN mengubah layout.
-JANGAN mengubah desain.
-JANGAN mengubah alur pembelian yang sudah berjalan.
+Tahap Landing Page telah selesai.
 
-Fokus hanya menyelesaikan seluruh pekerjaan yang masih tersisa agar sistem siap production.
+Backend REST API telah selesai.
 
-==================================================
-TARGET
-==================================================
+Storage Service telah selesai.
 
-Saya ingin seluruh alur transaksi benar-benar production ready.
+Download Engine telah selesai.
 
-Setelah tahap ini selesai, website harus siap diuji dengan transaksi uang asli dalam lingkungan production.
+Force Join telah selesai.
 
-==================================================
-PEKERJAAN YANG HARUS DISELESAIKAN
-==================================================
+Gunakan seluruh komponen Design System.
 
-1. PAYMENT GATEWAY PRODUCTION
+JANGAN membuat komponen baru jika sudah tersedia.
 
-Audit seluruh sistem pembayaran.
+====================================================
+
+TUJUAN
+
+Membuat halaman Download yang sangat modern, cepat, mobile friendly, dan premium.
+
+Halaman ini akan menjadi halaman yang paling sering dibuka user.
+
+Desain harus setara website cloud storage modern.
+
+====================================================
+
+Route
+
+/file/[token]
+
+====================================================
+
+Saat halaman dibuka.
+
+Ambil data menggunakan:
+
+GET /api/token/:token
+
+Jangan hardcode.
+
+====================================================
+
+Loading
+
+Saat membuka halaman.
+
+Jangan langsung muncul.
+
+Gunakan:
+
+Skeleton
+
+Loading Animation
+
+Fade
+
+Progress
+
+====================================================
+
+Validasi
+
+Jika token salah.
+
+Tampilkan halaman modern.
+
+❌ File tidak ditemukan.
+
+Dengan tombol
+
+Kembali ke Home.
+
+====================================================
+
+Jika token disable.
+
+Halaman:
+
+Link telah dinonaktifkan.
+
+====================================================
+
+Jika Force Join aktif.
+
+Jangan redirect.
+
+Tampilkan Card.
+
+━━━━━━━━━━━━━━
+
+📢 Join Channel
+
+━━━━━━━━━━━━━━
+
+Daftar seluruh channel.
+
+Button Join.
+
+Button
+
+✔ Saya Sudah Join
+
+━━━━━━━━━━━━━━
+
+Ketika user klik
+
+Saya Sudah Join
+
+Panggil API validasi.
+
+Jika lolos.
+
+Card berubah.
+
+✔ Verification Success
+
+Starting Download...
+
+====================================================
+
+Jika Force Join OFF
+
+Langsung tampil Download Card.
+
+====================================================
+
+Download Card
+
+Thumbnail
+
+Nama File
+
+Ukuran
+
+Jenis
+
+Tanggal Upload
+
+Total Download
+
+Uploader
+
+====================================================
+
+Button
+
+Download Now
+
+Copy Link
+
+Share
+
+====================================================
+
+Saat Download
+
+Jangan langsung download.
+
+Animasi.
+
+Preparing File...
+
+████░░░░░
+
+██████░░
+
+████████
+
+Starting Download...
+
+====================================================
+
+Download selesai.
+
+Toast
+
+Download Started
+
+====================================================
+
+Animation
+
+Gunakan Framer Motion.
+
+Hero Fade
+
+Card Hover
+
+Progress Animation
+
+Ripple Button
+
+Counter Animation
+
+Page Transition
+
+Glass Effect
+
+Floating Background
+
+====================================================
+
+Background
+
+Gradient
+
+Glassmorphism
+
+Blur
+
+Floating Shapes
+
+====================================================
+
+Mobile
+
+Optimalkan.
+
+Karena mayoritas user Telegram memakai HP.
+
+====================================================
+
+SEO
+
+Dynamic Metadata.
+
+Judul mengikuti nama file.
+
+OpenGraph.
+
+====================================================
+
+Share
+
+Copy Link.
+
+Native Share API.
+
+====================================================
+
+Dark Mode
+
+Harus sempurna.
+
+====================================================
+
+Loading
+
+Gunakan Skeleton.
+
+Jangan Spinner saja.
+
+====================================================
+
+Accessibility
+
+Keyboard Navigation.
+
+ARIA.
+
+====================================================
+
+Performance
+
+Gunakan Dynamic Import.
+
+Optimalkan Rendering.
+
+====================================================
+
+PENTING
+
+Belum membuat:
+
+Dashboard
+
+Upload
+
+Login
+
+Premium
+
+Statistics
+
+Admin
+
+====================================================
+
+OUTPUT
+
+1.
+
+Jelaskan struktur Download Page.
+
+2.
+
+Jelaskan API yang dipakai.
+
+3.
 
 Pastikan:
-
-- tidak ada sandbox
-- tidak ada placeholder
-- tidak ada demo key
-- tidak ada fake callback
-- tidak ada payment dummy
-- seluruh payment gateway menggunakan credential production
-
-Verifikasi:
-
-- callback
-- signature
-- timestamp
-- merchant
-- amount
-- reference
-- order id
-
-==================================================
-
-2. CALLBACK
-
-Periksa seluruh callback.
-
-Pastikan callback:
-
-- idempotent
-- tidak bisa diproses dua kali
-- tidak bisa mengubah status terminal
-- tidak bisa menerima callback palsu
-- mencatat audit log
-
-==================================================
-
-3. RETRY
-
-Jika provider timeout:
-
-- jangan langsung gagal
-- cek status provider
-- retry sesuai aturan
-- update status dengan aman
-
-==================================================
-
-4. REFUND SYSTEM
-
-Bangun sistem refund production.
-
-Refund hanya boleh jika:
-
-payment berhasil
-
-provider gagal permanen
-
-belum pernah refund
-
-tidak ada callback sukses
-
-Refund harus:
-
-atomic
-
-idempotent
-
-memiliki audit log
-
-memiliki approval admin jika diperlukan
-
-tidak boleh refund dua kali
-
-==================================================
-
-5. ADMIN REFUND
-
-Tambahkan backend:
-
-refund request
-
-refund approval
-
-refund reject
-
-refund history
-
-refund audit
-
-Tidak perlu mengubah UI.
-
-==================================================
-
-6. AUDIT LOG
-
-Semua aktivitas harus dicatat.
-
-create order
-
-payment
-
-callback
-
-provider request
-
-provider response
-
-refund
-
-retry
-
-timeout
-
-admin action
-
-login
-
-==================================================
-
-7. RECOVERY
-
-Jika server mati:
-
-order processing harus lanjut
-
-payment pending harus dicek
-
-callback terlambat tetap diproses
-
-provider timeout harus dicek ulang
-
-==================================================
-
-8. MONGODB
-
-Pastikan:
-
-seluruh transaksi memakai MongoDB
-
-tidak ada transaksi production memakai local_db.json
-
-local_db.json hanya untuk development
-
-==================================================
-
-9. VALIDASI
-
-Backend tidak boleh percaya frontend.
-
-Harga
-
-Provider
-
-Status
-
-Nama produk
-
-Kategori
-
-Subtotal
-
-Total
-
-Semua wajib diambil ulang dari database.
-
-==================================================
-
-10. TEST
-
-Setelah selesai lakukan simulasi:
-
-spam klik beli
-
-double callback
-
-callback terlambat
-
-provider timeout
-
-payment timeout
-
-server restart
-
-provider gagal
-
-refund
-
-double refund
-
-network error
-
-==================================================
-
-11. BUILD
-
-Jalankan:
-
-npm run lint
 
 npm run build
 
-Perbaiki seluruh error.
+npm run dev
 
-==================================================
+berhasil.
 
-12. AUDIT AKHIR
+4.
 
-Setelah semuanya selesai,
+Pastikan responsif.
 
-buat laporan lengkap:
+5.
 
-✔ tingkat keamanan
+Berhenti setelah Download Page selesai.
 
-✔ status refund
 
-✔ status payment
 
-✔ status callback
 
-✔ status MongoDB
 
-✔ status recovery
 
-✔ status retry
 
-✔ status provider
 
-✔ status Digiflazz
 
-✔ status transaksi
 
-✔ status production
 
-Berikan skor keamanan 0-100.
 
-Jika masih ada risiko sekecil apa pun, jelaskan secara rinci.
 
-Jangan membuat fitur baru.
 
-Jangan mengubah UI.
 
-Jangan mengubah desain.
 
-Fokus hanya menyelesaikan pondasi transaksi hingga benar-benar siap production.
+
+
+
+
 ```
