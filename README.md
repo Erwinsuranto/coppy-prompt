@@ -1,378 +1,88 @@
 ```
-# Telegram Drive Website - Tahap 18 : Statistics & Analytics (Professional Dashboard)
-
-Tahap sebelumnya telah selesai.
-
-Project saat ini telah memiliki:
-
-✅ Telegram Bot
-✅ Upload Engine
-✅ Download Engine
-✅ Storage Service
-✅ REST API
-✅ Authentication
-✅ Dashboard
-✅ Files Manager
-✅ Upload Manager
-✅ Settings Center
-✅ Landing Page
-✅ Download Page
-
-JANGAN mengubah fitur yang sudah berjalan.
-
-JANGAN merusak REST API.
-
-Gunakan seluruh Design System.
-
-====================================================
-
-TUJUAN
-
-Membangun halaman Statistics & Analytics profesional.
-
-Semua data diambil dari backend.
-
-Tidak boleh hardcode.
-
-====================================================
-
-ROUTE
-
-/admin/statistics
-
-====================================================
-
-OVERVIEW CARD
-
-Tampilkan:
-
-Total Files
-
-Total Downloads
-
-Total Uploads
-
-Total Users
-
-Total Storage
-
-Used Storage
-
-Free Storage
-
-====================================================
-
-TODAY
-
-Upload Hari Ini
-
-Download Hari Ini
-
-User Aktif Hari Ini
-
-Storage Bertambah Hari Ini
-
-====================================================
-
-GRAPH
-
-Upload Harian
-
-Download Harian
-
-User Baru
-
-Storage Growth
-
-Gunakan Chart Component.
-
-====================================================
-
-FILTER
-
-Hari
-
-7 Hari
-
-30 Hari
-
-90 Hari
-
-1 Tahun
-
-Custom Date Range
-
-====================================================
-
-TOP FILES
-
-Top 10 Download
-
-Nama File
-
-Download
-
-Ukuran
-
-Uploader
-
-====================================================
-
-TOP UPLOADER
-
-Top User
-
-Jumlah Upload
-
-Total Storage
-
-====================================================
-
-RECENT ACTIVITY
-
-Upload Terbaru
-
-Download Terbaru
-
-Login Admin
-
-Delete File
-
-Generate Link
-
-====================================================
-
-STORAGE
-
-Storage Used
-
-Storage Free
-
-Persentase
-
-Progress Bar
-
-====================================================
-
-DOWNLOAD ANALYTICS
-
-Total Download
-
-Download Hari Ini
-
-Download Minggu Ini
-
-Download Bulan Ini
-
-====================================================
-
-UPLOAD ANALYTICS
-
-Total Upload
-
-Upload Hari Ini
-
-Upload Minggu Ini
-
-Upload Bulan Ini
-
-====================================================
-
-FILE TYPE
-
-Pie Chart
-
-Photo
-
-Video
-
-Document
-
-Audio
-
-Archive
-
-Other
-
-====================================================
-
-SYSTEM
-
-Bot Status
-
-REST API
-
-Database
-
-Storage
-
-Website
-
-====================================================
-
-EXPORT
-
-CSV
-
-JSON
-
-====================================================
-
-REFRESH
-
-Manual Refresh
-
-Auto Refresh Placeholder
-
-====================================================
-
-LOADING
-
-Skeleton
-
-====================================================
-
-EMPTY STATE
-
-Gunakan Design System
-
-====================================================
-
-ANIMATION
-
-Framer Motion
-
-Fade
-
-Slide
-
-Counter Animation
-
-Chart Animation
-
-====================================================
-
-RESPONSIVE
-
-Mobile
-
-Tablet
-
-Desktop
-
-====================================================
-
-API
-
-Gunakan endpoint backend.
-
-Jika endpoint belum tersedia tambahkan endpoint berikut tanpa merusak endpoint lama:
-
-GET /api/statistics
-
-GET /api/statistics/overview
-
-GET /api/statistics/storage
-
-GET /api/statistics/download
-
-GET /api/statistics/upload
-
-GET /api/statistics/files
-
-GET /api/statistics/users
-
-GET /api/statistics/system
-
-GET /api/statistics/chart
-
-====================================================
-
-DATABASE
-
-Gunakan data yang sudah ada.
-
-Jika sebagian data belum tersedia tampilkan placeholder dan beri komentar TODO.
-
-Jangan membuat data palsu.
-
-====================================================
-
-DESIGN
-
-Gunakan Design System.
-
-Glass Card
-
-Soft Shadow
-
-Rounded
-
-Dark Mode
-
-Light Mode
-
-====================================================
-
-CODING STYLE
-
-Reusable Component
-
-TypeScript Strict
-
-SOLID
-
-Repository Pattern
-
-Tidak menggunakan any
-
-====================================================
-
-PENTING
-
-Belum membuat:
-
-User Management
-
-Premium
-
-Folder
-
-Category Management
-
-Audit Log
-
-Backup Manager
-
-Notification Center
-
-====================================================
-
-OUTPUT
-
-1. Jelaskan struktur Statistics.
-
-2. Jelaskan endpoint yang digunakan.
-
-3. Jelaskan chart yang dipakai.
-
-4. Jelaskan placeholder yang digunakan bila data belum tersedia.
-
-5. Pastikan:
-
-npm install
-
-npx prisma generate
-
-npx prisma migrate dev
-
-npm run build
-
-npm run dev
-
-berjalan tanpa error.
-
-6. Jangan mengubah fitur Upload, Download, Dashboard, Files Manager, Settings Center, Authentication, REST API maupun Bot Telegram yang sudah berjalan.
-
-7. Berhenti setelah Statistics & Analytics selesai.
+Lanjutkan penyempurnaan sistem Notifikasi Digital Cell hingga benar-benar production-ready.
+
+Target:
+- Skor keamanan minimal 95/100.
+- Tidak ada fitur notifikasi yang setengah jadi.
+- Tidak mengubah UI maupun alur transaksi yang sudah selesai.
+
+Pekerjaan yang harus diselesaikan:
+
+1. Buat halaman penuh /notifications.
+   - Daftar seluruh notifikasi.
+   - Pagination.
+   - Search.
+   - Filter:
+     * Semua
+     * Belum dibaca
+     * Order
+     * Deposit
+     * Wallet
+     * Refund
+     * Sistem
+   - Relative time.
+   - Infinite scroll atau pagination.
+   - Empty state.
+   - Loading.
+   - Retry.
+
+2. Migrasikan seluruh event lama agar menggunakan Event Bus.
+   Tidak boleh ada lagi pemanggilan DB.Notifications.create() secara langsung dari modul lain.
+
+3. Audit seluruh source code.
+   Cari semua pemanggilan notification lama.
+   Ganti menjadi NotificationService + EventBus.
+
+4. Pastikan semua event berikut menghasilkan notifikasi:
+   - Order dibuat
+   - Waiting payment
+   - Payment success
+   - Payment failed
+   - Processing
+   - Success
+   - Failed
+   - Refund
+   - Deposit
+   - Wallet debit
+   - Wallet credit
+   - Maintenance
+   - Provider offline
+   - Provider online
+   - Recovery
+   - Admin login
+   - Admin error
+
+5. Klik notifikasi harus membuka halaman yang sesuai:
+   Order → Detail Order
+   Deposit → Detail Deposit
+   Refund → Detail Refund
+   Wallet → Riwayat Wallet
+
+6. Audit keamanan:
+   - Tidak boleh membaca notification user lain.
+   - Tidak boleh ada IDOR.
+   - Admin dan user benar-benar terpisah.
+   - Semua endpoint wajib login.
+
+7. Uji:
+   - Spam klik.
+   - Double callback.
+   - Restart server.
+   - Reconnect.
+   - Provider timeout.
+   - Recovery.
+   - Multi tab browser.
+
+8. Jalankan:
+   npm run lint
+   npm run build
+
+9. Setelah selesai tampilkan laporan:
+   - File yang diubah.
+   - Hasil audit.
+   - Risiko tersisa.
+   - Skor keamanan.
+   - Production readiness.
+
+Jangan membuat fitur baru sebelum seluruh sistem notifikasi benar-benar selesai dan siap production.
 ```
