@@ -1,263 +1,349 @@
 ```
-# Telegram Drive Website - Tahap 16 : Upload Manager (Professional Upload Center)
+Lanjutkan pengembangan website Digital Cell.
 
-Tahap Files Manager telah selesai.
+PENTING:
+- Jangan mengubah UI pelanggan yang sudah ada.
+- Jangan mengubah alur checkout.
+- Jangan mengubah sistem transaksi yang sudah stabil.
+- Fokus hanya membuat Dashboard Keuangan (Wallet & Deposit Center) untuk Admin.
 
-Project saat ini memiliki:
-
-✅ Dashboard
-
-✅ Files Manager
-
-✅ Storage Service
-
-✅ Upload Engine
-
-✅ REST API
-
-✅ Telegram Bot
-
-Gunakan seluruh Design System.
-
-JANGAN mengubah backend yang sudah berjalan.
-
-====================================================
-
+==================================================
 TUJUAN
+==================================================
 
-Membangun Upload Manager profesional.
+Buat Dashboard Keuangan yang menjadi pusat kontrol seluruh saldo member dan transaksi deposit.
 
-Upload Manager menjadi pusat upload Website.
+Dashboard harus real-time dan mengambil data dari MongoDB, bukan data dummy.
 
-Website harus menggunakan Storage Service yang sudah ada.
+==================================================
+MENU BARU
+==================================================
 
-Tidak boleh duplicate code.
+Tambah menu Admin:
 
-====================================================
+💰 Keuangan
 
-ROUTE
+Sub menu:
 
-/admin/upload
+1. Dashboard Keuangan
+2. Wallet Member
+3. Deposit
+4. Ledger
+5. Koreksi Saldo
+6. Statistik
+7. Audit Log
 
-====================================================
+==================================================
+DASHBOARD KEUANGAN
+==================================================
 
-LAYOUT
+Tampilkan card:
 
-Modern.
+• Total Saldo Member
+• Total Deposit Hari Ini
+• Total Deposit Bulan Ini
+• Deposit Pending
+• Deposit Berhasil
+• Deposit Gagal
+• Total Refund
+• Total Transaksi Produk
+• Total Pendapatan Hari Ini
+• Total Pendapatan Bulan Ini
 
-Card.
+Semua data realtime dari database.
 
-Glass.
+==================================================
+WALLET MEMBER
+==================================================
 
-Responsive.
+Tampilkan tabel:
 
-====================================================
+Nama User
 
-UPLOAD AREA
+Email
 
-Drag & Drop.
+Nomor HP
 
-Click to Upload.
+Saldo
 
-Support Multiple File.
+Total Deposit
 
-====================================================
+Total Belanja
 
-PREVIEW
+Tanggal Daftar
 
-Sebelum upload.
+Status
+
+Pencarian cepat.
+
+Sorting.
+
+Pagination.
+
+==================================================
+DETAIL WALLET
+==================================================
+
+Klik user.
 
 Tampilkan:
 
-Thumbnail
+Saldo sekarang
 
-Nama
+Riwayat Deposit
 
-Ukuran
+Riwayat Pembelian
+
+Riwayat Refund
+
+Riwayat Penyesuaian Saldo
+
+Ledger lengkap
+
+==================================================
+LEDGER
+==================================================
+
+Semua perubahan saldo harus tampil.
+
+Kolom:
+
+Tanggal
+
+User
 
 Jenis
 
-====================================================
+Nominal
 
-RENAME
+Saldo Sebelum
 
-User boleh mengubah nama file sebelum upload.
+Saldo Sesudah
 
-====================================================
+Referensi
 
-DESCRIPTION
+Admin
 
-Optional.
+Status
 
-====================================================
+Filter:
 
-TAG
+Tanggal
 
-Optional.
+User
 
-====================================================
+Jenis
 
-CATEGORY
+Nominal
 
-Dropdown.
+==================================================
+KOREKSI SALDO
+==================================================
 
-Placeholder.
+Admin dapat:
 
-====================================================
+Tambah saldo
 
-BUTTON
+Kurangi saldo
 
-Upload
+Wajib:
 
-Cancel
+Alasan
 
-Reset
+Catatan
 
-====================================================
+Password admin
 
-UPLOAD PROGRESS
+Semua koreksi masuk ledger.
 
-Progress Bar.
+Tidak boleh ada update saldo langsung.
 
-Percentage.
+==================================================
+DEPOSIT
+==================================================
 
-Upload Speed (placeholder jika API belum menyediakan).
+Halaman Deposit Admin.
 
-Estimasi waktu (placeholder).
+Filter:
 
-====================================================
+Pending
 
-SETELAH BERHASIL
+Processing
 
-Tampilkan Card.
+Success
 
-✅ Upload Berhasil
+Failed
 
-Nama File
+Expired
 
-Ukuran
+Cancelled
 
-Token
+Cari:
 
-Download Link
+Invoice
 
-====================================================
+User
 
-BUTTON
+Gateway
 
-Copy Link
+Reference
 
-Open Download Page
+==================================================
+DETAIL DEPOSIT
+==================================================
 
-Upload Lagi
+Klik deposit.
 
-====================================================
+Tampilkan:
 
-ERROR
+Invoice
 
-Upload gagal.
+Gateway
 
-Toast.
+Reference
 
-Retry.
+Nominal
 
-====================================================
+Fee
 
-HISTORY
+Total
 
-Sidebar kecil.
+Status
 
-5 upload terakhir.
+Callback
 
-====================================================
+Recovery
 
-API
+Timeline
 
-Gunakan endpoint REST API upload yang sudah ada.
+Raw Callback
 
-Jangan membuat upload baru.
+Raw Response
 
-====================================================
+==================================================
+STATISTIK
+==================================================
 
-LOADING
+Grafik:
 
-Skeleton.
+Deposit harian
 
-====================================================
+Deposit bulanan
 
-ANIMATION
+Top member deposit
 
-Framer Motion.
+Top member belanja
 
-Fade.
+Pendapatan
 
-Scale.
+Refund
 
-Progress Animation.
+Wallet Growth
 
-Success Animation.
+==================================================
+AUDIT LOG
+==================================================
 
-====================================================
+Catat:
 
-RESPONSIVE
+Login admin
 
-Mobile
+Koreksi saldo
 
-Tablet
+Refund
 
-Desktop
+Perubahan gateway
 
-====================================================
+Perubahan status
 
-CODING STYLE
+Semua immutable.
 
-Reusable Components
+==================================================
+EXPORT
+==================================================
 
-TypeScript Strict
+Tambah Export:
 
-Tidak menggunakan any
+CSV
 
-====================================================
+Excel
 
-PENTING
+PDF
 
-Belum membuat:
+Untuk:
 
-Settings
+Wallet
 
-Statistics
+Deposit
 
-Users
+Ledger
 
-Premium
+Statistik
 
-Folder
+==================================================
+NOTIFIKASI
+==================================================
 
-Kategori Management
+Jika:
 
-====================================================
+Deposit sukses
 
-OUTPUT
+Refund
 
-1.
+Koreksi saldo
 
-Jelaskan Upload Manager.
+Kirim notifikasi:
 
-2.
+Website
 
-Jelaskan API yang digunakan.
+Telegram Admin
 
-3.
+WhatsApp Admin (jika aktif)
+
+==================================================
+SECURITY
+==================================================
 
 Pastikan:
 
+Hanya Admin dapat membuka Dashboard Keuangan.
+
+User tidak dapat mengakses endpoint admin.
+
+Gunakan role-based permission.
+
+==================================================
+PERFORMANCE
+==================================================
+
+Gunakan pagination.
+
+Gunakan index MongoDB.
+
+Jangan query seluruh collection.
+
+==================================================
+VALIDASI
+==================================================
+
+Jalankan:
+
+npm run lint
+
 npm run build
 
-npm run dev
+==================================================
+LAPORAN
+==================================================
 
-berjalan tanpa error.
+Setelah selesai tampilkan:
 
-4.
-
-Berhenti setelah Upload Manager selesai.
+- File yang diubah
+- Collection yang digunakan
+- Endpoint baru
+- Menu baru
+- Statistik yang dibuat
+- Fitur keamanan yang ditambahkan
+- Risiko yang masih tersisa
+- Skor keamanan Dashboard Keuangan
 ```
