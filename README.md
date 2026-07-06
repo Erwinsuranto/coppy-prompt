@@ -1,317 +1,263 @@
 ```
-Tambahkan fitur Deposit Saldo Otomatis ke website Digital Cell.
+# Telegram Drive Website - Tahap 15 : Files Manager (Admin)
 
-PENTING:
+Tahap Dashboard Foundation telah selesai.
 
-- Jangan mengubah UI yang sudah ada.
-- Jangan merusak sistem checkout produk.
-- Gunakan arsitektur transaksi yang sama dengan sistem order yang sudah di-hardening.
-- Semua transaksi deposit harus atomic, idempotent, dan production-ready.
+Saat ini project telah memiliki:
 
-==================================================
+✅ Authentication
+
+✅ Admin Layout
+
+✅ Dashboard
+
+✅ REST API
+
+✅ Storage Service
+
+✅ Telegram Bot
+
+JANGAN mengubah backend yang sudah berjalan.
+
+Gunakan seluruh Design System.
+
+====================================================
+
 TUJUAN
-==================================================
 
-Member dapat melakukan deposit saldo melalui payment gateway.
+Membangun halaman Files Manager.
 
-Setelah pembayaran berhasil:
+Halaman ini menjadi pusat pengelolaan seluruh file Telegram Drive.
 
-Saldo otomatis bertambah.
+====================================================
 
-Tidak perlu admin mengisi saldo secara manual.
+ROUTE
 
-==================================================
-ALUR
-==================================================
+/admin/files
 
-Member Login
+====================================================
 
-↓
+TABLE
 
-Menu Deposit Saldo
+Gunakan Data Table modern.
 
-↓
+Kolom:
 
-Input nominal
+Thumbnail/Icon
 
-↓
+Nama File
 
-Pilih metode pembayaran
+Jenis
 
-↓
+Ukuran
 
-Gateway membuat invoice
+Tanggal Upload
 
-↓
+Download
 
-User bayar
+Status
 
-↓
+Uploader
 
-Callback gateway
+Action
 
-↓
+====================================================
 
-Verifikasi signature
+SEARCH
 
-↓
+Realtime.
 
-Verifikasi amount
+Debounce.
 
-↓
+====================================================
 
-Verifikasi invoice
+FILTER
 
-↓
+Jenis File
 
-Verifikasi status
+Tanggal
 
-↓
+Status
 
-MongoDB Transaction
+Uploader
 
-↓
+====================================================
 
-Saldo bertambah
+SORT
 
-↓
+Nama
 
-Riwayat deposit tersimpan
+Tanggal
 
-↓
+Download
 
-Notifikasi berhasil
+Ukuran
 
-==================================================
-DATABASE
-==================================================
+====================================================
 
-Buat collection:
+PAGINATION
 
-wallets
+Gunakan pagination.
 
-- user_id
-- balance
-- created_at
-- updated_at
+====================================================
 
-deposit_transactions
+ACTION
 
-- id
-- invoice_id
-- payment_gateway
-- payment_reference
-- payment_method
-- nominal
-- fee
-- total
-- status
-- callback_status
-- user_id
-- created_at
-- updated_at
-- paid_at
+View
 
-wallet_ledger
+Copy Link
 
-- id
-- wallet_id
-- user_id
-- deposit_id
-- type
-- amount
-- balance_before
-- balance_after
-- description
-- created_at
+Download
 
-==================================================
+Regenerate Token
+
+Enable Link
+
+Disable Link
+
+Delete
+
+====================================================
+
+MULTI SELECT
+
+Support:
+
+Delete Selected
+
+Enable Selected
+
+Disable Selected
+
+====================================================
+
+DETAIL
+
+Klik file.
+
+Muncul Drawer.
+
+Isi:
+
+Thumbnail
+
+Nama
+
+Telegram File ID
+
+Unique ID
+
+Token
+
+Ukuran
+
+Tanggal
+
+Jenis
+
+Download
+
+Uploader
+
+====================================================
+
+COPY
+
+Copy Token
+
+Copy Download Link
+
+Copy Telegram File ID
+
+====================================================
+
 STATUS
-==================================================
 
-created
+Active
 
-waiting_payment
+Disabled
 
-paid
+Deleted
 
-processing
+====================================================
 
-success
+EMPTY
 
-failed
+Gunakan Empty State.
 
-expired
+====================================================
 
-cancelled
+LOADING
 
-==================================================
-ATOMIC TRANSACTION
-==================================================
+Gunakan Skeleton.
 
-Saat callback berhasil
+====================================================
 
-Mongo Transaction:
+ANIMATION
 
-1 insert ledger
+Fade
 
-2 update wallet balance
+Hover
 
-3 update deposit status
+Drawer Animation
 
-4 commit
+====================================================
 
-Jika gagal
+API
 
-rollback semuanya.
+Gunakan endpoint REST API.
 
-==================================================
-IDEMPOTENT
-==================================================
+Jangan hardcode.
 
-Callback dua kali
+====================================================
 
-Saldo tidak boleh bertambah dua kali.
+RESPONSIVE
 
-Gunakan:
+Mobile
 
-invoice_id
+Tablet
 
-payment_reference
+Desktop
 
-callback_id
+====================================================
 
-unique index
+PENTING
 
-==================================================
-VALIDASI CALLBACK
-==================================================
+Belum membuat:
 
-Verifikasi:
+Upload Page
 
-signature
+Settings
 
-merchant
+Statistics
 
-invoice
+Users
 
-amount
+Premium
 
-payment_reference
+====================================================
 
-status
+OUTPUT
 
-timestamp
+1.
 
-==================================================
-ANTI MANIPULASI
-==================================================
+Jelaskan struktur Files Manager.
 
-Frontend hanya mengirim:
+2.
 
-nominal
+Jelaskan API yang dipakai.
 
-payment_method
+3.
 
-Backend menghitung ulang.
-
-Nominal tidak boleh berasal dari frontend saat callback.
-
-==================================================
-LEDGER
-==================================================
-
-Semua perubahan saldo WAJIB masuk ledger.
-
-Tidak boleh ada update balance tanpa ledger.
-
-==================================================
-RIWAYAT
-==================================================
-
-User hanya dapat melihat deposit miliknya.
-
-Admin dapat melihat seluruh deposit.
-
-==================================================
-ADMIN
-==================================================
-
-Tambah menu:
-
-Deposit
-
-Berisi:
-
-Pending
-
-Berhasil
-
-Expired
-
-Gagal
-
-Cari invoice
-
-Cari user
-
-Filter gateway
-
-==================================================
-NOTIFIKASI
-==================================================
-
-Saat deposit sukses
-
-Kirim:
-
-Website
-
-Telegram
-
-WhatsApp (jika aktif)
-
-==================================================
-AUDIT
-==================================================
-
-Simulasikan:
-
-Double callback
-
-Double payment
-
-Spam deposit
-
-Nominal dimanipulasi
-
-Invoice expired
-
-Gateway timeout
-
-Server restart
-
-Mongo restart
-
-==================================================
-VALIDASI
-==================================================
-
-npm run lint
+Pastikan:
 
 npm run build
 
-==================================================
-LAPORAN
-==================================================
+npm run dev
 
-Setelah selesai tampilkan:
+berjalan tanpa error.
 
-- File yang diubah
-- Collection baru
-- Endpoint baru
-- UI baru
-- Risiko tersisa
-- Skor keamanan deposit
-- Kesiapan production
+4.
+
+Berhenti setelah Files Manager selesai.
 ```
