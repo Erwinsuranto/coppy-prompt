@@ -1,89 +1,371 @@
 ```
-Saat ini terjadi bug pada fitur upload Website Telegram Drive.
 
-Gejalanya:
+# ROLE
 
-- File berhasil diupload ke Telegram.
-- File sudah tersimpan di channel Telegram.
-- Progress upload mencapai 100%.
-- Metadata kemungkinan sudah tersimpan.
-- Namun frontend menampilkan:
+Kamu adalah Senior Prisma Engineer, Senior SQLite Engineer, Senior Backend Node.js Engineer, Senior Next.js Engineer, dan Senior Telegram Bot Engineer.
 
-Request failed with status code 400
+Jangan hanya memperbaiki error yang muncul.
 
-Akibatnya UI menampilkan "Upload gagal", padahal upload sebenarnya berhasil.
+Lakukan audit menyeluruh terhadap sinkronisasi Prisma, SQLite, Backend API, Upload, dan Database sampai benar-benar stabil untuk production.
 
-Lakukan audit seluruh alur upload end-to-end.
+==========================================================
+MASALAH SAAT INI
+==========================================================
+
+Upload file sebenarnya BERHASIL.
+
+Alurnya:
+
+✔ File berhasil dipilih.
+✔ Progress mencapai 100%.
+✔ File berhasil dikirim ke Telegram.
+✔ File muncul di Channel Telegram.
+✔ Bot berhasil mengirim file.
+✔ Download Token berhasil dibuat.
+
+Tetapi setelah upload selesai muncul error:
+
+Invalid prisma.file.findUnique()
+
+The column
+
+main.File.originalName
+
+does not exist in the current database.
+
+Selain itu migration gagal dengan:
+
+Error P3018
+
+Cannot add a column with non-constant default
+
+Migration:
+
+20260707120000_add_upload_metadata
+
+Artinya kode sudah menggunakan schema terbaru tetapi database SQLite masih schema lama.
+
+==========================================================
+TARGET
+==========================================================
+
+Jangan membuat solusi sementara.
+
+Perbaiki akar masalah.
+
+Pastikan schema Prisma, migration, SQLite, backend, dan frontend semuanya sinkron.
+
+==========================================================
+STEP 1
+Audit Prisma Schema
+==========================================================
 
 Periksa:
 
-1. Frontend
-- Axios/fetch upload request.
-- Error handling.
-- Validasi response.
-- Status code yang dianggap sukses.
-- Pastikan response 200/201 diproses sebagai sukses.
-- Jangan menampilkan "Upload gagal" jika backend sebenarnya sudah berhasil.
+prisma/schema.prisma
 
-2. Backend
-- Audit endpoint upload.
-- Pastikan semua langkah setelah upload Telegram mengembalikan status yang benar.
-- Jangan mengembalikan HTTP 400 jika file sudah berhasil dikirim.
-- Gunakan HTTP 400 hanya untuk request yang memang tidak valid.
-- Jika upload Telegram sukses dan metadata berhasil disimpan, kembalikan HTTP 200 atau 201.
+Cari seluruh field baru terutama:
 
-3. Database
-- Pastikan transaksi konsisten.
-- Jangan menyimpan file lalu mengembalikan error.
+originalName
 
-4. Telegram Service
-- Jika Telegram berhasil mengembalikan message_id dan file_id, proses harus dianggap sukses.
+mimeType
 
-5. Response API
-Pastikan format konsisten, misalnya:
+telegramFileId
 
-{
-  "success": true,
-  "message": "Upload berhasil",
-  "data": {
-    "id": "...",
-    "downloadToken": "...",
-    "telegramFileId": "...",
-    "telegramMessageId": "...",
-    "filename": "..."
-  }
-}
+telegramMessageId
 
-6. Frontend
-- Setelah response sukses:
-  - tampilkan toast "Upload berhasil"
-  - status menjadi Completed
-  - hilangkan pesan error
-  - file langsung muncul di My Files
-  - file langsung muncul di Admin Files
+downloadToken
 
-7. Audit semua kemungkinan penyebab HTTP 400:
-- Validasi schema
-- Zod
-- Prisma
-- Multipart parser
-- Rename file
-- Metadata
-- DownloadToken
-- Response serializer
+description
 
-8. Tambahkan logging detail pada endpoint upload:
-- request diterima
-- upload Telegram berhasil
-- metadata tersimpan
-- response yang dikirim
-- alasan jika mengembalikan HTTP 400
+createdAt
 
-Jangan hanya memperbaiki gejalanya. Temukan akar penyebab HTTP 400 dan pastikan alur upload benar-benar selesai tanpa false error.
+updatedAt
 
-Setelah selesai:
-- Jalankan build frontend dan backend.
-- Pastikan upload file menghasilkan HTTP 200/201.
-- Pastikan tidak ada lagi pesan "Request failed with status code 400" ketika upload sebenarnya berhasil.
+Pastikan semua field sesuai dengan SQLite.
 
+==========================================================
+STEP 2
+Audit Migration
+==========================================================
+
+Periksa migration:
+
+20260707120000_add_upload_metadata
+
+Cari seluruh default value yang menyebabkan SQLite gagal.
+
+Contoh:
+
+cuid()
+
+uuid()
+
+randomUUID()
+
+now()
+
+dbgenerated()
+
+expression SQL
+
+atau default lain yang tidak didukung ALTER TABLE SQLite.
+
+==========================================================
+STEP 3
+Perbaiki Migration
+==========================================================
+
+Jangan memakai solusi yang menghapus database.
+
+Jangan memakai:
+
+prisma migrate reset
+
+Jangan menghapus:
+
+dev.db
+
+Gunakan strategi migration yang aman.
+
+Jika perlu:
+
+Tambah kolom nullable terlebih dahulu.
+
+Isi data lama.
+
+Lalu ubah menjadi NOT NULL bila memang diperlukan.
+
+Migration harus bisa dijalankan pada database yang sudah berisi data.
+
+==========================================================
+STEP 4
+Audit Existing Data
+==========================================================
+
+Pastikan seluruh file lama tetap ada.
+
+Jangan kehilangan:
+
+Telegram Message ID
+
+Telegram File ID
+
+Download Token
+
+Metadata lama
+
+==========================================================
+STEP 5
+Audit Upload API
+==========================================================
+
+Pastikan setelah upload Telegram berhasil:
+
+metadata tersimpan
+
+findUnique berhasil
+
+response sukses
+
+HTTP 200 / 201
+
+Tidak boleh ada HTTP 400.
+
+==========================================================
+STEP 6
+Audit Prisma Query
+==========================================================
+
+Cari seluruh:
+
+findUnique()
+
+findFirst()
+
+findMany()
+
+select
+
+include
+
+Pastikan tidak meminta kolom yang belum ada.
+
+==========================================================
+STEP 7
+Audit Download
+==========================================================
+
+Pastikan:
+
+Download Token tetap sama.
+
+Bot Telegram.
+
+Website.
+
+Preview.
+
+Download.
+
+Search.
+
+My Files.
+
+Admin Files.
+
+Semua memakai downloadToken yang sama.
+
+==========================================================
+STEP 8
+Audit Frontend
+==========================================================
+
+Jika upload berhasil:
+
+✔ tampilkan Upload Success
+
+✔ jangan tampilkan Upload gagal
+
+✔ progress selesai
+
+✔ tampilkan metadata
+
+✔ tampilkan file
+
+==========================================================
+STEP 9
+Audit Backend
+==========================================================
+
+Jika Telegram berhasil upload tetapi database gagal,
+
+Backend harus rollback dengan benar.
+
+Tidak boleh mengembalikan response sukses palsu.
+
+Jika database sukses,
+
+Response harus:
+
+HTTP 200
+
+atau
+
+HTTP 201
+
+==========================================================
+STEP 10
+Logging
+==========================================================
+
+Tambahkan logging lengkap:
+
+Upload dimulai
+
+Upload Telegram berhasil
+
+Metadata disimpan
+
+Prisma Query berhasil
+
+Response dikirim
+
+Jika gagal:
+
+log alasan lengkap
+
+==========================================================
+STEP 11
+Testing
+==========================================================
+
+Lakukan pengujian:
+
+Upload JPG
+
+Upload PNG
+
+Upload PDF
+
+Upload ZIP
+
+Upload Video
+
+Upload File Besar
+
+Pastikan:
+
+✔ berhasil
+
+✔ metadata benar
+
+✔ database benar
+
+✔ Telegram benar
+
+✔ download benar
+
+==========================================================
+STEP 12
+Production Ready
+==========================================================
+
+Setelah selesai jalankan:
+
+Backend
+
+npm install
+
+npm run build
+
+Frontend
+
+npm install
+
+npm run build
+
+Migration
+
+npx prisma generate
+
+npx prisma migrate deploy
+
+Pastikan semuanya berhasil tanpa warning yang menyebabkan aplikasi gagal.
+
+==========================================================
+OUTPUT
+==========================================================
+
+Berikan laporan:
+
+1. Penyebab utama error.
+
+2. File yang diubah.
+
+3. Migration yang diubah.
+
+4. Query Prisma yang diperbaiki.
+
+5. Alasan perubahan.
+
+6. Bukti bahwa upload berhasil.
+
+7. Bukti bahwa metadata berhasil.
+
+8. Bukti bahwa My Files bekerja.
+
+9. Bukti bahwa Search bekerja.
+
+10. Bukti bahwa Download bekerja.
+
+11. Bukti bahwa Preview bekerja.
+
+12. Pastikan tidak ada lagi error:
+
+The column main.File.originalName does not exist
+
+13. Pastikan migration dapat dijalankan pada SQLite production tanpa menghapus database.
+
+Jangan berhenti sampai seluruh sistem Upload Telegram Drive benar-benar siap production.
 ```
