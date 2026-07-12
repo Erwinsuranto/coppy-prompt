@@ -10,6 +10,39 @@
 # 
 ```
 
+
+Halaman web sudah dapat dibuka, tetapi fitur Upload belum tampil.
+
+Yang terjadi:
+- Halaman Telegram Drive terbuka.
+- Hanya muncul tulisan:
+  "Choose My Files to manage uploads."
+- Tidak ada drag & drop.
+- Tidak ada tombol Choose File.
+- Tidak ada tombol Upload.
+
+Tugas:
+
+1. Audit komponen Upload.
+2. Cari mengapa Upload Studio tidak dirender.
+3. Pastikan halaman Upload langsung menampilkan:
+   - Drag & Drop area
+   - Tombol Choose File
+   - Daftar file yang dipilih
+   - Progress upload
+   - Tombol Upload
+4. Jangan mengubah desain yang sudah ada.
+5. Pastikan setelah memilih file, upload benar-benar berjalan ke backend Telegram.
+6. Jika Upload Studio belum dipanggil, perbaiki routing atau import.
+7. Jalankan build dan pastikan halaman Upload berfungsi.
+
+Berikan daftar file yang diubah beserta alasan setiap perubahan.
+
+
+```
+# 
+```
+
 Audit selesai.
 
 Sekarang jangan hanya membaca struktur project.
