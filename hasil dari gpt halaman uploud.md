@@ -1,3 +1,88 @@
+
+
+
+
+
+
+# 
+```
+
+
+STOP.
+
+Jangan membuat audit repository.
+Jangan menjelaskan GitHub Actions.
+Jangan membuat ringkasan.
+Jangan membuat laporan.
+
+Saya sedang memverifikasi implementasi Upload & Download.
+
+Frontend UploadStudio sudah saya lihat.
+
+Sekarang kirim IMPLEMENTASI BACKEND yang sebenarnya.
+
+Kirim source code lengkap satu file per balasan sampai selesai.
+
+Urutan wajib:
+
+1.
+app/api/uploads/file/route.ts
+atau
+pages/api/uploads/file.ts
+
+2.
+Semua helper/service yang dipakai endpoint upload, misalnya:
+lib/telegram.ts
+lib/upload.ts
+lib/storage.ts
+lib/database.ts
+atau file lain yang dipanggil endpoint tersebut.
+
+3.
+Model/database yang dipakai untuk menyimpan metadata upload.
+
+4.
+Endpoint yang dipakai untuk:
+- create upload
+- progress
+- finish upload
+- save metadata
+- Telegram Bot API upload
+- folder destination
+
+5.
+Halaman Download:
+
+app/download/[id]/page.tsx
+
+beserta semua komponen yang dipakai.
+
+6.
+Endpoint Download:
+
+app/api/download/[id]/route.ts
+
+atau endpoint download lain yang sebenarnya.
+
+7.
+Semua helper download Telegram.
+
+8.
+Jika ada proxy download, kirim seluruh source code proxy tersebut.
+
+Aturan:
+
+- Jangan hanya mengirim nama file.
+- Jangan meringkas.
+- Jangan mengatakan "sudah ada di repository".
+- Jangan mengatakan "lihat commit".
+- Kirim source code lengkap.
+- Jika terlalu panjang, kirim satu file penuh per balasan sampai seluruh implementasi selesai.
+
+Saya akan memverifikasi sendiri apakah Upload dan Download benar-benar sudah dapat digunakan.
+
+
+```
 'use client';import{useEffect,useRef,useState}from'react';import{CheckCircle2,File,FileText,Folder,FolderUp,Pause,Play,RefreshCw,Trash2,UploadCloud,X}from'lucide-react';type FolderRow={id:string;name:string};type RecentFile={id:string;fileName:string;size:number;mimeType?:string;uploadedAt?:string};type Status='queued'|'uploading'|'paused'|'done'|'failed'|'cancelled';type Item={id:string;file:globalThis.File;name:string;relativePath:string;folderId:string;progress:number;status:Status;error?:string;preview?:string;speed:number;eta:number};const uid=()=>crypto.randomUUID?.()||`${Date.now()}-${Math.random()}`;const fmt=(n:number)=>n<1024?`${n} B`:n<1048576?`${(n/1024).toFixed(1)} KB`:n<1073741824?`${(n/1048576).toFixed(1)} MB`:`${(n/1073741824).toFixed(1)} GB`;const duration=(s:number)=>!Number.isFinite(s)||s<=0?'Calculating…':s<60?`${Math.ceil(s)} sec`:`${Math.ceil(s/60)} min`;
 
 export function UploadStudio(){const[items,setItems]=useState<Item[]>([]),[folders,setFolders]=useState<FolderRow[]>([]),[folderId,setFolderId]=useState('root'),[running,setRunning]=useState(false),[queuePaused,setQueuePaused]=useState(false),[toast,setToast]=useState(''),[recent,setRecent]=useState<RecentFile[]>([]),[dragging,setDragging]=useState(false);const fileInput=useRef<HTMLInputElement>(null),folderInput=useRef<HTMLInputElement>(null),requests=useRef(new Map<string,XMLHttpRequest>()),itemsRef=useRef<Item[]>([]),pausedRef=useRef(false),stopRef=useRef(false),runningRef=useRef(false),cancelled=useRef(new Set<string>());useEffect(()=>{itemsRef.current=items},[items]);async function loadData(){const[fr,xr]=await Promise.all([fetch('/api/folders'),fetch('/api/files')]),[fp,xp]=await Promise.all([fr.json(),xr.json()]);setFolders((fp.data||[]).map((f:any)=>({id:String(f.id),name:String(f.name)})));const files=Array.isArray(xp.data)?xp.data:(xp.data?.files||[]);setRecent(files.slice().sort((a:any,b:any)=>new Date(b.uploadedAt||0).getTime()-new Date(a.uploadedAt||0).getTime()).slice(0,6))}useEffect(()=>{folderInput.current?.setAttribute('webkitdirectory','');folderInput.current?.setAttribute('directory','');void loadData();return()=>itemsRef.current.forEach(i=>i.preview&&URL.revokeObjectURL(i.preview))},[]);function add(files:globalThis.File[]){const valid=files.filter(f=>f.size>0);setItems(current=>current.concat(valid.map(file=>({id:uid(),file,name:file.name,relativePath:(file as globalThis.File&{webkitRelativePath?:string}).webkitRelativePath||file.name,folderId,progress:0,status:'queued' as const,preview:/^(image|video)\//.test(file.type)||file.type==='application/pdf'?URL.createObjectURL(file):undefined,speed:0,eta:0}))));setToast(valid.length?`${valid.length} file${valid.length===1?'':'s'} added to the queue`:'No uploadable files selected')}function patch(id:string,next:Partial<Item>){setItems(rows=>rows.map(row=>row.id===id?{...row,...next}:row))}function upload(item:Item){return new Promise<void>((resolve,reject)=>{const xhr=new XMLHttpRequest();requests.current.set(item.id,xhr);xhr.open('POST','/api/uploads/file');xhr.responseType='json';let lastAt=performance.now(),lastBytes=0;xhr.upload.onprogress=e=>{const now=performance.now(),elapsed=(now-lastAt)/1000;if(elapsed>=.2){const rate=(e.loaded-lastBytes)/elapsed;patch(item.id,{progress:e.lengthComputable?Math.min(96,Math.round(e.loaded/e.total*96)):50,speed:rate,eta:rate>0?(e.total-e.loaded)/rate:0});lastAt=now;lastBytes=e.loaded}};xhr.onload=()=>{requests.current.delete(item.id);if(xhr.status>=200&&xhr.status<300&&xhr.response?.success){patch(item.id,{status:'done',progress:100,speed:0,eta:0});resolve()}else reject(new Error(xhr.response?.message||`Upload failed (${xhr.status})`))};xhr.onerror=()=>{requests.current.delete(item.id);reject(new Error('Network error'))};xhr.onabort=()=>{requests.current.delete(item.id);reject(new Error(cancelled.current.has(item.id)?'Upload cancelled':pausedRef.current?'Upload paused. Resume restarts this transfer.':'Upload interrupted'))};const form=new FormData();form.set('file',item.file,item.name);form.set('folderId',item.folderId);form.set('relativePath',item.relativePath.replace(/[^/]+$/,item.name));xhr.send(form)})}async function start(){if(runningRef.current)return;runningRef.current=true;setRunning(true);setQueuePaused(false);pausedRef.current=false;stopRef.current=false;const queue=itemsRef.current.filter(i=>['queued','failed','paused'].includes(i.status)).map(i=>i.id);for(const id of queue){if(stopRef.current||pausedRef.current)break;const current=itemsRef.current.find(i=>i.id===id);if(!current||current.status==='done'||current.status==='cancelled')continue;cancelled.current.delete(id);patch(id,{status:'uploading',error:undefined});try{await upload({...current,name:itemsRef.current.find(i=>i.id===id)?.name||current.name,folderId:itemsRef.current.find(i=>i.id===id)?.folderId||folderId});setToast(`${current.name} uploaded successfully`);await loadData()}catch(error){const message=error instanceof Error?error.message:'Upload failed';if(cancelled.current.has(id)){cancelled.current.delete(id);patch(id,{status:'cancelled',error:undefined,speed:0,eta:0})}else if(pausedRef.current)patch(id,{status:'paused',error:message,speed:0,eta:0});else if(stopRef.current)patch(id,{status:'cancelled',error:undefined,speed:0,eta:0});else patch(id,{status:'failed',error:message,speed:0,eta:0})}}runningRef.current=false;setRunning(false);if(!pausedRef.current&&!stopRef.current)setToast('Upload queue finished')}function pause(){pausedRef.current=true;setQueuePaused(true);requests.current.forEach((request,id)=>{patch(id,{status:'paused'});request.abort()})}function resume(){pausedRef.current=false;setQueuePaused(false);void start()}function cancel(id:string){cancelled.current.add(id);const request=requests.current.get(id);if(request)request.abort();else{cancelled.current.delete(id);patch(id,{status:'cancelled',error:undefined,speed:0,eta:0})}}function cancelAll(){stopRef.current=true;pausedRef.current=false;requests.current.forEach(r=>r.abort());setItems(rows=>rows.map(row=>row.status==='done'?row:{...row,status:'cancelled',speed:0,eta:0}));runningRef.current=false;setRunning(false);setQueuePaused(false)}function retry(id:string){cancelled.current.delete(id);patch(id,{status:'queued',progress:0,error:undefined,speed:0,eta:0});setTimeout(()=>void start(),0)}function preview(item:Item){if(item.file.type.startsWith('image/')&&item.preview)return <img src={item.preview} alt=""/>;if(item.file.type.startsWith('video/')&&item.preview)return <video src={item.preview} muted/>;if(item.file.type==='application/pdf'&&item.preview)return <object data={item.preview} type="application/pdf" aria-label={`Preview ${item.name}`}><FileText/></object>;return <File/>}return <main className="td-upload-studio"><header><a href="/my-files">My Files</a><div><p>Upload to Telegram Drive</p><h1>Upload files</h1></div></header><section className={`td-drop ${dragging?'is-dragging':''}`} onDragEnter={()=>setDragging(true)} onDragLeave={()=>setDragging(false)} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();setDragging(false);add(Array.from(e.dataTransfer.files))}}><input ref={fileInput} type="file" multiple hidden onChange={e=>{add(Array.from(e.target.files||[]));e.target.value=''}}/><input ref={folderInput} type="file" multiple hidden onChange={e=>{add(Array.from(e.target.files||[]));e.target.value=''}}/><UploadCloud/><h2>Drop files here</h2><p>Choose files on mobile or desktop, or select a browser folder while preserving relative paths.</p><div className="td-picker-actions"><button onClick={()=>fileInput.current?.click()}><UploadCloud/>Choose files</button><button onClick={()=>folderInput.current?.click()}><FolderUp/>Choose folder</button></div></section><section className="td-upload-controls"><label><span>Destination</span><select value={folderId} onChange={e=>setFolderId(e.target.value)}><option value="root">My Files</option>{folders.map(f=><option key={f.id} value={f.id}>{f.name}</option>)}</select></label><div><button disabled={!items.some(i=>['queued','failed','paused'].includes(i.status))||running&&!queuePaused} onClick={()=>queuePaused?resume():void start()}><Play/>{queuePaused?'Resume uploads':'Upload queue'}</button><button disabled={!running} onClick={pause}><Pause/>Pause</button><button disabled={!items.length} onClick={cancelAll}><X/>Cancel all</button></div></section>{items.length?<section className="td-upload-queue"><div className="td-queue-title"><h2>Upload queue</h2><span>{items.length} files · {fmt(items.reduce((n,i)=>n+i.file.size,0))}</span></div>{items.map(item=><article key={item.id}><div className="thumb">{preview(item)}</div><div className="td-upload-meta"><input aria-label={`Rename ${item.name}`} value={item.name} disabled={item.status==='uploading'||item.status==='done'} onChange={e=>patch(item.id,{name:e.target.value})}/><p>{fmt(item.file.size)} · {item.file.type||'File'} · {folders.find(f=>f.id===item.folderId)?.name||'My Files'}</p><progress value={item.progress} max="100"/><small className={item.status}>{item.error||`${item.status}${item.status==='uploading'?` · ${fmt(item.speed)}/s · ${duration(item.eta)} remaining`:''}`}</small></div><div className="td-row-actions">{['failed','paused','cancelled'].includes(item.status)&&<button aria-label={`Retry ${item.name}`} onClick={()=>retry(item.id)}><RefreshCw/></button>}{item.status==='uploading'&&<button aria-label={`Pause ${item.name}`} onClick={pause}><Pause/></button>}<button aria-label={`Cancel ${item.name}`} onClick={()=>cancel(item.id)}><Trash2/></button></div></article>)}</section>:<section className="td-upload-empty"><Folder/><h2>Your queue is empty</h2><p>Add files to begin.</p></section>}<section className="td-history"><div className="td-queue-title"><h2>Recent uploads</h2><a href="/recent">View all</a></div>{recent.length?<div className="td-history-grid">{recent.map(file=><a key={file.id} href={`/files/${encodeURIComponent(file.id)}`}><File/><span><strong>{file.fileName}</strong><small>{fmt(Number(file.size||0))} · {file.uploadedAt?new Date(file.uploadedAt).toLocaleString():'Recently uploaded'}</small></span></a>)}</div>:<p className="td-history-empty">No recent uploads yet.</p>}</section>{toast&&<div role="status" className="td-toast"><CheckCircle2/>{toast}<button aria-label="Dismiss notification" onClick={()=>setToast('')}><X/></button></div>}</main>}
