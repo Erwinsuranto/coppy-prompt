@@ -7,6 +7,37 @@
 
 
 
+
+# 
+```
+
+BUG: Tombol Upload tidak berfungsi.
+
+Kondisi saat ini:
+- Halaman My Files terbuka.
+- Tombol Upload tampil di kanan bawah.
+- Saat tombol Upload ditekan, tetap berada di halaman yang sama.
+- Tidak muncul file picker.
+- Tidak muncul dialog upload.
+- Tidak muncul drag & drop.
+
+Tugas:
+
+1. Cari event onClick tombol Upload.
+2. Pastikan tombol Upload membuka file picker atau Upload Studio.
+3. Jika memakai input[type=file], pastikan input tersebut dipanggil melalui tombol Upload.
+4. Jika memakai modal Upload Studio, pastikan modal dirender dan terbuka.
+5. Jika routing salah, perbaiki routing.
+6. Setelah diperbaiki, uji bahwa:
+   - Klik Upload → file picker muncul.
+   - Pilih file → file masuk ke upload queue.
+   - Upload berjalan ke backend Telegram.
+7. Jalankan build dan pastikan tidak ada error.
+8. Commit perubahan dan laporkan file yang diubah.
+
+
+
+```
 # 
 ```
 
