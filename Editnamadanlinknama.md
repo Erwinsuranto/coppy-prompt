@@ -1,3 +1,211 @@
+
+
+
+
+
+# 
+```
+
+You are a senior TypeScript, Next.js and Telegram Bot engineer.
+
+Build a complete production-ready Telegram Bot.
+
+IMPORTANT
+
+- Do NOT create placeholder code.
+- Do NOT leave TODOs.
+- Every feature must be fully implemented.
+- Production quality.
+- Clean architecture.
+- TypeScript.
+- Next.js App Router.
+- Telegram Bot API.
+- Environment variables.
+- Error handling.
+- Logging.
+- Rate limiting.
+- Security.
+- README.
+
+================================================
+
+BOT FLOW
+
+/start
+
+Display:
+
+Welcome
+
+Paste a supported media URL.
+
+The bot should:
+
+- validate URL
+- detect supported platform
+- fetch media metadata through a compliant provider/API
+- show:
+
+Thumbnail
+
+Title
+
+Duration
+
+Author
+
+Available formats
+
+Then display inline keyboard.
+
+Example
+
+Video
+Audio
+Cancel
+
+If user selects Video
+
+Display available qualities reported by the provider.
+
+Example
+
+144p
+240p
+360p
+480p
+720p
+1080p
+
+Only display qualities actually available.
+
+If user selects Audio
+
+Display
+
+MP3 128k
+MP3 320k
+Original Audio
+
+================================================
+
+DOWNLOAD FLOW
+
+When user selects a format:
+
+Show progress
+
+Fetching metadata...
+Preparing...
+Downloading...
+Uploading...
+
+Then send media.
+
+Large files should stream when possible.
+
+================================================
+
+ADMIN
+
+/admin
+
+Dashboard
+
+Users
+
+Downloads
+
+Errors
+
+Logs
+
+Broadcast
+
+Statistics
+
+================================================
+
+DATABASE
+
+Store
+
+Users
+
+Download history
+
+Statistics
+
+Blocked users
+
+================================================
+
+FEATURES
+
+Rate limiting
+
+Queue system
+
+Retry failed downloads
+
+Temporary cache
+
+Automatic cleanup
+
+Logging
+
+================================================
+
+SECURITY
+
+Validate URL
+
+Prevent spam
+
+Prevent abuse
+
+Prevent invalid requests
+
+================================================
+
+PROJECT STRUCTURE
+
+app/
+
+bot/
+
+lib/
+
+components/
+
+utils/
+
+types/
+
+config/
+
+================================================
+
+README
+
+Include complete installation.
+
+Environment variables.
+
+Run commands.
+
+Deployment instructions.
+
+Troubleshooting.
+
+================================================
+
+Generate production-ready code.
+
+
+
+```
+
 ```
 
 Selesaikan fitur File Manager yang belum selesai.
