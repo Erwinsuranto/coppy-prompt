@@ -11,6 +11,37 @@
 # 
 ```
 
+Server berjalan normal.
+
+Log menunjukkan:
+- GET /upload 200
+- GET /my-files 200
+- GET /api/files 200
+
+Tetapi saat tombol Upload ditekan tidak ada request:
+
+POST /api/uploads/file
+
+Audit frontend.
+
+Cari mengapa klik tombol Upload tidak memicu request upload.
+
+Periksa:
+1. Event onClick tombol Upload.
+2. input[type=file].
+3. Apakah file picker benar-benar mengembalikan File.
+4. Apakah fetch('/api/uploads/file') pernah dipanggil.
+5. Buka browser console dan Network.
+6. Perbaiki sampai POST /api/uploads/file benar-benar muncul di log server.
+
+Jangan hanya commit kode. Verifikasi upload benar-benar berjalan.
+
+
+
+```
+# 
+```
+
 BUG: Tombol Upload tidak berfungsi.
 
 Kondisi saat ini:
