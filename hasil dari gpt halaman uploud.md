@@ -4,6 +4,55 @@
 
 
 
+
+
+# 
+```
+
+STOP.
+
+Jangan kirim route wrapper lagi.
+
+Saya sudah melihat:
+
+app/api/uploads/file/route.ts
+
+Sekarang kirim implementasi sebenarnya yang dipanggil endpoint tersebut.
+
+Kirim source code lengkap:
+
+services/website-upload.service.ts
+
+atau file yang berisi:
+
+uploadWebsiteFile()
+
+WebsiteUploadError
+
+Semua helper yang dipanggil service tersebut.
+
+Saya ingin melihat:
+
+1. Upload ke Telegram Bot API.
+2. Upload ke channel/database.
+3. Penyimpanan metadata.
+4. MongoDB query.
+5. Error handling.
+6. Progress upload.
+7. Folder destination.
+8. Generate fileId/downloadToken/shareToken.
+9. Return response ke frontend.
+
+Jangan dipotong.
+Jangan diringkas.
+Jangan menjelaskan.
+
+Kirim source code lengkap satu file penuh.
+Jika service memanggil helper lain, lanjutkan helper tersebut sampai seluruh implementasi upload selesai.
+
+
+
+```
 # 
 ```
 
