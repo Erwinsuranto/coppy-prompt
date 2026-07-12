@@ -6,6 +6,37 @@
 
 
 
+
+# 
+```
+
+Audit selesai.
+
+Sekarang jangan hanya membaca struktur project.
+
+Lanjutkan implementasi sampai selesai.
+
+Target:
+
+1. Pastikan halaman app/download/[id]/page.tsx benar-benar bekerja.
+2. Pastikan DownloadLanding dapat mengambil data file berdasarkan downloadToken.
+3. Jika ada import yang salah, perbaiki tanpa mengubah struktur project.
+4. Pastikan download menggunakan API backend yang sudah ada.
+5. Pastikan halaman menampilkan:
+   - nama file
+   - ukuran file
+   - tombol Download
+   - progress download
+   - error handling
+6. Jika ada file yang belum ada, buat otomatis.
+7. Jalankan build sampai berhasil.
+8. Commit semua perubahan ke branch aktif.
+
+Jangan berhenti setelah audit. Lanjutkan implementasi sampai build berhasil.
+
+
+
+```
 # 
 ```
 
