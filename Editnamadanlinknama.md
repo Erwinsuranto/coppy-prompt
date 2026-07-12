@@ -3,6 +3,59 @@
 
 
 
+
+
+
+# 
+```
+
+STOP.
+
+Backend upload sudah saya terima.
+
+Saya tidak membutuhkan audit atau penjelasan lagi.
+
+Sekarang kirim implementasi FRONTEND Upload dan Download yang benar-benar dipakai website.
+
+Kirim source code lengkap berikut secara utuh:
+
+1.
+components/final-ui/upload-studio.tsx
+
+2.
+components/final-ui/upload-dropzone.tsx
+
+3.
+components/final-ui/upload-progress.tsx
+
+4.
+components/final-ui/upload-queue.tsx
+
+5.
+components/final-ui/upload-toolbar.tsx
+
+6.
+app/download/[id]/page.tsx
+
+7.
+components/final-ui/download-view.tsx
+
+8.
+Semua hook yang dipakai upload/download.
+
+Jangan ringkas.
+
+Jangan audit.
+
+Jangan menjelaskan.
+
+Kirim source code penuh satu file per balasan sampai seluruh Upload UI dan Download UI selesai.
+
+Jika suatu file mengimpor komponen lain, lanjutkan otomatis sampai semua implementasi Upload dan Download selesai.
+
+
+
+```
 # 
 ```
 
