@@ -8,6 +8,101 @@
 
 
 
+# Prompt: Mobile UI Final Bug Fix
+```
+
+Project saat ini menggunakan branch:
+
+feat/mobile-upload-download-final
+
+Jangan membuat branch baru.
+Jangan mengubah arsitektur project.
+Jangan menghapus fitur yang sudah bekerja.
+
+Saat ini upload sudah berfungsi dan file sudah muncul di My Files.
+
+Fokus hanya memperbaiki bug yang masih ada.
+
+BUG YANG HARUS DIPERBAIKI
+
+1. Header mobile rusak.
+- Chip "Shared with me" dan "Collaborate" bertumpuk di atas logo Telegram Drive.
+- Rapikan layout agar semua elemen sejajar.
+- Pastikan responsive pada layar HP.
+
+2. Floating Action Button.
+- Tombol Upload menutupi tombol lain di belakangnya.
+- Atur posisi FAB agar tidak saling overlap.
+- Pastikan Safe Area Android diperhatikan.
+
+3. Folder Header.
+- Judul folder terlalu besar.
+- Rapikan breadcrumb.
+- Kurangi tinggi header agar lebih hemat ruang.
+
+4. Mobile Layout.
+- Rapikan padding dan spacing.
+- Hilangkan ruang kosong berlebihan.
+- Pastikan Search, Filter, Sort dan File List proporsional.
+
+5. Upload.
+- Pastikan setelah upload selesai:
+  - progress hilang
+  - daftar file otomatis refresh
+  - jumlah item bertambah
+  - tidak perlu refresh halaman
+
+6. Download.
+- Klik file harus membuka halaman download yang benar.
+- Pastikan downloadToken digunakan.
+- Pastikan tombol Download bekerja.
+
+7. File Preview.
+- Thumbnail gambar tampil.
+- File non-gambar menggunakan icon sesuai tipe.
+
+8. Responsive.
+- Uji lebar:
+  - 320px
+  - 360px
+  - 390px
+  - 412px
+  - Tablet
+- Tidak boleh ada elemen yang saling menumpuk.
+
+9. Regression Test.
+Pastikan tetap berfungsi:
+- Upload
+- Folder
+- Search
+- Sort
+- Filter
+- Refresh
+- Select
+- Favorite
+- Download
+
+10. Build.
+Jalankan:
+npm run build
+
+Perbaiki seluruh error.
+
+11. Jalankan:
+npm run dev
+
+Verifikasi seluruh bug benar-benar selesai.
+
+12. Commit seluruh perubahan ke branch:
+feat/mobile-upload-download-final
+
+Jangan berhenti sebelum seluruh bug UI mobile selesai.
+Berikan daftar file yang diubah, alasan perubahan, hasil build, dan commit hash terakhir.
+
+
+
+```
+
 # 
 ```
 
